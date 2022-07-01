@@ -1,0 +1,9 @@
+.account-update-form {
+  display: flex;
+  flex-direction: column;
+
+  .account-update-form__actions {
+    display: flex;
+    justify-content: center;
+  }
+}

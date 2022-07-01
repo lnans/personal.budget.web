@@ -1,0 +1,141 @@
+:root {
+  // Colors
+  --color-primary: rgb(54, 52, 197);
+  --color-primary-15: rgba(54, 52, 197, 0.15);
+  --color-primary-35: rgba(54, 52, 197, 0.25);
+  --color-primary-90: rgba(54, 52, 197, 0.9);
+  --color-success: rgb(35, 163, 85);
+  --color-success-15: rgb(35, 163, 85, 0.15);
+  --color-success-90: rgb(35, 163, 85, 0.9);
+  --color-warning: rgb(203, 124, 63);
+  --color-warning-15: rgb(203, 124, 63, 0.15);
+  --color-warning-90: rgb(203, 124, 63, 0.9);
+  --color-error: rgb(196, 78, 71);
+  --color-error-15: rgb(196, 78, 71, 0.15);
+  --color-error-90: rgb(196, 78, 71, 0.9);
+  --color-white: rgb(255, 255, 255);
+  --color-text: rgb(6, 18, 55);
+  --color-text-disabled: rgba(6, 18, 55, 0.35);
+  --color-gray-0: rgb(218, 220, 224);
+  --color-gray-1: rgb(176, 176, 191);
+  --color-gray-2: rgb(133, 133, 145);
+
+  // NavBar
+  --navbar-height: 64px;
+  --navbar-padding: 24px;
+
+  // Radius
+  --radius-default: 8px;
+  --radius-rounded: 50%;
+
+  // Toast
+  --toast-margin: 10px;
+  --toast-padding: 20px;
+  --toast-primary: rgb(225, 225, 246);
+  --toast-success: rgb(222, 241, 230);
+  --toast-warning: rgb(247, 235, 226);
+  --toast-error: rgb(246, 229, 228);
+
+  // Buttons
+  --buttons-margin: 8px;
+  --buttons-padding: 8px 12px;
+  --buttons-height: 45px;
+
+  // Controls
+  --controls-height: 60px;
+  --controls-width: 150px;
+
+  --controls-margin-inline: 8px;
+  --controls-margin-block: 10px 20px;
+  --controls-padding-inline: 12px;
+  --controls-padding-block: 17px;
+
+  --controls-font-size: 15px;
+  --controls-label-size: 15px;
+  --controls-label-min-size: 13px;
+  --controls-error-font-size: 12px;
+
+  // Cards
+  --cards-margin: 14px;
+  --cards-padding: 12px;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  overflow: auto;
+}
+
+* {
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  position: relative;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--color-white);
+}
+
+main {
+  max-height: calc(100vh - var(--navbar-height));
+  padding: 14px 14px 0 14px;
+  overflow: auto;
+}
+
+// Scrollbar
+
+*::-webkit-scrollbar {
+  width: 1.4em; /* Total width including `border-width` of scrollbar thumb */
+  height: 0;
+}
+*::-webkit-scrollbar-thumb {
+  height: 1em;
+  border: 0.5em solid rgba(0, 0, 0, 0); /* Transparent border together with `background-clip: padding-box` does the trick */
+  background-clip: padding-box;
+  border-radius: 1em;
+  background-color: rgba(0, 0, 0, 0.15);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.025);
+}
+*::-webkit-scrollbar-button {
+  width: 0;
+  height: 0;
+  display: none;
+}
+*::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+
+// Input type number
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+@keyframes animation-spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(1turn);
+  }
+}

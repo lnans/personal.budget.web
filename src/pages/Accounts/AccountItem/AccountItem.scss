@@ -1,0 +1,84 @@
+.account-divider {
+  margin-inline: 14px;
+  border-bottom: 1px solid var(--color-gray-0);
+}
+
+.account {
+  display: flex;
+  padding: 14px;
+  cursor: pointer;
+
+  transition: background-color 0.25s ease;
+
+  &:hover {
+    background-color: rgba(54, 52, 197, 0.03);
+  }
+
+  .account__icon {
+    display: flex;
+    align-items: center;
+    margin-right: 14px;
+    font-size: 18px;
+    color: var(--color-gray-2);
+  }
+
+  .account__title {
+    .account-name {
+      font-weight: 500;
+    }
+    .account-bank {
+      font-weight: 300;
+      font-size: 14px;
+      color: var(--color-gray-2);
+    }
+  }
+
+  .account-balance {
+    align-self: center;
+    display: flex;
+    margin-left: auto;
+    padding: 5px 8px;
+
+    color: var(--color-success);
+    background-color: var(--color-success-15);
+    border-radius: var(--radius-default);
+
+    &.negative {
+      background-color: var(--color-error-15);
+      color: var(--color-error);
+    }
+
+    &.neutral {
+      background-color: var(--color-warning-15);
+      color: var(--color-warning);
+    }
+
+    .account-balance__amount {
+      font-weight: 500;
+    }
+    .account-balance__currency {
+      margin-left: 8px;
+    }
+  }
+
+  .account__action {
+    align-self: center;
+    display: flex;
+    align-items: center;
+    border: none;
+    background-color: transparent;
+    font-size: 18px;
+    padding-left: 8px;
+    cursor: pointer;
+    transition: color 0.25s ease;
+    color: var(--color-gray-2);
+
+    &:hover {
+      color: var(--color-primary);
+    }
+
+    &.danger:hover {
+      color: var(--color-error);
+    }
+  }
+}

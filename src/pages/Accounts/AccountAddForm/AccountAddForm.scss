@@ -1,0 +1,13 @@
+.account-add-form {
+  display: flex;
+  flex-direction: column;
+
+  .account-add-form__line {
+    display: flex;
+  }
+
+  .account-add-form__actions {
+    display: flex;
+    justify-content: center;
+  }
+}

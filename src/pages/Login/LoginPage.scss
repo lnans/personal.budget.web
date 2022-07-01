@@ -1,0 +1,12 @@
+.login-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+
+  .login-page__logo {
+    max-width: 120px;
+    align-self: center;
+    margin-block: 20px;
+  }
+}

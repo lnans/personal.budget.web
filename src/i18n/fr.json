@@ -1,0 +1,58 @@
+{
+  "errors": {
+    "validation": {
+      "required": "Champs obligatoire",
+      "invalid_amount": "Montant non valide"
+    },
+    "auth": {
+      "failed": "Echec d'authentification"
+    }
+  },
+  "common": {
+    "no_data": "Aucun résultat"
+  },
+  "enums": {
+    "account_type": {
+      "Expenses": "Dépenses",
+      "Savings": "Epargne"
+    }
+  },
+  "app": {
+    "navbar": {
+      "dashboard": "Dashboard",
+      "accounts": "Comptes"
+    }
+  },
+  "pages": {
+    "login": {
+      "username": "Nom d'utilisateur",
+      "password": "Mot de passe",
+      "submit": "Connexion"
+    },
+    "accounts": {
+      "account_card": {
+        "enabled": "Actifs",
+        "archived": "Archivés"
+      },
+      "account_add": {
+        "title": "Ajouter un compte",
+        "name": "Nom du compte",
+        "bank": "Banque",
+        "initial_amount": "Montant initial",
+        "type": "Type",
+        "validate": "Créer le compte"
+      },
+      "account_update": {
+        "title": "Modifer le compte",
+        "name": "Nom du compte",
+        "bank": "Banque",
+        "validate": "Mettre à jour"
+      },
+      "account_delete": {
+        "title": "Supprimer un compte",
+        "delete": "Supprimer",
+        "archive": "Archiver"
+      }
+    }
+  }
+}

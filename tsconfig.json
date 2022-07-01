@@ -5,9 +5,11 @@
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "allowJs": false,
     "skipLibCheck": true,
-    "esModuleInterop": true,
+    "esModuleInterop": false,
     "allowSyntheticDefaultImports": true,
     "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "forceConsistentCasingInFileNames": true,
     "module": "ESNext",
     "moduleResolution": "Node",
@@ -17,13 +19,13 @@
     "jsx": "react-jsx",
     "baseUrl": "./src",
     "paths": {
+      "@api": ["api"],
       "@components": ["components"],
+      "@hooks": ["hooks"],
+      "@i18n": ["i18n"],
+      "@models": ["models"],
       "@pages": ["pages"],
-      "@plugins/*": ["plugins/*"],
-      "@models/*": ["models/*"],
-      "@hooks/*": ["hooks/*"],
-      "@api/*": ["api/*"],
-      "@utils/*": ["utils/*"]
+      "@utils": ["utils"]
     }
   },
   "include": ["src"],

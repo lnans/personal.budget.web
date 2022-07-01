@@ -1,0 +1,145 @@
+.toasts-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  bottom: 0;
+  width: 100vw;
+  pointer-events: none;
+  z-index: 99000;
+
+  .toast {
+    display: flex;
+    align-items: center;
+    min-width: 250px;
+    max-width: 360px;
+    min-height: 70px;
+    backdrop-filter: opacity(0.9);
+    pointer-events: all;
+    font-size: 14px;
+    animation: toast 0.5s ease forwards;
+
+    border-radius: var(--radius-default);
+    margin: var(--toast-margin);
+    padding: var(--toast-padding);
+
+    &.toast--leaving {
+      animation: toast-leaving 0.5s ease forwards;
+    }
+
+    &.toast--primary {
+      background-color: var(--toast-primary);
+      color: var(--color-primary);
+      .toast-close-icon:before,
+      .toast-close-icon:after {
+        background-color: var(--color-primary);
+      }
+    }
+
+    &.toast--success {
+      background-color: var(--toast-success);
+      color: var(--color-success);
+      .toast-close-icon:before,
+      .toast-close-icon:after {
+        background-color: var(--color-success);
+      }
+    }
+
+    &.toast--warning {
+      background-color: var(--toast-warning);
+      color: var(--color-warning);
+      .toast-close-icon:before,
+      .toast-close-icon:after {
+        background-color: var(--color-warning);
+      }
+    }
+
+    &.toast--error {
+      background-color: var(--toast-error);
+      color: var(--color-error);
+      .toast-close-icon:before,
+      .toast-close-icon:after {
+        background-color: var(--color-error);
+      }
+    }
+
+    .toast__icon {
+      display: flex;
+      align-items: center;
+      margin-right: var(--toast-padding);
+      font-size: 20px;
+    }
+
+    .toast__close-btn {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      padding: 0;
+      transform: scale(0.75);
+      background: transparent;
+      border: 0;
+      cursor: pointer;
+
+      .toast-close-icon {
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        transition: all 0.25s ease;
+
+        &:before,
+        &:after {
+          content: '';
+          position: absolute;
+          width: 16px;
+          height: 2px;
+          border-radius: 2px;
+          transition: all 0.3s ease;
+        }
+
+        &:before {
+          transform: rotate(-45deg);
+        }
+
+        &:hover:before {
+          width: 12px;
+          transform: rotate(180deg);
+        }
+
+        &:after {
+          transform: rotate(45deg);
+        }
+
+        &:hover:after {
+          width: 12px;
+          transform: rotate(180deg);
+        }
+      }
+    }
+  }
+}
+
+@keyframes toast {
+  from {
+    opacity: 0;
+    clip-path: circle(0% at 50% 100%);
+  }
+  to {
+    opacity: 1;
+    clip-path: circle(120% at 50% 100%);
+  }
+}
+
+@keyframes toast-leaving {
+  from {
+    opacity: 1;
+    clip-path: circle(120% at 50% 100%);
+  }
+  to {
+    opacity: 0;
+    clip-path: circle(0% at 50% 100%);
+  }
+}

@@ -1,37 +1,53 @@
-import { Main, NavBar } from '@components'
-import { AccountsPage, DashboardPage, TestBedPage } from '@pages'
+import { authRequests } from '@api'
+import { AuthLoader, NavBar } from '@components'
+import { AuthInfoResponse } from '@models'
+import { AccountsPage, LoginPage } from '@pages'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useQuery } from 'react-query'
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
-import './app.scss'
 
-export default function App() {
+function App() {
+  const [isInit, setIsInit] = useState<boolean>(false)
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
+
+  useQuery<AuthInfoResponse>(authRequests.AUTHENTICATION_CACHE_KEY, authRequests.getAuthInfo, {
+    onSuccess: () => setIsAuthenticated(true),
+    onSettled: () => setIsInit(true),
+  })
+
+  if (!isInit) {
+    return <AuthLoader />
+  } else if (!isAuthenticated) {
+    return <LoginPage onAuthenticate={setIsAuthenticated} />
+  }
+
+  return <AuthenticatedApp />
+}
+
+function AuthenticatedApp() {
   const [currentPath, setCurrentPath] = useState<string>('/')
-
   const { t } = useTranslation()
   const navigate = useNavigate()
   const location = useLocation()
-
   const appRoutes = {
-    dashboard: { path: '/', name: t('nav.dashboard'), icon: 'bx bx-tachometer' },
-    accounts: { path: '/accounts', name: t('nav.accounts'), icon: 'bx bxs-wallet' },
-    test: { path: '/test', name: t('nav.test'), icon: 'bx bx-test-tube' },
+    dashboard: { path: '/', name: t('app.navbar.dashboard'), icon: 'ri-dashboard-line' },
+    accounts: { path: '/accounts', name: t('app.navbar.accounts'), icon: 'ri-wallet-3-line' },
   }
-
   useEffect(() => {
     setCurrentPath(location.pathname)
   }, [location])
 
   return (
-    <>
-      <NavBar title={t('app')} routes={appRoutes} currentPath={currentPath} onNavigate={navigate} />
-      <Main>
+    <div className='main-container'>
+      <NavBar routes={appRoutes} currentPath={currentPath} onNavigate={navigate} />
+      <main>
         <Routes>
-          <Route path={appRoutes.dashboard.path} element={<DashboardPage />} />
           <Route path={appRoutes.accounts.path} element={<AccountsPage />} />
-          <Route path={appRoutes.test.path} element={<TestBedPage />} />
         </Routes>
-      </Main>
-    </>
+      </main>
+    </div>
   )
 }
+
+export default App

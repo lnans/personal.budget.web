@@ -1,0 +1,193 @@
+.select {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-style: solid;
+  border-width: 2px;
+  transition: border 0.25s ease;
+  cursor: pointer;
+  width: fit-content;
+
+  border-color: var(--color-gray-1);
+  border-radius: var(--radius-default);
+  margin-inline: var(--controls-margin-inline);
+  margin-block: var(--controls-margin-block);
+  min-height: var(--controls-height);
+  min-width: var(--controls-width);
+
+  .select__control {
+    user-select: none;
+    width: 100%;
+    border: 0;
+    border-radius: inherit;
+    outline: none;
+    z-index: 1;
+    background-color: transparent;
+    color: transparent;
+    cursor: pointer;
+
+    font-size: var(--controls-font-size);
+    padding-inline: var(--controls-padding-inline);
+    padding-block: var(--controls-padding-block);
+
+    &:disabled,
+    &:disabled ~ .select__icon {
+      opacity: 0.6;
+    }
+  }
+
+  .select__label {
+    position: absolute;
+    left: 10px;
+    padding-inline: 6px;
+    font-weight: 500;
+    user-select: none;
+    transition-duration: 0.25s;
+    transition-timing-function: ease;
+    transition-property: transform, font-size, color;
+
+    font-size: var(--controls-font-size);
+    color: var(--color-gray-1);
+    background-color: var(--color-white);
+    border-radius: var(--radius-rounded);
+  }
+
+  .select__value {
+    position: absolute;
+    left: 0;
+    padding-left: 12px;
+    pointer-events: none;
+    font-size: var(--controls-font-size);
+    color: var(--color-text);
+  }
+
+  .select__error {
+    position: absolute;
+    right: 8px;
+    bottom: -20px;
+
+    font-size: var(--controls-error-font-size);
+    color: var(--color-error);
+  }
+
+  &:hover {
+    border-color: var(--color-gray-2);
+    &:not(:focus-within).select--has-value .select__label {
+      color: var(--color-gray-2);
+    }
+  }
+
+  &:focus-within {
+    border-color: var(--color-primary-90);
+    .select__label {
+      color: var(--color-primary);
+    }
+  }
+
+  &:focus-within .select__label,
+  &.select--has-value .select__label {
+    transform: translate(3%, -29px);
+    font-size: 13px;
+    font-weight: 400;
+  }
+
+  &.select--full {
+    width: calc(100% - 2 * var(--controls-margin-inline));
+  }
+
+  &.select--has-error {
+    border-color: var(--color-error-90);
+    &:hover {
+      border-color: var(--color-error);
+    }
+    &:focus-within .select__label,
+    &.select--has-value .select__label {
+      color: var(--color-error) !important;
+    }
+  }
+
+  &.select--disabled,
+  &.select--disabled .select__control {
+    pointer-events: none;
+    opacity: 0.35;
+  }
+
+  &.select--isActive .select__icon {
+    margin-top: 0 !important;
+    transform: rotate(45deg) !important;
+  }
+
+  .select__icon {
+    z-index: 4;
+    position: absolute;
+    right: 15px;
+    margin-top: -2px;
+    pointer-events: none;
+    cursor: pointer;
+    width: 9px;
+    height: 9px;
+    transition: transform 0.25s ease;
+    transform: rotate(-135deg);
+    transform-origin: center;
+
+    &:before,
+    &:after {
+      content: '';
+      background-color: var(--color-gray-2);
+      position: absolute;
+      display: block;
+      top: 0;
+    }
+
+    &:before {
+      width: 2px;
+      height: 100%;
+    }
+
+    &:after {
+      width: 100%;
+      height: 2px;
+    }
+  }
+
+  .select-list-items {
+    position: absolute;
+    background-color: var(--color-white);
+    max-height: 200px;
+    width: calc(100% + 4px);
+    top: 60px;
+    box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.05);
+    overflow-y: auto;
+    padding: 4px 7px 4px 7px;
+    z-index: 5;
+
+    box-shadow: rgb(0 0 0 / 20%) 0px 5px 5px -3px, rgb(0 0 0 / 14%) 0px 8px 10px 1px,
+      rgb(0 0 0 / 12%) 0px 3px 14px 2px;
+    //border: 2px solid var(--color-primary-90);
+    border-radius: var(--radius-default);
+
+    .select-list__item {
+      width: 100%;
+      border: 0;
+      background-color: transparent;
+      border-radius: 5px;
+      display: flex;
+      margin: 2px 0;
+      padding: 6px 10px;
+      text-align: left;
+      transition: padding 0.25s ease;
+      cursor: pointer;
+      color: var(--color-text);
+
+      &:not(.select-list__item--selected):hover {
+        padding-left: 14px;
+        color: var(--color-primary);
+      }
+
+      &.select-list__item--selected {
+        background-color: var(--color-primary-15);
+        color: var(--color-primary);
+      }
+    }
+  }
+}

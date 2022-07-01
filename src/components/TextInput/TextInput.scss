@@ -1,0 +1,108 @@
+.input {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-style: solid;
+  border-width: 2px;
+  transition: border 0.25s ease;
+  width: fit-content;
+
+  border-color: var(--color-gray-1);
+  border-radius: var(--radius-default);
+  margin-inline: var(--controls-margin-inline);
+  margin-block: var(--controls-margin-block);
+  min-height: var(--controls-height);
+  min-width: var(--controls-width);
+
+  .input__control {
+    width: 100%;
+    border: 0;
+    border-radius: inherit;
+    outline: none;
+    z-index: 1;
+    background-color: transparent;
+
+    font-size: var(--controls-font-size);
+    caret-color: var(--color-text);
+    color: var(--color-text);
+    padding-inline: var(--controls-padding-inline);
+    padding-block: var(--controls-padding-block);
+  }
+
+  .input__label {
+    position: absolute;
+    left: 10px;
+    padding-inline: 6px;
+    font-weight: 500;
+    user-select: none;
+    transition-duration: 0.25s;
+    transition-timing-function: ease;
+    transition-property: transform, font-size, color;
+
+    font-size: var(--controls-font-size);
+    color: var(--color-gray-1);
+    background-color: var(--color-white);
+    border-radius: var(--radius-rounded);
+  }
+
+  .input__error {
+    position: absolute;
+    right: 8px;
+    bottom: -20px;
+
+    font-size: var(--controls-error-font-size);
+    color: var(--color-error);
+  }
+
+  .input__icon {
+    position: absolute;
+    right: 0;
+    text-align: center;
+    font-size: 24px;
+
+    width: calc(var(--controls-padding-inline) * 3);
+    color: var(--color-gray-2);
+  }
+
+  &:hover {
+    border-color: var(--color-gray-2);
+    &:not(:focus-within).input--has-value .input__label {
+      color: var(--color-gray-2);
+    }
+  }
+
+  &:focus-within {
+    border-color: var(--color-primary-90);
+    .input__label {
+      color: var(--color-primary);
+    }
+  }
+
+  &:focus-within .input__label,
+  &.input--has-value .input__label {
+    transform: translate(3%, -29px);
+    font-size: 13px;
+    font-weight: 400;
+  }
+
+  &.input--full {
+    width: calc(100% - 2 * var(--controls-margin-inline));
+  }
+
+  &.input--has-error {
+    border-color: var(--color-error-90);
+    &:hover {
+      border-color: var(--color-error);
+    }
+    &:focus-within .input__label,
+    &.input--has-value .input__label {
+      color: var(--color-error) !important;
+    }
+  }
+
+  &.input--disabled,
+  &.input--disabled .input__control {
+    pointer-events: none;
+    opacity: 0.35;
+  }
+}

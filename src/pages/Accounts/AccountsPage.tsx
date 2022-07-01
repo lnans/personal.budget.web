@@ -1,67 +1,82 @@
-import { accountsRoutes } from '@api/endpoints/accountsEndPoints'
-import { AccountTile, AccountTileNew, ButtonFloating, OperationsTable, SectionTitle, SwitchInput } from '@components'
-import { AccountDetailsResponse } from '@models/account/AccountDetailsResponse'
-import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { useQuery } from 'react-query'
 import './AccountsPage.scss'
-import AddAccountForm from './AddAccount/AddAccountForm'
-import EditAccountForm from './EditAccount/EditAccountForm'
 
-export default function AccountsPage() {
-  const [selectedAccount, setSelectedAccount] = useState<AccountDetailsResponse | null>(null)
-  const [archived, setArchived] = useState<boolean>(false)
-  const [isCreatingAccount, setIsCreatingAccount] = useState<boolean>(false)
-  const [isEditingAccount, setIsEditingAccount] = useState<boolean>(false)
+import { Dialog } from '@components'
+import { AccountInfoResponse } from '@models'
+import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+
+import AccountAddForm from './AccountAddForm/AccountAddForm'
+import AccountCard from './AccountCard/AccountCard'
+import AccountDeleteForm from './AccountDeleteForm/AccountDeleteForm'
+import AccountUpdateForm from './AccountUpdateForm/AccountUpdateForm'
+import OperationList from './OperationList/OperationList'
+
+function AccountsPage() {
   const { t } = useTranslation()
-  const { data: accounts, refetch } = useQuery<AccountDetailsResponse[]>(accountsRoutes.CACHE_KEY, accountsRoutes.getAccounts({ archived }))
-
-  useEffect(() => {
-    setSelectedAccount(null)
-    refetch()
-  }, [archived])
-
-  useEffect(() => {
-    if (accounts?.length) {
-      setSelectedAccount(accounts[0])
-    }
-  }, [accounts])
-
+  const [selectedAccount, setSelectedAccount] = useState<AccountInfoResponse>()
+  const [accountDialogOpen, setAccountDialogOpen] = useState<boolean>(false)
+  const [accountUpdateDialogOpen, setAccountUpdateDialogOpen] = useState<boolean>(false)
+  const [accountDeleteDialogOpen, setAcountDeleteDialogOpen] = useState<boolean>(false)
   return (
-    <div className="accounts-page-container">
-      <div className="accounts-page-section__accounts">
-        <SectionTitle>{t('pages.accounts.title')}</SectionTitle>
-        <div className="accounts-filter-switch">
-          <SwitchInput textOn="Archivé" textOff="Archivé" onChange={setArchived} highlight={true} />
-        </div>
-        <div className="accounts-page-content">
-          {accounts &&
-            accounts.map((account) => (
-              <AccountTile
-                key={account.id}
-                account={account}
-                isSelected={selectedAccount?.id === account.id}
-                onClick={() => setSelectedAccount(account)}
-                onEdit={() => setIsEditingAccount(true)}
-              />
-            ))}
-          <AccountTileNew onClick={() => setIsCreatingAccount(true)} />
-        </div>
+    <div className='accounts-page'>
+      <div>
+        <AccountCard
+          title={t('pages.accounts.account_card.enabled')}
+          selectedAccount={selectedAccount}
+          onSelect={setSelectedAccount}
+          onCreate={() => setAccountDialogOpen(true)}
+          onEdit={() => setAccountUpdateDialogOpen(true)}
+          onDelete={() => setAcountDeleteDialogOpen(true)}
+        />
+        <AccountCard
+          archived
+          title={t('pages.accounts.account_card.archived')}
+          selectedAccount={selectedAccount}
+          onSelect={setSelectedAccount}
+          onEdit={() => setAccountUpdateDialogOpen(true)}
+          onDelete={() => setAcountDeleteDialogOpen(true)}
+        />
       </div>
 
-      <div className="accounts-page-section__operations">
+      {selectedAccount && <OperationList accountId={selectedAccount.id} />}
+
+      {/* Add account form */}
+      <Dialog
+        title={t('pages.accounts.account_add.title')}
+        open={accountDialogOpen}
+        onClose={() => setAccountDialogOpen(false)}
+      >
+        <AccountAddForm onSuccess={() => setAccountDialogOpen(false)} />
+      </Dialog>
+
+      {/* Update account form */}
+      <Dialog
+        title={t('pages.accounts.account_update.title')}
+        open={accountUpdateDialogOpen}
+        onClose={() => setAccountUpdateDialogOpen(false)}
+      >
         {selectedAccount && (
-          <>
-            <SectionTitle>{t('pages.accounts.operations')}</SectionTitle>
-            <div className="accounts-page-content">
-              <OperationsTable accountId={selectedAccount.id} />
-            </div>
-          </>
+          <AccountUpdateForm
+            account={selectedAccount}
+            onSuccess={() => setAccountUpdateDialogOpen(false)}
+          />
         )}
-        <ButtonFloating icon="bx bx-add-to-queue" />
-      </div>
-      <AddAccountForm show={isCreatingAccount} onClose={() => setIsCreatingAccount(false)} />
-      {selectedAccount && <EditAccountForm account={selectedAccount} show={isEditingAccount} onClose={() => setIsEditingAccount(false)} />}
+      </Dialog>
+
+      {/* Delete account form */}
+      <Dialog
+        title={t('pages.accounts.account_delete.title')}
+        open={accountDeleteDialogOpen}
+        onClose={() => setAcountDeleteDialogOpen(false)}
+      >
+        <AccountDeleteForm
+          accountId={selectedAccount?.id ?? ''}
+          isArchived={!!selectedAccount?.archived}
+          onSuccess={() => setAcountDeleteDialogOpen(false)}
+        />
+      </Dialog>
     </div>
   )
 }
+
+export default AccountsPage
