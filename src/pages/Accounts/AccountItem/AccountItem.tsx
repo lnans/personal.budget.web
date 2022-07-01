@@ -25,13 +25,7 @@ function AccountItem({ account, isSelected, onSelect, onEdit, onDelete }: Props)
   return (
     <>
       <div className='account-divider' />
-      <div
-        tabIndex={-1}
-        role='button'
-        className='account'
-        onClick={() => onSelect(account)}
-        onKeyDown={(e) => e.key === 'Enter' && onSelect(account)}
-      >
+      <div tabIndex={-1} role='button' className='account' onClick={() => onSelect(account)} onKeyDown={(e) => e.key === 'Enter' && onSelect(account)}>
         <div className='account__icon'>
           <i className={iconClass}></i>
         </div>
@@ -40,9 +34,7 @@ function AccountItem({ account, isSelected, onSelect, onEdit, onDelete }: Props)
           <p className='account-bank'>{account.bank}</p>
         </div>
         <div className={amountClass}>
-          <p className='account-balance__amount'>
-            {numberWithSpaces(account.balance).toString().replace('.', ',')}
-          </p>
+          <p className='account-balance__amount'>{numberWithSpaces(account.balance).toString().replace('.', ',')}</p>
           <span className='account-balance__currency'>€</span>
         </div>
         {isSelected && (

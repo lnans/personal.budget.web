@@ -3,7 +3,7 @@ import { ErrorHttp, ErrorResponse } from '@models'
 const apiUrl = import.meta.env.VITE_API_BASE_URL
 const tokenKey = import.meta.env.VITE_TOKEN_KEY
 
-const getAuthorizedHeader = (headers?: Headers): Headers => {
+function getAuthorizedHeader(headers?: Headers): Headers {
   const token = localStorage.getItem(tokenKey)
   const authorizationHeader = new Headers(headers)
   if (token) {
@@ -12,7 +12,7 @@ const getAuthorizedHeader = (headers?: Headers): Headers => {
   return authorizationHeader
 }
 
-const getContentHeader = <TData>(content: TData): Headers => {
+function getContentHeader<TData>(content: TData): Headers {
   const body = JSON.stringify(content)
   const contentHeader = new Headers()
   contentHeader.append('Content-Type', 'application/json')
@@ -41,33 +41,26 @@ async function parseResponse<TResult>(response: Response): Promise<TResult> {
   return Promise.reject(httpError)
 }
 
-const Get = <TResult>(path: string) =>
-  fetch(`${apiUrl}${path}`, { headers: getAuthorizedHeader() }).then<TResult>(parseResponse)
+type HttpMethod = 'GET' | 'POST' | 'PATCH' | 'DELETE'
 
-const Post = <TBody, TResult>(path: string, body: TBody) =>
-  fetch(`${apiUrl}${path}`, {
-    method: 'POST',
+async function Request<TResult>(method: HttpMethod, path: string): Promise<TResult> {
+  return fetch(`${apiUrl}${path}`, {
+    method,
+    headers: getAuthorizedHeader(),
+  }).then<TResult>(parseResponse)
+}
+
+async function RequestWithBody<TResult, TBody>(method: HttpMethod, path: string, body: TBody): Promise<TResult> {
+  return fetch(`${apiUrl}${path}`, {
+    method,
     headers: getAuthorizedHeader(getContentHeader(body)),
     body: JSON.stringify(body),
   }).then<TResult>(parseResponse)
+}
 
-const Patch = <TBody, TResult>(path: string, body: TBody) =>
-  fetch(`${apiUrl}${path}`, {
-    method: 'PATCH',
-    headers: getAuthorizedHeader(getContentHeader(body)),
-    body: JSON.stringify(body),
-  }).then<TResult>(parseResponse)
+const Get = async <TResult>(path: string) => Request<TResult>('GET', path)
+const Post = async <TBody, TResult>(path: string, body: TBody) => RequestWithBody<TResult, TBody>('POST', path, body)
+const Patch = async <TBody, TResult>(path: string, body: TBody) => RequestWithBody<TResult, TBody>('PATCH', path, body)
+const Delete = async <TResult>(path: string) => Request<TResult>('DELETE', path)
 
-const Put = <TBody, TResult>(path: string, body: TBody) =>
-  fetch(`${apiUrl}${path}`, {
-    method: 'PUT',
-    headers: getAuthorizedHeader(getContentHeader(body)),
-    body: JSON.stringify(body),
-  }).then<TResult>(parseResponse)
-
-const Delete = <TResult>(path: string) =>
-  fetch(`${apiUrl}${path}`, { method: 'DELETE', headers: getAuthorizedHeader() }).then<TResult>(
-    parseResponse
-  )
-
-export { Delete, Get, Patch, Post, Put }
+export const http = { Delete, Get, Patch, Post }

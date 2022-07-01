@@ -21,17 +21,7 @@ export type Props<TFormValues> = {
   name?: Path<TFormValues>
 }
 
-function TextInput<TFormValues>({
-  label,
-  disabled,
-  icon,
-  type = 'text',
-  fullWidth,
-  error,
-  defaultValue,
-  formControl,
-  name,
-}: Props<TFormValues>) {
+function TextInput<TFormValues>({ label, disabled, icon, type = 'text', fullWidth, error, defaultValue, formControl, name }: Props<TFormValues>) {
   const [hasValue, setHasValue] = useState<boolean>(!!defaultValue)
   const uid = useUID()
   const ref = useRef<HTMLInputElement | null>(null)

@@ -1,11 +1,10 @@
+import { http } from '@api'
 import { AuthInfoResponse, SignInRequest, SignInResponse } from '@models'
-
-import { Get, Post } from '../utils'
 
 const AUTHENTICATION_CACHE_KEY = 'Authentication'
 
-const getAuthInfo = () => Get<AuthInfoResponse>('/auth')
-const signIn = (form: SignInRequest) => Post<SignInRequest, SignInResponse>('/auth/signin', form)
+const getAuthInfo = () => http.Get<AuthInfoResponse>('/auth')
+const signIn = (form: SignInRequest) => http.Post<SignInRequest, SignInResponse>('/auth/signin', form)
 
 export const authRequests = {
   AUTHENTICATION_CACHE_KEY,

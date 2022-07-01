@@ -62,10 +62,5 @@ export default {
   },
 } as ComponentMeta<typeof SelectInput>
 
-export type ComponentProps = Omit<
-  Props<unknown>,
-  'itemValue' | 'itemKey' | 'items' | 'formControl' | 'name'
->
-export const Component: Story<ComponentProps> = (args) => (
-  <SelectInput {...args} items={items} itemKey='id' itemValue='value' />
-)
+export type ComponentProps = Omit<Props<unknown>, 'itemValue' | 'itemKey' | 'items' | 'formControl' | 'name'>
+export const Component: Story<ComponentProps> = (args) => <SelectInput {...args} items={items} itemKey='id' itemValue='value' />

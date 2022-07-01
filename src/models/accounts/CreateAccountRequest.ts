@@ -13,9 +13,7 @@ export const CreateAccountRequestValidator = object().shape({
   bank: string().required('errors.validation.required'),
   icon: string(),
   type: string().required('errors.validation.required'),
-  initialBalance: number()
-    .typeError('errors.validation.invalid_amount')
-    .required('errors.validation.required'),
+  initialBalance: number().typeError('errors.validation.invalid_amount').required('errors.validation.required'),
 })
 
 export default CreateAccountRequest

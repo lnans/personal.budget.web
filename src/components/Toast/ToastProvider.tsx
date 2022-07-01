@@ -15,11 +15,9 @@ type ToastProviderProps = {
 function ToastProvider({ children }: ToastProviderProps) {
   const [toasts, setToasts] = useState<ToastMessage[]>([])
 
-  const open = (message: string, type: ToastType) =>
-    setToasts((currentToasts) => [new ToastMessage(message, type), ...currentToasts])
+  const open = (message: string, type: ToastType) => setToasts((currentToasts) => [new ToastMessage(message, type), ...currentToasts])
 
-  const close = (id: string) =>
-    setToasts((currentToasts) => currentToasts.filter((toast) => toast.id !== id))
+  const close = (id: string) => setToasts((currentToasts) => currentToasts.filter((toast) => toast.id !== id))
 
   const contextValue = useMemo<ToastApi>(
     () => ({

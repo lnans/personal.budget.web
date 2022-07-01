@@ -18,8 +18,7 @@ expect.extend({
   toHaveClass: (received: HTMLElement, expected: string) => {
     if (!received.classList.contains(expected)) {
       return {
-        message: () =>
-          `\n - expected to have class: ${expected}\n - received: ${received.className}`,
+        message: () => `\n - expected to have class: ${expected}\n - received: ${received.className}`,
         expected: expected,
         actual: received.className,
         pass: false,

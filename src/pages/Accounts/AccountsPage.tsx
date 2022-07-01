@@ -41,39 +41,18 @@ function AccountsPage() {
       {selectedAccount && <OperationList accountId={selectedAccount.id} />}
 
       {/* Add account form */}
-      <Dialog
-        title={t('pages.accounts.account_add.title')}
-        open={accountDialogOpen}
-        onClose={() => setAccountDialogOpen(false)}
-      >
+      <Dialog title={t('pages.accounts.account_add.title')} open={accountDialogOpen} onClose={() => setAccountDialogOpen(false)}>
         <AccountAddForm onSuccess={() => setAccountDialogOpen(false)} />
       </Dialog>
 
       {/* Update account form */}
-      <Dialog
-        title={t('pages.accounts.account_update.title')}
-        open={accountUpdateDialogOpen}
-        onClose={() => setAccountUpdateDialogOpen(false)}
-      >
-        {selectedAccount && (
-          <AccountUpdateForm
-            account={selectedAccount}
-            onSuccess={() => setAccountUpdateDialogOpen(false)}
-          />
-        )}
+      <Dialog title={t('pages.accounts.account_update.title')} open={accountUpdateDialogOpen} onClose={() => setAccountUpdateDialogOpen(false)}>
+        {selectedAccount && <AccountUpdateForm account={selectedAccount} onSuccess={() => setAccountUpdateDialogOpen(false)} />}
       </Dialog>
 
       {/* Delete account form */}
-      <Dialog
-        title={t('pages.accounts.account_delete.title')}
-        open={accountDeleteDialogOpen}
-        onClose={() => setAcountDeleteDialogOpen(false)}
-      >
-        <AccountDeleteForm
-          accountId={selectedAccount?.id ?? ''}
-          isArchived={!!selectedAccount?.archived}
-          onSuccess={() => setAcountDeleteDialogOpen(false)}
-        />
+      <Dialog title={t('pages.accounts.account_delete.title')} open={accountDeleteDialogOpen} onClose={() => setAcountDeleteDialogOpen(false)}>
+        <AccountDeleteForm accountId={selectedAccount?.id ?? ''} isArchived={!!selectedAccount?.archived} onSuccess={() => setAcountDeleteDialogOpen(false)} />
       </Dialog>
     </div>
   )

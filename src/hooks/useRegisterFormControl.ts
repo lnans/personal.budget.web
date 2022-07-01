@@ -12,10 +12,7 @@ type RegisterTypes = {
   disabled?: boolean | undefined
 }
 
-export const useRegisterFormControl = <TFormValues>(
-  register?: UseFormRegister<TFormValues>,
-  name?: Path<TFormValues>
-) => {
+export const useRegisterFormControl = <TFormValues>(register?: UseFormRegister<TFormValues>, name?: Path<TFormValues>) => {
   let inputRefCallBack: RefCallBack | undefined
   let onChange: ChangeHandler | undefined
   let types: RegisterTypes | undefined

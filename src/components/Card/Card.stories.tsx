@@ -9,8 +9,6 @@ export default {
 
 export const Component: Story = () => (
   <Card>
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 200 }}>
-      Card Exemple
-    </div>
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 200 }}>Card Exemple</div>
   </Card>
 )

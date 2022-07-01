@@ -26,16 +26,7 @@ const items = [
 
 describe('● Render:', () => {
   test('[default] → should render <input>', () => {
-    render(
-      <SelectInput
-        label='Test'
-        formControl={register}
-        name='value'
-        items={items}
-        itemKey='id'
-        itemValue='value'
-      />
-    )
+    render(<SelectInput label='Test' formControl={register} name='value' items={items} itemKey='id' itemValue='value' />)
 
     const input = screen.getByTestId('select')
     const container = input?.parentElement
@@ -107,16 +98,7 @@ describe('● Render:', () => {
 
 describe('● When user select:', () => {
   test('[default] → should render <input> with has-value and is-active class', () => {
-    render(
-      <SelectInput
-        label='Test'
-        formControl={register}
-        name='value'
-        items={items}
-        itemKey='id'
-        itemValue='value'
-      />
-    )
+    render(<SelectInput label='Test' formControl={register} name='value' items={items} itemKey='id' itemValue='value' />)
 
     const input = screen.getByTestId('select')
     let container = screen.getByTestId('select-container')
@@ -145,16 +127,7 @@ describe('● When user select:', () => {
 
   test('[event] → should trigger onChange with item not selected', async () => {
     const { onChange } = register('value')
-    render(
-      <SelectInput
-        label='Test'
-        formControl={register}
-        name='value'
-        items={items}
-        itemKey='id'
-        itemValue='value'
-      />
-    )
+    render(<SelectInput label='Test' formControl={register} name='value' items={items} itemKey='id' itemValue='value' />)
     const input = screen.getByTestId('select')
     fireEvent.focus(input)
 
@@ -166,17 +139,7 @@ describe('● When user select:', () => {
 
   test('[event] → should not trigger onChange with item already selected', async () => {
     const { onChange } = register('value')
-    render(
-      <SelectInput
-        label='Test'
-        formControl={register}
-        name='value'
-        items={items}
-        itemKey='id'
-        itemValue='value'
-        defaultValue='1'
-      />
-    )
+    render(<SelectInput label='Test' formControl={register} name='value' items={items} itemKey='id' itemValue='value' defaultValue='1' />)
     const input = screen.getByTestId('select')
     fireEvent.focus(input)
 

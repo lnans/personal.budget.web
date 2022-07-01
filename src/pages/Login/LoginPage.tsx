@@ -24,13 +24,10 @@ function LoginPage({ onAuthenticate }: Props) {
     localStorage.setItem(tokenKey, data.token!)
   }
 
-  const { mutate: signIn, isLoading } = useMutation<SignInResponse, ErrorResponse, SignInRequest>(
-    authRequests.signIn,
-    {
-      onSuccess,
-      onError,
-    }
-  )
+  const { mutate: signIn, isLoading } = useMutation<SignInResponse, ErrorResponse, SignInRequest>(authRequests.signIn, {
+    onSuccess,
+    onError,
+  })
 
   const {
     register,
@@ -42,7 +39,7 @@ function LoginPage({ onAuthenticate }: Props) {
     <div className='login-page'>
       <Card>
         <img className='login-page__logo' alt='logo' src='/logo.png' />
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)} className='login-page__form'>
           <TextInput
             formControl={register}
             name='username'

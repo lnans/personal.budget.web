@@ -1,22 +1,20 @@
+import { http } from '@api'
 import { AccountInfoResponse, CreateAccountRequest, UpdateAccountRequest } from '@models'
-
-import { Delete, Get, Patch, Post } from '../utils'
 
 const ACCOUNT_CACHE_KEY = 'accounts'
 
 const getAccounts =
   ({ archived = false }) =>
   () =>
-    Get<AccountInfoResponse[]>(`/accounts?archived=${archived}`)
+    http.Get<AccountInfoResponse[]>(`/accounts?archived=${archived}`)
 
-const postAccount = (form: CreateAccountRequest) => Post('/accounts', form)
+const postAccount = (form: CreateAccountRequest) => http.Post('/accounts', form)
 
-const updateAccount = (id: string) => (form: UpdateAccountRequest) => Patch(`/accounts/${id}`, form)
+const updateAccount = (id: string) => (form: UpdateAccountRequest) => http.Patch(`/accounts/${id}`, form)
 
-const archiveAccount = (id: string, archived: boolean) => () =>
-  Patch(`/accounts/${id}/archive`, { archived })
+const archiveAccount = (id: string, archived: boolean) => () => http.Patch(`/accounts/${id}/archive`, { archived })
 
-const deleteAccount = (id: string) => () => Delete(`/accounts/${id}`)
+const deleteAccount = (id: string) => () => http.Delete(`/accounts/${id}`)
 
 export const accountsRequests = {
   ACCOUNT_CACHE_KEY,

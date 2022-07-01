@@ -24,18 +24,7 @@ export type Props<TFormValues> = {
   name?: Path<TFormValues>
 }
 
-function SelectInput<TFormValues>({
-  label,
-  disabled,
-  itemKey,
-  itemValue,
-  items,
-  fullWidth,
-  error,
-  defaultValue,
-  formControl,
-  name,
-}: Props<TFormValues>) {
+function SelectInput<TFormValues>({ label, disabled, itemKey, itemValue, items, fullWidth, error, defaultValue, formControl, name }: Props<TFormValues>) {
   const [isActive, setIsActive] = useState(false)
   const [value, setValue] = useState<string>()
   const [labelValue, setLabelValue] = useState<string>()
@@ -63,10 +52,7 @@ function SelectInput<TFormValues>({
   const onSelectItem = (item: SelectItem) => {
     setLabelValue(item[itemValue])
 
-    const nativeInputSetter = Object.getOwnPropertyDescriptor(
-      window.HTMLInputElement.prototype,
-      'value'
-    )?.set
+    const nativeInputSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set
     nativeInputSetter?.call(ref.current, item[itemKey])
 
     const e = new Event('input', { bubbles: true })
@@ -124,20 +110,11 @@ function SelectInput<TFormValues>({
           {items.map((item) => (
             <Fragment key={item[itemKey]}>
               {item.id === value ? (
-                <button
-                  id={`selectItem_${item[itemKey]}`}
-                  className='select-list__item select-list__item--selected'
-                  data-testid='select-item'
-                >
+                <button id={`selectItem_${item[itemKey]}`} className='select-list__item select-list__item--selected' data-testid='select-item'>
                   {item[itemValue]}
                 </button>
               ) : (
-                <button
-                  id={`selectItem_${item[itemKey]}`}
-                  className='select-list__item'
-                  onClick={() => onSelectItem(item)}
-                  data-testid='select-item'
-                >
+                <button id={`selectItem_${item[itemKey]}`} className='select-list__item' onClick={() => onSelectItem(item)} data-testid='select-item'>
                   {item[itemValue]}
                 </button>
               )}

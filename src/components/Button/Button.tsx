@@ -15,16 +15,7 @@ type Props = {
   onClick?: () => void
 }
 
-function Button({
-  children,
-  color = 'primary',
-  disabled,
-  loading,
-  fullWidth,
-  small,
-  outlined,
-  onClick,
-}: Props) {
+function Button({ children, color = 'primary', disabled, loading, fullWidth, small, outlined, onClick }: Props) {
   const btnClasses = clsx({
     btn: true,
     'btn--loading': loading,
@@ -36,12 +27,7 @@ function Button({
   })
 
   return (
-    <button
-      className={btnClasses}
-      disabled={disabled || loading}
-      onClick={onClick}
-      data-testid='btn'
-    >
+    <button className={btnClasses} disabled={disabled || loading} onClick={onClick} data-testid='btn'>
       <div className='btn__content'>{children}</div>
       <div className='btn__loader' />
     </button>

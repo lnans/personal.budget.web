@@ -18,20 +18,9 @@ type Props = {
   onDelete?: () => void
 }
 
-function AccountCard({
-  title,
-  archived = false,
-  selectedAccount,
-  onSelect,
-  onCreate,
-  onEdit,
-  onDelete,
-}: Props) {
+function AccountCard({ title, archived = false, selectedAccount, onSelect, onCreate, onEdit, onDelete }: Props) {
   const { t } = useTranslation()
-  const { data } = useQuery(
-    accountsRequests.ACCOUNT_CACHE_KEY + archived,
-    accountsRequests.getAccounts({ archived })
-  )
+  const { data } = useQuery(accountsRequests.ACCOUNT_CACHE_KEY + archived, accountsRequests.getAccounts({ archived }))
 
   return (
     <Card width='450px'>

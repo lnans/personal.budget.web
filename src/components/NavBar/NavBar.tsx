@@ -28,11 +28,7 @@ function NavBar({ currentPath, routes, onNavigate }: Props) {
       <div className='navbar__links'>
         {routesArray.map((route, idx) => (
           <button
-            className={
-              currentPath === route.path
-                ? 'navbar-link-item navbar-link-item--current'
-                : 'navbar-link-item'
-            }
+            className={currentPath === route.path ? 'navbar-link-item navbar-link-item--current' : 'navbar-link-item'}
             onClick={() => handleNavigation(route.path)}
             key={idx}
             data-testid='navbar-link-item'

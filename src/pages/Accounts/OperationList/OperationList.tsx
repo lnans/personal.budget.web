@@ -9,10 +9,7 @@ type Props = {
 }
 
 function OperationList({ accountId }: Props) {
-  const { data, refetch } = useQuery(
-    operationsRequests.OPERATIONS_CACHE_KEY,
-    operationsRequests.getOperations({ accountId })
-  )
+  const { data, refetch } = useQuery(operationsRequests.OPERATIONS_CACHE_KEY, operationsRequests.getOperations({ accountId }))
 
   useEffect(() => {
     refetch()

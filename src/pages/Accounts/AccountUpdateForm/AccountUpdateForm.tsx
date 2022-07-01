@@ -31,13 +31,9 @@ function AccountUpdateForm({ account, onSuccess }: Props) {
     onSuccess()
   }
 
-  const { mutate: update, isLoading } = useMutation(
-    accountsRequests.ACCOUNT_CACHE_KEY,
-    accountsRequests.updateAccount(account.id),
-    {
-      onSuccess: onUpdateAccount,
-    }
-  )
+  const { mutate: update, isLoading } = useMutation(accountsRequests.ACCOUNT_CACHE_KEY, accountsRequests.updateAccount(account.id), {
+    onSuccess: onUpdateAccount,
+  })
 
   const onSubmit: SubmitHandler<UpdateAccountRequest> = (form: UpdateAccountRequest) => {
     update(form)
@@ -54,6 +50,7 @@ function AccountUpdateForm({ account, onSuccess }: Props) {
             disabled={isLoading}
             defaultValue={account.name}
             error={errors.name?.message ? t(errors.name.message) : undefined}
+            fullWidth
           />
           <TextInput
             label={t('pages.accounts.account_update.bank')}
@@ -62,6 +59,7 @@ function AccountUpdateForm({ account, onSuccess }: Props) {
             disabled={isLoading}
             defaultValue={account.bank}
             error={errors.bank?.message ? t(errors.bank.message) : undefined}
+            fullWidth
           />
         </div>
         <div className='account-update-form__actions'>

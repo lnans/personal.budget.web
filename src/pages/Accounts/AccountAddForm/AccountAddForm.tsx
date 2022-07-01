@@ -32,11 +32,7 @@ function AccountAddForm({ onSuccess }: Props) {
     onSuccess()
   }
 
-  const { mutate: createAccount, isLoading } = useMutation(
-    accountsRequests.ACCOUNT_CACHE_KEY,
-    accountsRequests.postAccount,
-    { onSuccess: onCreateAccount }
-  )
+  const { mutate: createAccount, isLoading } = useMutation(accountsRequests.ACCOUNT_CACHE_KEY, accountsRequests.postAccount, { onSuccess: onCreateAccount })
 
   const onSubmit: SubmitHandler<CreateAccountRequest> = (form: CreateAccountRequest) => {
     createAccount(form)
@@ -52,6 +48,7 @@ function AccountAddForm({ onSuccess }: Props) {
             name='name'
             disabled={isLoading}
             error={errors.name?.message ? t(errors.name.message) : undefined}
+            fullWidth
           />
           <TextInput
             label={t('pages.accounts.account_add.bank')}
@@ -59,6 +56,7 @@ function AccountAddForm({ onSuccess }: Props) {
             name='bank'
             disabled={isLoading}
             error={errors.bank?.message ? t(errors.bank.message) : undefined}
+            fullWidth
           />
         </div>
         <div className='account-add-form__line'>
