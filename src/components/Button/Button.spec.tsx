@@ -76,7 +76,7 @@ describe('● When user click', () => {
     const onClick = vi.fn()
     render(<Button onClick={onClick}>Test</Button>)
 
-    const button = screen.getByTestId('btn')!
+    const button = screen.getByTestId('btn')
 
     fireEvent.click(button)
 
@@ -92,7 +92,7 @@ describe('● When user click', () => {
       </Button>
     )
 
-    const button = screen.getByTestId('btn')!
+    const button = screen.getByTestId('btn')
 
     fireEvent.click(button)
 
@@ -108,7 +108,7 @@ describe('● When user click', () => {
       </Button>
     )
 
-    const button = screen.getByTestId('btn')!
+    const button = screen.getByTestId('btn')
 
     fireEvent.click(button)
 

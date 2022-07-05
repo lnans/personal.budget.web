@@ -24,7 +24,9 @@ function AccountDeleteForm({ accountId, isArchived, onSuccess }: Props) {
   const { mutate: archived, isLoading: archiveLoading } = useMutation(
     accountsRequests.ACCOUNT_CACHE_KEY,
     accountsRequests.archiveAccount(accountId, !isArchived),
-    { onSuccess: onSubmitSuccess }
+    {
+      onSuccess: onSubmitSuccess,
+    }
   )
   const { mutate: remove, isLoading: deleteLoading } = useMutation(accountsRequests.ACCOUNT_CACHE_KEY, accountsRequests.deleteAccount(accountId), {
     onSuccess: onSubmitSuccess,

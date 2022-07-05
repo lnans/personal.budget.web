@@ -1,10 +1,10 @@
 import { cleanup } from '@testing-library/react'
 import { afterEach, expect, vi } from 'vitest'
 
-interface CustomMatchers {
-  toHaveClass(expected: string): void
-  toBeDisabled(): void
-  toBeInTheDocument(): void
+interface CustomMatchers<R = unknown> {
+  toHaveClass(expected: string): R
+  toBeDisabled(): R
+  toBeInTheDocument(): R
 }
 
 declare global {
@@ -30,7 +30,7 @@ expect.extend({
   toBeDisabled: (received: HTMLInputElement | HTMLButtonElement) => {
     if (!received.disabled) {
       return {
-        message: () => `\n - expected disabled: true\n - received: false`,
+        message: () => '\n - expected disabled: true\n - received: false',
         expected: true,
         actual: received.disabled,
         pass: false,
@@ -45,7 +45,7 @@ expect.extend({
   toBeInTheDocument: (received: HTMLElement) => {
     if (received === null || received.ownerDocument !== received.getRootNode({ composed: true })) {
       return {
-        message: () => `Element not found`,
+        message: () => 'Element not found',
         pass: false,
       }
     }

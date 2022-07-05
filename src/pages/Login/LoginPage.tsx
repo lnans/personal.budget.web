@@ -21,7 +21,7 @@ function LoginPage({ onAuthenticate }: Props) {
   const onSubmit = (form: SignInRequest) => signIn(form)
   const onSuccess = (data: SignInResponse) => {
     onAuthenticate(true)
-    localStorage.setItem(tokenKey, data.token!)
+    localStorage.setItem(tokenKey, data.token!) // eslint-disable-line @typescript-eslint/no-non-null-assertion
   }
 
   const { mutate: signIn, isLoading } = useMutation<SignInResponse, ErrorResponse, SignInRequest>(authRequests.signIn, {
