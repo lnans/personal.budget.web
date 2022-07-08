@@ -55,6 +55,8 @@
   }
 
   .input__icon {
+    display: flex;
+    justify-content: center;
     position: absolute;
     right: 0;
     text-align: center;

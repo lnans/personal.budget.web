@@ -1,16 +1,17 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import { describe, expect, test, vi } from 'vitest'
+import { Ri4KFill } from 'react-icons/ri'
 
 import NavBar from './NavBar'
 
 const routes = {
   home: {
-    icon: '',
+    Icon: Ri4KFill,
     path: '/',
     name: 'home',
   },
   accounts: {
-    icon: '',
+    Icon: Ri4KFill,
     path: '/accounts',
     name: 'accounts',
   },

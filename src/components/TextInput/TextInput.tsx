@@ -1,18 +1,19 @@
 import './TextInput.scss'
 
 import { useBlurEffect, useRegisterFormControl } from '@hooks'
-import clsx from 'clsx'
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useState, useId } from 'react'
 import { useRef } from 'react'
 import { Path, UseFormRegister } from 'react-hook-form'
-import { useUID } from 'react-uid'
+import { IconType } from 'react-icons'
+
+import clsx from 'clsx'
 
 export type TextFieldType = 'text' | 'password' | 'number'
 
 export type Props<TFormValues> = {
   label: string
   disabled?: boolean
-  icon?: string
+  Icon?: IconType
   type?: TextFieldType
   fullWidth?: boolean
   error?: string
@@ -21,9 +22,9 @@ export type Props<TFormValues> = {
   name?: Path<TFormValues>
 }
 
-function TextInput<TFormValues>({ label, disabled, icon, type = 'text', fullWidth, error, defaultValue, formControl, name }: Props<TFormValues>) {
+function TextInput<TFormValues>({ label, disabled, Icon, type = 'text', fullWidth, error, defaultValue, formControl, name }: Props<TFormValues>) {
   const [hasValue, setHasValue] = useState<boolean>(!!defaultValue)
-  const uid = useUID()
+  const uid = useId()
   const ref = useRef<HTMLInputElement | null>(null)
   const fmc = useRegisterFormControl(formControl, name)
 
@@ -38,7 +39,7 @@ function TextInput<TFormValues>({ label, disabled, icon, type = 'text', fullWidt
     input: true,
     'input--full': fullWidth,
     'input--disabled': disabled,
-    'input--icon': icon,
+    'input--icon': Icon,
     'input--has-value': hasValue,
     'input--has-error': error,
   })
@@ -70,7 +71,11 @@ function TextInput<TFormValues>({ label, disabled, icon, type = 'text', fullWidt
           {error}
         </label>
       )}
-      {icon && <i className={`input__icon ${icon}`}></i>}
+      {Icon && (
+        <div className='input__icon'>
+          <Icon />
+        </div>
+      )}
     </div>
   )
 }

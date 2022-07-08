@@ -1,10 +1,7 @@
-/* eslint-disable no-unused-vars */
-enum OperationType {
+export enum TransactionType {
   Expense = 'Expense',
   Income = 'Income',
   Fixed = 'Fixed',
   Transfer = 'Transfer',
   Budget = 'Budget',
 }
-
-export default OperationType

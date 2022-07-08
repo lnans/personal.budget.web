@@ -37,8 +37,8 @@ function AccountDeleteForm({ accountId, isArchived, onSuccess }: Props) {
       <Button color='error' loading={archiveLoading || deleteLoading} onClick={remove}>
         {t('pages.accounts.account_delete.delete')}
       </Button>
-      <Button color='warning' loading={archiveLoading || deleteLoading} onClick={archived}>
-        {t('pages.accounts.account_delete.archive')}
+      <Button color={isArchived ? 'success' : 'warning'} loading={archiveLoading || deleteLoading} onClick={archived}>
+        {isArchived ? t('pages.accounts.account_delete.activate') : t('pages.accounts.account_delete.archive')}
       </Button>
     </div>
   )

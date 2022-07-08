@@ -1,6 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import { UseFormRegister } from 'react-hook-form'
 import { describe, expect, test, vi } from 'vitest'
+import { RiAB } from 'react-icons/ri'
 
 import TextInput from './TextInput'
 
@@ -69,7 +70,7 @@ describe('● Render:', () => {
   })
 
   test('[icon] → should render <input> with icon', () => {
-    render(<TextInput label='Test' icon='icon' />)
+    render(<TextInput label='Test' Icon={RiAB} />)
 
     const input = screen.getByTestId('input')
     const container = input?.parentElement

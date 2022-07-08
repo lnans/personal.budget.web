@@ -1,13 +1,12 @@
 import './SelectInput.scss'
 
 import { useOuterClick, useRegisterFormControl } from '@hooks'
-import clsx from 'clsx'
-import { ChangeEvent, Fragment, useEffect, useRef, useState } from 'react'
+import { ChangeEvent, Fragment, useEffect, useId, useRef, useState } from 'react'
 import { Path, UseFormRegister } from 'react-hook-form'
-import { useUID } from 'react-uid'
+
+import clsx from 'clsx'
 
 export type SelectItem = {
-  // eslint-disable-next-line no-unused-vars
   [key in string]: string
 }
 
@@ -28,7 +27,7 @@ function SelectInput<TFormValues>({ label, disabled, itemKey, itemValue, items, 
   const [isActive, setIsActive] = useState(false)
   const [value, setValue] = useState<string>()
   const [labelValue, setLabelValue] = useState<string>()
-  const uid = useUID()
+  const uid = useId()
   const ctnRef = useOuterClick<HTMLDivElement>(() => setIsActive(false))
   const ref = useRef<HTMLInputElement | null>(null)
   const fmc = useRegisterFormControl(formControl, name)

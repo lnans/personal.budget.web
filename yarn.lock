@@ -3915,6 +3915,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-icons@npm:^4.4.0":
+  version: 4.4.0
+  resolution: "react-icons@npm:4.4.0"
+  peerDependencies:
+    react: "*"
+  checksum: dd93a1dcc8ac8a3cf46a2b33e80b586fa967331fa5fcb90d061abf276155a8363a331643e203d67cb9bab4261d00a757da854bcce1fce2c6e4258bf3e33f711b
+  languageName: node
+  linkType: hard
+
 "react-is@npm:^16.13.1":
   version: 16.13.1
   resolution: "react-is@npm:16.13.1"
@@ -3978,21 +3987,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-uid@npm:^2.3.2":
-  version: 2.3.2
-  resolution: "react-uid@npm:2.3.2"
-  dependencies:
-    tslib: ^2.0.0
-  peerDependencies:
-    "@types/react": ^16.8.0 || ^17.0.0 || ^18.0.0
-    react: ^16.8.0 || ^17.0.0 || ^18.0.0
-  peerDependenciesMeta:
-    "@types/react":
-      optional: true
-  checksum: fcaab1a48786c1a6b2ac9fec5c6b0f89c0ba52148c33181e74439036c70ebdc4b54539dfa54d7789a2ed7ddd8b6a102b7bf091e4553e18ea3e8e6ece50b93cbe
-  languageName: node
-  linkType: hard
-
 "react@npm:^18.2.0":
   version: 18.2.0
   resolution: "react@npm:18.2.0"
@@ -4044,13 +4038,6 @@ __metadata:
   version: 3.2.0
   resolution: "regexpp@npm:3.2.0"
   checksum: a78dc5c7158ad9ddcfe01aa9144f46e192ddbfa7b263895a70a5c6c73edd9ce85faf7c0430e59ac38839e1734e275b9c3de5c57ee3ab6edc0e0b1bdebefccef8
-  languageName: node
-  linkType: hard
-
-"remixicon@npm:^2.5.0":
-  version: 2.5.0
-  resolution: "remixicon@npm:2.5.0"
-  checksum: 7fa8f3643e3f24d7fa1cdbf37391bb4b3bfc0fda6643ba4e09e92fb8639351cee03f51539f18640747c2055e3622c8b81369f323857793ffbe7d2292cbac60c6
   languageName: node
   linkType: hard
 
@@ -4606,13 +4593,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^2.0.0":
-  version: 2.4.0
-  resolution: "tslib@npm:2.4.0"
-  checksum: 8c4aa6a3c5a754bf76aefc38026134180c053b7bd2f81338cb5e5ebf96fefa0f417bff221592bf801077f5bf990562f6264fecbc42cd3309b33872cb6fc3b113
-  languageName: node
-  linkType: hard
-
 "tsutils@npm:^3.21.0":
   version: 3.21.0
   resolution: "tsutils@npm:3.21.0"
@@ -4797,10 +4777,9 @@ __metadata:
     react-dom: ^18.2.0
     react-hook-form: ^7.33.1
     react-i18next: ^11.17.4
+    react-icons: ^4.4.0
     react-query: ^3.39.1
     react-router-dom: ^6.3.0
-    react-uid: ^2.3.2
-    remixicon: ^2.5.0
     sass: ^1.53.0
     typescript: ^4.7.4
     vite: ^2.9.13

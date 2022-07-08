@@ -5,10 +5,10 @@ import { Button, Card, TextInput } from '@components'
 import { useFormValidator, useToast } from '@hooks'
 import { ErrorResponse, SignInRequest, SignInRequestValidator, SignInResponse } from '@models'
 import { useTranslation } from 'react-i18next'
+import { RiLock2Line, RiUser3Line } from 'react-icons/ri'
 import { useMutation } from 'react-query'
 
 type Props = {
-  // eslint-disable-next-line no-unused-vars
   onAuthenticate: (isAuthenticated: boolean) => void
 }
 
@@ -45,7 +45,7 @@ function LoginPage({ onAuthenticate }: Props) {
             name='username'
             label={t('pages.login.username')}
             fullWidth
-            icon='ri-user-3-line'
+            Icon={RiUser3Line}
             error={errors?.username?.message ? t(errors?.username?.message) : undefined}
             disabled={isLoading}
           />
@@ -55,7 +55,7 @@ function LoginPage({ onAuthenticate }: Props) {
             label={t('pages.login.password')}
             fullWidth
             type='password'
-            icon='ri-lock-2-line'
+            Icon={RiLock2Line}
             error={errors?.password?.message ? t(errors?.password?.message) : undefined}
             disabled={isLoading}
           />

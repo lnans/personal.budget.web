@@ -3,12 +3,14 @@ import './AccountAddForm.scss'
 import { accountsRequests } from '@api'
 import { Button, SelectInput, TextInput } from '@components'
 import { useFormValidator } from '@hooks'
-import i18n from '@i18n'
 import { AccountType, CreateAccountRequest, CreateAccountRequestValidator } from '@models'
 import { EnumToSelect } from '@utils'
 import { SubmitHandler } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
+import { RiMoneyEuroCircleLine } from 'react-icons/ri'
 import { useMutation, useQueryClient } from 'react-query'
+
+import i18n from '@i18n'
 
 type Props = {
   onSuccess: () => void
@@ -63,7 +65,7 @@ function AccountAddForm({ onSuccess }: Props) {
           <TextInput
             label={t('pages.accounts.account_add.initial_amount')}
             type='number'
-            icon='ri-money-euro-circle-line'
+            Icon={RiMoneyEuroCircleLine}
             formControl={register}
             name='initialBalance'
             disabled={isLoading}

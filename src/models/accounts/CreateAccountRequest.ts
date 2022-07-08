@@ -1,6 +1,6 @@
 import { number, object, string } from 'yup'
 
-type CreateAccountRequest = {
+export type CreateAccountRequest = {
   name: string
   bank: string
   icon?: string
@@ -15,5 +15,3 @@ export const CreateAccountRequestValidator = object().shape({
   type: string().required('errors.validation.required'),
   initialBalance: number().typeError('errors.validation.invalid_amount').required('errors.validation.required'),
 })
-
-export default CreateAccountRequest

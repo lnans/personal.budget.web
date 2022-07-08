@@ -1,6 +1,4 @@
-type InfiniteData<TData> = {
+export type InfiniteData<TData> = {
   data: TData[]
   nextCursor?: number
 }
-
-export default InfiniteData

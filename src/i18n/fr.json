@@ -51,7 +51,8 @@
       "account_delete": {
         "title": "Supprimer un compte",
         "delete": "Supprimer",
-        "archive": "Archiver"
+        "archive": "Archiver",
+        "activate": "Activer"
       }
     }
   }

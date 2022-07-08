@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useQuery } from 'react-query'
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
+import { RiDashboardLine, RiWallet3Line } from 'react-icons/ri'
 
 function App() {
   const [isInit, setIsInit] = useState<boolean>(false)
@@ -31,8 +32,8 @@ function AuthenticatedApp() {
   const navigate = useNavigate()
   const location = useLocation()
   const appRoutes = {
-    dashboard: { path: '/', name: t('app.navbar.dashboard'), icon: 'ri-dashboard-line' },
-    accounts: { path: '/accounts', name: t('app.navbar.accounts'), icon: 'ri-wallet-3-line' },
+    dashboard: { path: '/', name: t('app.navbar.dashboard'), Icon: RiDashboardLine },
+    accounts: { path: '/accounts', name: t('app.navbar.accounts'), Icon: RiWallet3Line },
   }
   useEffect(() => {
     setCurrentPath(location.pathname)

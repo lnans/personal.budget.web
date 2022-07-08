@@ -1,6 +1,6 @@
 import './OperationList.scss'
 
-import { operationsRequests } from '@api'
+import { transactionsRequests } from '@api'
 import { useEffect } from 'react'
 import { useQuery } from 'react-query'
 
@@ -9,7 +9,7 @@ type Props = {
 }
 
 function OperationList({ accountId }: Props) {
-  const { data, refetch } = useQuery(operationsRequests.OPERATIONS_CACHE_KEY, operationsRequests.getOperations({ accountId }))
+  const { data, refetch } = useQuery(transactionsRequests.TRANSACTIONS_CACHE_KEY, transactionsRequests.getTransactions({ accountId }))
 
   useEffect(() => {
     refetch()

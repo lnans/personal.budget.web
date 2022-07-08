@@ -1,12 +1,12 @@
 import './ToastProvider.scss'
 
-import clsx from 'clsx'
-import { ReactNode, useMemo, useState } from 'react'
-import { useEffect } from 'react'
+import { ReactNode, useEffect, useMemo, useState } from 'react'
 import { createPortal } from 'react-dom'
-
+import { RiCheckboxCircleLine, RiErrorWarningLine, RiInformationLine } from 'react-icons/ri'
 import { ToastApi, ToastContext } from './ToastContext'
 import { ToastMessage, ToastType } from './ToastMessage'
+
+import clsx from 'clsx'
 
 type ToastProviderProps = {
   children: ReactNode
@@ -74,16 +74,21 @@ function Toast({ children, type, onClose }: ToastProps) {
     'toast--error': type === 'error',
   })
 
-  const iconClass = clsx({
-    'ri-information-line': type === 'info',
-    'ri-checkbox-circle-line': type === 'success',
-    'ri-error-warning-line': type === 'warning' || type === 'error',
-  })
+  const Icon = ({ icon }: { icon: ToastType }) => {
+    switch (icon) {
+      case 'info':
+        return <RiInformationLine />
+      case 'success':
+        return <RiCheckboxCircleLine />
+      default:
+        return <RiErrorWarningLine />
+    }
+  }
 
   return (
     <div className={toastClass} data-testid='toast'>
       <div className='toast__icon'>
-        <i className={iconClass}></i>
+        <Icon icon={type} />
       </div>
       <div className='toast__text'>{children}</div>
       <button onClick={handleClose} className='toast__close-btn' data-testid='toast__close-btn'>

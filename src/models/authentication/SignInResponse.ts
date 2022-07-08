@@ -1,6 +1,4 @@
-type SignInResponse = {
-  username?: string
-  token?: string
+export type SignInResponse = {
+  username: string
+  token: string
 }
-
-export default SignInResponse

@@ -4,6 +4,7 @@ import { accountsRequests } from '@api'
 import { Card } from '@components'
 import { AccountInfoResponse } from '@models'
 import { useTranslation } from 'react-i18next'
+import { RiAddCircleLine } from 'react-icons/ri'
 import { useQuery } from 'react-query'
 
 import AccountItem from '../AccountItem/AccountItem'
@@ -29,7 +30,7 @@ function AccountCard({ title, archived = false, selectedAccount, onSelect, onCre
 
         {!archived && (
           <button className='account-add' onClick={onCreate}>
-            <i className='ri-add-circle-line'></i>
+            <RiAddCircleLine />
           </button>
         )}
       </div>

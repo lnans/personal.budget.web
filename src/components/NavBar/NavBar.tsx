@@ -1,19 +1,19 @@
 import './NavBar.scss'
 
+import { IconType } from 'react-icons'
+
 type NavBarRoute = {
   name: string
   path: string
-  icon: string
+  Icon: IconType
 }
 type NavBarRoutes = {
-  // eslint-disable-next-line no-unused-vars
   [key in string]: NavBarRoute
 }
 
 export type Props = {
   currentPath: string
   routes: NavBarRoutes
-  // eslint-disable-next-line no-unused-vars
   onNavigate?: (path: string) => void
 }
 
@@ -26,15 +26,17 @@ function NavBar({ currentPath, routes, onNavigate }: Props) {
     <nav className='navbar' data-testid='nav'>
       <img className='navbar__logo' src='/logo.png' alt='app logo' />
       <div className='navbar__links'>
-        {routesArray.map((route, idx) => (
+        {routesArray.map(({ name, path, Icon }, idx) => (
           <button
-            className={currentPath === route.path ? 'navbar-link-item navbar-link-item--current' : 'navbar-link-item'}
-            onClick={() => handleNavigation(route.path)}
+            className={currentPath === path ? 'navbar-link-item navbar-link-item--current' : 'navbar-link-item'}
+            onClick={() => handleNavigation(path)}
             key={idx}
             data-testid='navbar-link-item'
           >
-            <i className={route.icon}></i>
-            {route.name}
+            <div className='navbar-link-item__icon'>
+              <Icon />
+            </div>
+            {name}
           </button>
         ))}
       </div>

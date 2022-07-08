@@ -1,7 +1,4 @@
-/* eslint-disable no-unused-vars */
-enum AccountType {
+export enum AccountType {
   Expenses = 'Expenses',
   Savings = 'Savings',
 }
-
-export default AccountType

@@ -1,6 +1,4 @@
-type HttpError = {
+export type ErrorHttp = {
   status: number
   body: string
 }
-
-export default HttpError

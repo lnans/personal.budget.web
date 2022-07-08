@@ -1,17 +1,15 @@
-import OperationType from './OperationType'
+import { TransactionType } from './TransactionType'
 
-type OperationInfoResponse = {
+export type TransactionInfoResponse = {
   id: string
   description: string
   tagId: string
   tagName: string
   tagColor: string
-  type: OperationType
+  type: TransactionType
   accountId: string
   accountName: string
   amount: number
   creationDate: string
   executionDate: string
 }
-
-export default OperationInfoResponse
