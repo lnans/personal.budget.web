@@ -7,7 +7,7 @@ import { AccountInfoResponse, UpdateAccountRequest, UpdateAccountRequestValidato
 import { useEffect } from 'react'
 import { SubmitHandler } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
-import { useMutation, useQueryClient } from 'react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 type Props = {
   account: AccountInfoResponse
@@ -26,12 +26,12 @@ function AccountUpdateForm({ account, onSuccess }: Props) {
   useEffect(() => reset({ id: account.id, name: account.name, bank: account.bank }), [])
 
   const onUpdateAccount = () => {
-    queryClient.invalidateQueries(accountsRequests.ACCOUNT_CACHE_KEY + account.archived)
+    queryClient.invalidateQueries([accountsRequests.ACCOUNT_CACHE_KEY + account.archived])
     reset()
     onSuccess()
   }
 
-  const { mutate: update, isLoading } = useMutation(accountsRequests.ACCOUNT_CACHE_KEY, accountsRequests.updateAccount(account.id), {
+  const { mutate: update, isLoading } = useMutation([accountsRequests.ACCOUNT_CACHE_KEY], accountsRequests.updateAccount(account.id), {
     onSuccess: onUpdateAccount,
   })
 

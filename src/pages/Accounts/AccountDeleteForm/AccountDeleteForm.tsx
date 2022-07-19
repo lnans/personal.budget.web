@@ -3,7 +3,7 @@ import './AccountDeleteForm.scss'
 import { accountsRequests } from '@api'
 import { Button } from '@components'
 import { useTranslation } from 'react-i18next'
-import { useMutation, useQueryClient } from 'react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 type Props = {
   accountId: string
@@ -16,19 +16,19 @@ function AccountDeleteForm({ accountId, isArchived, onSuccess }: Props) {
   const queryClient = useQueryClient()
 
   const onSubmitSuccess = () => {
-    queryClient.invalidateQueries(accountsRequests.ACCOUNT_CACHE_KEY + isArchived)
-    queryClient.invalidateQueries(accountsRequests.ACCOUNT_CACHE_KEY + !isArchived)
+    queryClient.invalidateQueries([accountsRequests.ACCOUNT_CACHE_KEY + isArchived])
+    queryClient.invalidateQueries([accountsRequests.ACCOUNT_CACHE_KEY + !isArchived])
     onSuccess()
   }
 
   const { mutate: archived, isLoading: archiveLoading } = useMutation(
-    accountsRequests.ACCOUNT_CACHE_KEY,
+    [accountsRequests.ACCOUNT_CACHE_KEY],
     accountsRequests.archiveAccount(accountId, !isArchived),
     {
       onSuccess: onSubmitSuccess,
     }
   )
-  const { mutate: remove, isLoading: deleteLoading } = useMutation(accountsRequests.ACCOUNT_CACHE_KEY, accountsRequests.deleteAccount(accountId), {
+  const { mutate: remove, isLoading: deleteLoading } = useMutation([accountsRequests.ACCOUNT_CACHE_KEY], accountsRequests.deleteAccount(accountId), {
     onSuccess: onSubmitSuccess,
   })
 

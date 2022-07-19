@@ -8,7 +8,7 @@ import { EnumToSelect } from '@utils'
 import { SubmitHandler } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { RiMoneyEuroCircleLine } from 'react-icons/ri'
-import { useMutation, useQueryClient } from 'react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import i18n from '@i18n'
 
@@ -29,12 +29,12 @@ function AccountAddForm({ onSuccess }: Props) {
 
   const onCreateAccount = () => {
     const archived = false
-    queryClient.invalidateQueries(accountsRequests.ACCOUNT_CACHE_KEY + archived)
+    queryClient.invalidateQueries([accountsRequests.ACCOUNT_CACHE_KEY + archived])
     reset()
     onSuccess()
   }
 
-  const { mutate: createAccount, isLoading } = useMutation(accountsRequests.ACCOUNT_CACHE_KEY, accountsRequests.postAccount, { onSuccess: onCreateAccount })
+  const { mutate: createAccount, isLoading } = useMutation([accountsRequests.ACCOUNT_CACHE_KEY], accountsRequests.postAccount, { onSuccess: onCreateAccount })
 
   const onSubmit: SubmitHandler<CreateAccountRequest> = (form: CreateAccountRequest) => {
     createAccount(form)

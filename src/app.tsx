@@ -4,7 +4,7 @@ import { AuthInfoResponse } from '@models'
 import { AccountsPage, LoginPage } from '@pages'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useQuery } from 'react-query'
+import { useQuery } from '@tanstack/react-query'
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import { RiDashboardLine, RiWallet3Line } from 'react-icons/ri'
 
@@ -12,7 +12,7 @@ function App() {
   const [isInit, setIsInit] = useState<boolean>(false)
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
 
-  useQuery<AuthInfoResponse>(authRequests.AUTHENTICATION_CACHE_KEY, authRequests.getAuthInfo, {
+  useQuery<AuthInfoResponse>([authRequests.AUTHENTICATION_CACHE_KEY], authRequests.getAuthInfo, {
     onSuccess: () => setIsAuthenticated(true),
     onSettled: () => setIsInit(true),
   })

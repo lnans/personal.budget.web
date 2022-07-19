@@ -6,7 +6,7 @@ import { useFormValidator, useToast } from '@hooks'
 import { ErrorResponse, SignInRequest, SignInRequestValidator, SignInResponse } from '@models'
 import { useTranslation } from 'react-i18next'
 import { RiLock2Line, RiUser3Line } from 'react-icons/ri'
-import { useMutation } from 'react-query'
+import { useMutation } from '@tanstack/react-query'
 
 type Props = {
   onAuthenticate: (isAuthenticated: boolean) => void

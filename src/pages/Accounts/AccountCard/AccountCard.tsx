@@ -5,7 +5,7 @@ import { Card } from '@components'
 import { AccountInfoResponse } from '@models'
 import { useTranslation } from 'react-i18next'
 import { RiAddCircleLine } from 'react-icons/ri'
-import { useQuery } from 'react-query'
+import { useQuery } from '@tanstack/react-query'
 
 import AccountItem from '../AccountItem/AccountItem'
 
@@ -21,7 +21,7 @@ type Props = {
 
 function AccountCard({ title, archived = false, selectedAccount, onSelect, onCreate, onEdit, onDelete }: Props) {
   const { t } = useTranslation()
-  const { data } = useQuery(accountsRequests.ACCOUNT_CACHE_KEY + archived, accountsRequests.getAccounts({ archived }))
+  const { data } = useQuery([accountsRequests.ACCOUNT_CACHE_KEY + archived], accountsRequests.getAccounts({ archived }))
 
   return (
     <Card width='450px'>

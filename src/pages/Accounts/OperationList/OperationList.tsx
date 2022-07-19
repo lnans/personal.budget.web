@@ -2,14 +2,14 @@ import './OperationList.scss'
 
 import { transactionsRequests } from '@api'
 import { useEffect } from 'react'
-import { useQuery } from 'react-query'
+import { useQuery } from '@tanstack/react-query'
 
 type Props = {
   accountId: string
 }
 
 function OperationList({ accountId }: Props) {
-  const { data, refetch } = useQuery(transactionsRequests.TRANSACTIONS_CACHE_KEY, transactionsRequests.getTransactions({ accountId }))
+  const { data, refetch } = useQuery([transactionsRequests.TRANSACTIONS_CACHE_KEY], transactionsRequests.getTransactions({ accountId }))
 
   useEffect(() => {
     refetch()
