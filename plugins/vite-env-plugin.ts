@@ -3,6 +3,7 @@ import { z } from 'zod'
 
 /**
  * Vite plugin to validate environment variables before starting dev server or building
+ * Also convert primitive types (number, boolean) using zod's coercion
  * This ensures the application won't start with invalid configuration
  */
 export function validateEnvPlugin(schema: z.ZodSchema): Plugin {
@@ -11,7 +12,8 @@ export function validateEnvPlugin(schema: z.ZodSchema): Plugin {
     configResolved(config) {
       log(`validating environment variables for ${config.mode} mode`)
       try {
-        schema.parse(config.env)
+        const result = schema.parse(config.env)
+        Object.assign(config.env, result) // Update env with parsed values
       } catch (error) {
         if (error instanceof z.ZodError) {
           error.issues.map((issue) => logError(issue.message)).join('\n')

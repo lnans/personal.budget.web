@@ -3,8 +3,6 @@ import { useState } from 'react'
 
 function App() {
   const [count, setCount] = useState(0)
-  console.log('API URL:', import.meta.env.VITE_API_URL)
-
   return (
     <>
       <h1>Vite + React</h1>
