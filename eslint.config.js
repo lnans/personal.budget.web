@@ -33,6 +33,17 @@ export default defineConfig([
     },
     rules: {
       '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          // Allow unused parameters in type definitions
+          args: 'after-used',
+        },
+      ],
+      // Disable base rule as it conflicts with TypeScript version
+      'no-unused-vars': 'off',
     },
   },
 ])
