@@ -13,5 +13,11 @@
   "errors.User.RefreshToken.Required": "Refresh token required",
   "errors.User.InvalidCredentials": "Invalid credentials",
   "errors.User.InvalidRefreshToken": "Invalid or expired token",
-  "errors.User.NotFound": "User not found"
+  "errors.User.NotFound": "User not found",
+  "app.brand": "Budget.",
+  "auth.signIn.title": "Welcome back",
+  "auth.signIn.description": "Login with your account",
+  "auth.signIn.email.label": "Email",
+  "auth.signIn.password.label": "Password",
+  "auth.signIn.submit": "Login"
 }
