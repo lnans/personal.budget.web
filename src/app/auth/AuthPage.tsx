@@ -1,10 +1,23 @@
 import { GalleryVerticalEnd } from 'lucide-react'
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
 
 import { SignInForm } from '@/features/authentication/components/SignInForm'
+import { useAuthStore } from '@/features/authentication/stores/authStore'
 
 function AuthPage() {
   const { t } = useTranslation()
+  const navigate = useNavigate()
+
+  const { authToken } = useAuthStore((state) => state)
+  const { isAuthTokenValid } = useAuthStore((state) => state.actions)
+
+  useEffect(() => {
+    if (authToken && isAuthTokenValid()) {
+      navigate('/', { replace: true })
+    }
+  }, [authToken, isAuthTokenValid, navigate])
 
   return (
     <div className="bg-muted flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">

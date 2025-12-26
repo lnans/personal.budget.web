@@ -37,8 +37,8 @@ export const useAuthStore = create<AuthStore>()(
             },
           })
         },
-        isAuthTokenValid: () => isTokenExpired(get().authToken?.token ?? null),
-        isRefreshTokenValid: () => isTokenExpired(get().refreshToken?.token ?? null),
+        isAuthTokenValid: () => !isTokenExpired(get().authToken?.token ?? null),
+        isRefreshTokenValid: () => !isTokenExpired(get().refreshToken?.token ?? null),
         clearAuth: () => {
           set({
             authToken: null,
