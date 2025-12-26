@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { AuthFn } from '@/api/endpoints/AuthenticationEndpoints'
 import { queryKeys } from '@/api/QueryKeys'
+import { AppLoader } from '@/components/ui/AppLoader'
 import { useAuthStore } from '@/features/authentication/stores/authStore'
 
 const REFRESH_TOKEN_BEFORE_EXPIRY_MS = 5 * 60 * 1000 // 5 minutes
@@ -100,7 +101,7 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
   const isLoading = isRefreshingToken || (isAuthValid && isLoadingUser)
 
   if (isLoading) {
-    return <div>Loading...</div>
+    return <AppLoader />
   }
 
   if (isUserError) {
