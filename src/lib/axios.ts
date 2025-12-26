@@ -1,4 +1,4 @@
-import axios, { AxiosError, type AxiosInstance, type InternalAxiosRequestConfig } from 'axios'
+import axios, { type AxiosInstance, type InternalAxiosRequestConfig } from 'axios'
 
 import { useAuthStore } from '@/features/authentication/stores/authStore'
 
@@ -9,17 +9,21 @@ export const apiClient: AxiosInstance = axios.create({
   },
 })
 
-apiClient.interceptors.request.use(
-  (config: InternalAxiosRequestConfig) => {
-    const authToken = useAuthStore.getState().authToken
+apiClient.interceptors.request.use((config: InternalAxiosRequestConfig) => {
+  const authToken = useAuthStore.getState().authToken
 
-    if (authToken) {
-      config.headers.Authorization = `Bearer ${authToken}`
-    }
+  if (authToken) {
+    config.headers.Authorization = `Bearer ${authToken}`
+  }
 
-    return config
+  return config
+})
+
+apiClient.interceptors.response.use(
+  (response) => {
+    return response
   },
-  (error: AxiosError) => {
-    return Promise.reject(error)
+  async (error) => {
+    return Promise.reject(error.response?.data)
   }
 )

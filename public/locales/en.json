@@ -14,10 +14,12 @@
   "errors.User.InvalidCredentials": "Invalid credentials",
   "errors.User.InvalidRefreshToken": "Invalid or expired token",
   "errors.User.NotFound": "User not found",
+  "errors.User.Forbidden": "Forbidden",
+  "errors.User.InternalServerError": "Internal server error",
   "app.brand": "Budget.",
   "auth.signIn.title": "Welcome back",
   "auth.signIn.description": "Login with your account",
-  "auth.signIn.email.label": "Email",
+  "auth.signIn.login.label": "Login",
   "auth.signIn.password.label": "Password",
-  "auth.signIn.submit": "Login"
+  "auth.signIn.submit": "Sign in"
 }

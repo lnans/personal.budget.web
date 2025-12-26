@@ -1,9 +1,15 @@
+import { getTokenExpiration } from '@/lib/utils'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
+type Token = {
+  token: string
+  expireAt: Date
+}
+
 type AuthStore = {
-  authToken: string | null
-  refreshToken: string | null
+  authToken: Token | null
+  refreshToken: Token | null
   actions: {
     setAuthTokens: (authToken: string, refreshToken: string) => void
     clearAuth: () => void
@@ -18,8 +24,14 @@ export const useAuthStore = create<AuthStore>()(
       actions: {
         setAuthTokens: (authToken: string, refreshToken: string) => {
           set({
-            authToken,
-            refreshToken,
+            authToken: {
+              token: authToken,
+              expireAt: getTokenExpiration(authToken)!,
+            },
+            refreshToken: {
+              token: refreshToken,
+              expireAt: getTokenExpiration(refreshToken)!,
+            },
           })
         },
         clearAuth: () => {
@@ -32,6 +44,10 @@ export const useAuthStore = create<AuthStore>()(
     }),
     {
       name: 'budget-auth-storage',
+      partialize: (state) => ({
+        authToken: state.authToken,
+        refreshToken: state.refreshToken,
+      }),
     }
   )
 )

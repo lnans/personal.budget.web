@@ -1,18 +1,9 @@
-import { QueryClient } from '@tanstack/react-query'
+import type { Problem } from '@/types/Problem'
 
-export const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      // Stale time: data is considered fresh for 5 minutes
-      staleTime: 1000 * 60 * 5,
-      // Cache time: unused data stays in cache for 10 minutes
-      gcTime: 1000 * 60 * 10,
-      retry: false,
-      refetchOnWindowFocus: false,
-      refetchOnReconnect: true,
-    },
-    mutations: {
-      retry: false,
-    },
-  },
-})
+declare module '@tanstack/react-query' {
+  // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+  interface Register {
+    // Use unknown so call sites must narrow explicitly.
+    defaultError: Problem
+  }
+}
