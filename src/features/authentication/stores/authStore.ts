@@ -1,6 +1,7 @@
-import { getTokenExpiration } from '@/lib/utils'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+
+import { getTokenExpiration } from '@/lib/utils'
 
 type Token = {
   token: string

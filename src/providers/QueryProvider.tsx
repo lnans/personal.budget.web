@@ -1,8 +1,9 @@
-import type { Problem } from '@/types/Problem'
 import { MutationCache, QueryCache, QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
+
+import type { Problem } from '@/types/Problem'
 
 function QueryProvider({ children }: { children: React.ReactNode }) {
   const { t } = useTranslation()

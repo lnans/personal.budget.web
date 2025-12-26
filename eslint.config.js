@@ -1,10 +1,11 @@
 import js from '@eslint/js'
 import pluginQuery from '@tanstack/eslint-plugin-query'
-import prettier from 'eslint-plugin-prettier/recommended'
-import reactDom from 'eslint-plugin-react-dom'
-import reactHooks from 'eslint-plugin-react-hooks'
-import reactRefresh from 'eslint-plugin-react-refresh'
-import reactX from 'eslint-plugin-react-x'
+import pluginImport from 'eslint-plugin-import'
+import pluginPrettier from 'eslint-plugin-prettier/recommended'
+import pluginReactDom from 'eslint-plugin-react-dom'
+import pluginReactHooks from 'eslint-plugin-react-hooks'
+import pluginReactRefresh from 'eslint-plugin-react-refresh'
+import pluginReactX from 'eslint-plugin-react-x'
 import { defineConfig, globalIgnores } from 'eslint/config'
 import globals from 'globals'
 import tseslint from 'typescript-eslint'
@@ -16,11 +17,32 @@ export default defineConfig([
     extends: [
       js.configs.recommended,
       tseslint.configs.stylisticTypeChecked,
-      reactHooks.configs.flat.recommended,
-      reactRefresh.configs.vite,
-      prettier,
-      reactX.configs['recommended-typescript'],
-      reactDom.configs.recommended,
+      pluginImport.flatConfigs.recommended,
+      {
+        settings: {
+          'import/resolver': {
+            typescript: {
+              project: ['./tsconfig.app.json', './tsconfig.node.json'],
+              noWarnOnMultipleProjects: true,
+            },
+          },
+        },
+        rules: {
+          'import/order': [
+            'error',
+            {
+              groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index', 'object'],
+              'newlines-between': 'always',
+              alphabetize: { order: 'asc', caseInsensitive: true },
+            },
+          ],
+        },
+      },
+      pluginReactHooks.configs.flat.recommended,
+      pluginReactRefresh.configs.vite,
+      pluginPrettier,
+      pluginReactX.configs['recommended-typescript'],
+      pluginReactDom.configs.recommended,
       ...pluginQuery.configs['flat/recommended'],
     ],
     languageOptions: {

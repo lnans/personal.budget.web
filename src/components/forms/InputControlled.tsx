@@ -1,8 +1,9 @@
-import { Field, FieldDescription, FieldError, FieldLabel } from '@/components/ui/Field'
-import { Input } from '@/components/ui/Input'
 import type { ComponentProps } from 'react'
 import { Controller, type FieldPath, type FieldValues, type UseControllerProps } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
+
+import { Field, FieldDescription, FieldError, FieldLabel } from '@/components/ui/Field'
+import { Input } from '@/components/ui/Input'
 
 type InputTextControlledProps<
   TFieldValues extends FieldValues = FieldValues,

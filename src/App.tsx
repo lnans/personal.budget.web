@@ -1,7 +1,7 @@
+import { GalleryVerticalEnd } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
 import { SignInForm } from '@/features/authentication/components/SignInForm'
-import { GalleryVerticalEnd } from 'lucide-react'
 
 function App() {
   const { t } = useTranslation()
