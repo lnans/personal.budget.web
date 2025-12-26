@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
-import { getTokenExpiration } from '@/lib/utils'
+import { getTokenExpiration, isTokenExpired } from '@/lib/utils'
 
 type Token = {
   token: string
@@ -13,13 +13,15 @@ type AuthStore = {
   refreshToken: Token | null
   actions: {
     setAuthTokens: (authToken: string, refreshToken: string) => void
+    isAuthTokenValid: () => boolean
+    isRefreshTokenValid: () => boolean
     clearAuth: () => void
   }
 }
 
 export const useAuthStore = create<AuthStore>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       authToken: null,
       refreshToken: null,
       actions: {
@@ -35,6 +37,8 @@ export const useAuthStore = create<AuthStore>()(
             },
           })
         },
+        isAuthTokenValid: () => isTokenExpired(get().authToken?.token ?? null),
+        isRefreshTokenValid: () => isTokenExpired(get().refreshToken?.token ?? null),
         clearAuth: () => {
           set({
             authToken: null,

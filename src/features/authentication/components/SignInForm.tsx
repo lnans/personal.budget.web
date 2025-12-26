@@ -3,7 +3,7 @@ import { useMutation } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
-import { authMutations } from '@/api/authentication/AuthMutations'
+import { AuthFn } from '@/api/endpoints/AuthenticationEndpoints'
 import { InputControlled } from '@/components/forms/InputControlled'
 import { Button } from '@/components/ui/Button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card'
@@ -19,7 +19,7 @@ export function SignInForm({ className, ...props }: React.ComponentProps<'div'>)
   const { setAuthTokens, clearAuth } = useAuthStore((state) => state.actions)
 
   const { mutate: signIn, isPending } = useMutation({
-    mutationFn: authMutations.signIn,
+    mutationFn: AuthFn.signIn,
     onSuccess: (data) => {
       setAuthTokens(data.bearer, data.refreshToken)
     },
