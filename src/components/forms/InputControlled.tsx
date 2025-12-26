@@ -37,7 +37,7 @@ function InputControlled<
             autoComplete="off"
           />
           <FieldDescription>{description}</FieldDescription>
-          {fieldState.invalid && fieldState.error?.message && <FieldError errors={[{ message: t(fieldState.error.message) }]} />}
+          <FieldError errors={fieldState.error?.message ? [{ message: t(fieldState.error.message) }] : undefined} />
         </Field>
       )}
     />
