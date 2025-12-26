@@ -1,28 +1,34 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { AuthFn } from '@/api/endpoints/AuthenticationEndpoints'
 import { queryKeys } from '@/api/QueryKeys'
 import { useAuthStore } from '@/features/authentication/stores/authStore'
 
+const REFRESH_TOKEN_BEFORE_EXPIRY_MS = 5 * 60 * 1000 // 5 minutes
+
 function AuthProvider({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate()
+
   const { authToken, refreshToken } = useAuthStore((state) => state)
   const { isAuthTokenValid, isRefreshTokenValid, setAuthTokens, clearAuth } = useAuthStore((state) => state.actions)
 
   const isAuthValid = authToken && isAuthTokenValid()
   const isRefreshValid = refreshToken && isRefreshTokenValid()
+  const hasNoTokens = !authToken && !refreshToken
+
+  const redirectToAuth = useCallback(() => {
+    clearAuth()
+    navigate('/auth', { replace: true })
+  }, [clearAuth, navigate])
 
   const { mutate: refreshTokenMutate, isPending: isRefreshingToken } = useMutation({
     mutationFn: () => AuthFn.refreshToken(refreshToken!.token),
     onSuccess: (data) => {
       setAuthTokens(data.bearer, data.refreshToken)
     },
-    onError: () => {
-      clearAuth()
-      navigate('/auth', { replace: true })
-    },
+    onError: redirectToAuth,
   })
 
   const {
@@ -38,8 +44,36 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const refreshTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
+  const clearRefreshTimer = useCallback(() => {
+    if (refreshTimerRef.current) {
+      clearTimeout(refreshTimerRef.current)
+      refreshTimerRef.current = null
+    }
+  }, [])
+
+  const scheduleTokenRefresh = useCallback(() => {
+    const authValid = authToken && isAuthTokenValid()
+    const refreshValid = refreshToken && isRefreshTokenValid()
+
+    if (!authValid || !authToken?.expireAt || !refreshValid) {
+      return
+    }
+
+    const expirationTime = new Date(authToken.expireAt).getTime()
+    const now = Date.now()
+    const timeUntilRefresh = expirationTime - now - REFRESH_TOKEN_BEFORE_EXPIRY_MS
+
+    if (timeUntilRefresh > 0) {
+      refreshTimerRef.current = setTimeout(() => {
+        refreshTokenMutate()
+      }, timeUntilRefresh)
+    } else {
+      refreshTokenMutate()
+    }
+  }, [authToken, refreshToken, isAuthTokenValid, isRefreshTokenValid, refreshTokenMutate])
+
   useEffect(() => {
-    if (!authToken && !refreshToken) {
+    if (hasNoTokens) {
       navigate('/auth', { replace: true })
       return
     }
@@ -48,53 +82,29 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
       return
     }
 
-    if (!isAuthValid && isRefreshValid) {
+    if (isRefreshValid) {
       refreshTokenMutate()
       return
     }
 
-    if (!isAuthValid && !isRefreshValid) {
-      clearAuth()
-      navigate('/auth', { replace: true })
-    }
-  }, [authToken, refreshToken, isAuthValid, isRefreshValid, navigate, refreshTokenMutate, clearAuth])
+    redirectToAuth()
+  }, [hasNoTokens, isAuthValid, isRefreshValid, navigate, refreshTokenMutate, redirectToAuth])
 
   useEffect(() => {
-    if (refreshTimerRef.current) {
-      clearTimeout(refreshTimerRef.current)
-      refreshTimerRef.current = null
-    }
+    clearRefreshTimer()
+    scheduleTokenRefresh()
 
-    if (isAuthValid && authToken?.expireAt && isRefreshValid) {
-      const expirationTime = new Date(authToken.expireAt).getTime()
-      const now = Date.now()
-      const fiveMinutesInMs = 5 * 60 * 1000
-      const timeUntilRefresh = expirationTime - now - fiveMinutesInMs
+    return clearRefreshTimer
+  }, [clearRefreshTimer, scheduleTokenRefresh])
 
-      if (timeUntilRefresh > 0) {
-        refreshTimerRef.current = setTimeout(() => {
-          refreshTokenMutate()
-        }, timeUntilRefresh)
-      } else {
-        refreshTokenMutate()
-      }
-    }
+  const isLoading = isRefreshingToken || (isAuthValid && isLoadingUser)
 
-    return () => {
-      if (refreshTimerRef.current) {
-        clearTimeout(refreshTimerRef.current)
-        refreshTimerRef.current = null
-      }
-    }
-  }, [isAuthValid, isRefreshValid, authToken?.expireAt, refreshTokenMutate])
-
-  if (isRefreshingToken || (isAuthValid && isLoadingUser)) {
+  if (isLoading) {
     return <div>Loading...</div>
   }
 
   if (isUserError) {
-    clearAuth()
-    navigate('/auth', { replace: true })
+    redirectToAuth()
     return null
   }
 
@@ -102,7 +112,6 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
     return <>{children}</>
   }
 
-  // Default: show nothing while redirecting
   return null
 }
 
