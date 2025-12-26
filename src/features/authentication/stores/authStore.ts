@@ -5,7 +5,7 @@ import { getTokenExpiration, isTokenExpired } from '@/lib/utils'
 
 type Token = {
   token: string
-  expireAt: Date
+  expireAt: string
 }
 
 type AuthStore = {
@@ -26,14 +26,16 @@ export const useAuthStore = create<AuthStore>()(
       refreshToken: null,
       actions: {
         setAuthTokens: (authToken: string, refreshToken: string) => {
+          const authTokenExpiration = getTokenExpiration(authToken)
+          const refreshTokenExpiration = getTokenExpiration(refreshToken)
           set({
             authToken: {
               token: authToken,
-              expireAt: getTokenExpiration(authToken)!,
+              expireAt: authTokenExpiration?.toISOString() ?? '',
             },
             refreshToken: {
               token: refreshToken,
-              expireAt: getTokenExpiration(refreshToken)!,
+              expireAt: refreshTokenExpiration?.toISOString() ?? '',
             },
           })
         },

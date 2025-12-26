@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { AuthFn } from '@/api/endpoints/AuthenticationEndpoints'
@@ -36,6 +36,8 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
     retry: false,
   })
 
+  const refreshTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
   useEffect(() => {
     if (!authToken && !refreshToken) {
       navigate('/auth', { replace: true })
@@ -56,6 +58,35 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
       navigate('/auth', { replace: true })
     }
   }, [authToken, refreshToken, isAuthValid, isRefreshValid, navigate, refreshTokenMutate, clearAuth])
+
+  useEffect(() => {
+    if (refreshTimerRef.current) {
+      clearTimeout(refreshTimerRef.current)
+      refreshTimerRef.current = null
+    }
+
+    if (isAuthValid && authToken?.expireAt && isRefreshValid) {
+      const expirationTime = new Date(authToken.expireAt).getTime()
+      const now = Date.now()
+      const fiveMinutesInMs = 5 * 60 * 1000
+      const timeUntilRefresh = expirationTime - now - fiveMinutesInMs
+
+      if (timeUntilRefresh > 0) {
+        refreshTimerRef.current = setTimeout(() => {
+          refreshTokenMutate()
+        }, timeUntilRefresh)
+      } else {
+        refreshTokenMutate()
+      }
+    }
+
+    return () => {
+      if (refreshTimerRef.current) {
+        clearTimeout(refreshTimerRef.current)
+        refreshTimerRef.current = null
+      }
+    }
+  }, [isAuthValid, isRefreshValid, authToken?.expireAt, refreshTokenMutate])
 
   if (isRefreshingToken || (isAuthValid && isLoadingUser)) {
     return <div>Loading...</div>
