@@ -1,6 +1,0 @@
-export { default as AppLoader } from './app-loader/app-loader'
-export { default as AppLogo } from './app-logo/app-logo'
-export { default as AppNav } from './app-nav/app-nav'
-export { default as ButtonThemeSwitch } from './button-theme-switch/button-theme-switch'
-export { default as Notifications } from './notifications/notifications'
-export { default as User } from './user/user'

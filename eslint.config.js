@@ -1,0 +1,71 @@
+import js from '@eslint/js'
+import pluginQuery from '@tanstack/eslint-plugin-query'
+import pluginImport from 'eslint-plugin-import'
+import pluginPrettier from 'eslint-plugin-prettier/recommended'
+import pluginReactDom from 'eslint-plugin-react-dom'
+import pluginReactHooks from 'eslint-plugin-react-hooks'
+import pluginReactRefresh from 'eslint-plugin-react-refresh'
+import pluginReactX from 'eslint-plugin-react-x'
+import { defineConfig, globalIgnores } from 'eslint/config'
+import globals from 'globals'
+import tseslint from 'typescript-eslint'
+
+export default defineConfig([
+  globalIgnores(['dist', '.yarn']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      js.configs.recommended,
+      tseslint.configs.stylisticTypeChecked,
+      pluginImport.flatConfigs.recommended,
+      {
+        settings: {
+          'import/resolver': {
+            typescript: {
+              project: ['./tsconfig.app.json', './tsconfig.node.json'],
+              noWarnOnMultipleProjects: true,
+            },
+          },
+        },
+        rules: {
+          'import/order': [
+            'error',
+            {
+              groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index', 'object'],
+              'newlines-between': 'always',
+              alphabetize: { order: 'asc', caseInsensitive: true },
+            },
+          ],
+        },
+      },
+      pluginReactHooks.configs.flat.recommended,
+      pluginReactRefresh.configs.vite,
+      pluginPrettier,
+      pluginReactX.configs['recommended-typescript'],
+      pluginReactDom.configs.recommended,
+      ...pluginQuery.configs['flat/recommended'],
+    ],
+    languageOptions: {
+      ecmaVersion: 2020,
+      globals: globals.browser,
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+    },
+    rules: {
+      '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          // Allow unused parameters in type definitions
+          args: 'after-used',
+        },
+      ],
+      // Disable base rule as it conflicts with TypeScript version
+      'no-unused-vars': 'off',
+    },
+  },
+])

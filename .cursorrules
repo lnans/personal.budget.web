@@ -1,0 +1,165 @@
+# Type Management Rules for Personal Budget Web
+
+## Directory Structure
+
+Types are organized by domain in `src/types/`. Each domain has its own folder with the following structure:
+
+```
+src/types/
+  {domain}/
+    {domain}Errors.ts  # Error code constants (optional, domain-specific)
+    enums/             # Enum type definitions (optional, domain-specific)
+    forms/             # Request/form DTOs (input types)
+    responses/         # Response DTOs (output types)
+```
+
+**Note**: Not all domains have `enums/` subdirectories. Only create `enums/` when a domain has enum types.
+
+## Naming Conventions
+
+### Files
+
+- **Errors**: `{domain}Errors.ts` (e.g., `accountsErrors.ts`, `authenticationErrors.ts`, `accountOperationsErrors.ts`)
+- **Enums**: `{Name}Type.ts` (e.g., `AccountType.ts`)
+- **Forms**: `{Action}FormDto.ts` (e.g., `CreateAccountFormDto.ts`, `RenameAccountFormDto.ts`)
+- **Responses**: `{Action}ResponseDto.ts` (e.g., `CreateAccountResponseDto.ts`, `GetAccountsResponseDto.ts`)
+
+### Exports
+
+- **Schema exports**: `{Name}Schema` (e.g., `AccountTypeSchema`, `CreateAccountFormSchema`)
+- **Type exports**: `{Name}` (e.g., `AccountType`, `CreateAccountFormDto`)
+
+## Type Patterns
+
+### Errors (`{domain}Errors.ts`)
+
+- Export a const object with error code constants
+- Use `as const` to ensure type safety
+- Error codes follow the pattern: `{Entity}.{Property}.{ErrorType}` or `{Entity}.{ErrorType}`
+- Example:
+  ```typescript
+  export const AccountsErrors = {
+    NameRequired: 'Account.Name.Required',
+    NameTooLong: 'Account.Name.TooLong',
+    AccountTypeUnknown: 'Account.AccountType.Unknown',
+    NotFound: 'Account.NotFound',
+    AlreadyDeleted: 'Account.AlreadyDeleted',
+  } as const
+  ```
+
+### Enums (`enums/`)
+
+- Use Zod enum schemas with `z.enum()`
+- Export both the schema and the inferred type
+- Example:
+
+  ```typescript
+  import { z } from 'zod'
+
+  export const AccountTypeSchema = z.enum(['Checking', 'Savings'])
+
+  export type AccountType = z.infer<typeof AccountTypeSchema>
+  ```
+
+### Forms (`forms/`)
+
+- **MUST** use Zod schemas for validation
+- Define validation constants (e.g., `MAX_NAME_LENGTH`) at the top of the file
+- Export both the schema (`{Name}Schema`) and the inferred type (`{Name}FormDto`)
+- Use descriptive validation rules (`.min()`, `.max()`, etc.)
+- Import enum schemas from `../enums/` when needed
+- Example:
+
+  ```typescript
+  import { z } from 'zod'
+
+  import { AccountTypeSchema } from '../enums/AccountType'
+
+  const MAX_NAME_LENGTH = 20
+
+  export const CreateAccountFormSchema = z.object({
+    name: z.string().min(1).max(MAX_NAME_LENGTH),
+    type: AccountTypeSchema,
+    initialBalance: z.number(),
+  })
+
+  export type CreateAccountFormDto = z.infer<typeof CreateAccountFormSchema>
+  ```
+
+### Responses (`responses/`)
+
+- Use plain TypeScript types (NO Zod schemas)
+- Import enum types (not schemas) from `../enums/` when needed within the same domain
+- For cross-domain imports, use relative paths like `../../{otherDomain}/enums/{Type}`
+- Use `import type` for type-only imports
+- Example (same domain):
+
+  ```typescript
+  import type { AccountType } from '../enums/AccountType'
+
+  export type CreateAccountResponseDto = {
+    id: string
+    name: string
+    type: AccountType
+    balance: number
+    createdAt: string
+    updatedAt: string
+  }
+  ```
+
+- Example (cross-domain):
+
+  ```typescript
+  import type { AccountType } from '../../accounts/enums/AccountType'
+
+  export type AddOperationResponseDto = {
+    id: string
+    name: string
+    type: AccountType
+    balance: number
+    createdAt: string
+    updatedAt: string
+  }
+  ```
+
+## Import Conventions
+
+- Use relative imports within the same domain (e.g., `../enums/AccountType`)
+- For cross-domain imports, use relative paths (e.g., `../../accounts/enums/AccountType`)
+- Use `import type` for type-only imports in response DTOs
+- Import Zod schemas in form DTOs, import types in response DTOs
+- Prefer same-domain imports when possible, but cross-domain imports are allowed when needed
+
+## Validation Rules
+
+- Define validation constants (e.g., `MAX_NAME_LENGTH`, `MAX_DESCRIPTION_LENGTH`) as constants at the top of form files
+- Use meaningful validation rules:
+  - Strings: `.min(1)` for required, `.max(N)` for length limits
+  - Numbers: `.number()` for numeric values
+  - Enums: Import and use the enum schema
+
+## Creating New Types
+
+1. **Identify the domain**: Determine which domain folder the type belongs to (e.g., `accounts`, `authentication`, `accountOperations`)
+2. **Determine the category**:
+   - Use `{domain}Errors.ts` for error code constants (one file per domain)
+   - Use `enums/` for enum types (only if the domain has enums)
+   - Use `forms/` for request/input DTOs
+   - Use `responses/` for response/output DTOs
+3. **Follow naming conventions**: Use the appropriate naming pattern for the file
+4. **Follow patterns**:
+   - Error files MUST export a const object with `as const`
+   - Forms MUST use Zod schemas
+   - Responses MUST use plain TypeScript types
+   - Enums MUST use Zod enum schemas
+
+## Best Practices
+
+- Keep validation constants at the top of form files for easy maintenance
+- Use descriptive names that clearly indicate the action (e.g., `CreateAccount`, `RenameAccount`, `UpdateAccountOperationAmount`)
+- Maintain consistency with existing patterns in the codebase
+- Export both schemas (for forms/enums) and types for maximum flexibility
+- Use `import type` in response DTOs to ensure type-only imports
+- Group related operations in the same domain (e.g., account operations in `accountOperations`, account management in `accounts`)
+- Error codes should be descriptive and follow a consistent naming pattern
+- Only create `enums/` subdirectories when a domain actually has enum types
