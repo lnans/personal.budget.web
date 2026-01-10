@@ -1,73 +1,129 @@
-# React + TypeScript + Vite
+<p align="center">
+    <img src="./doc/logo.png" />
+</p>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Budget. Web
 
-Currently, two official plugins are available:
+**Budget.** is a personal finance management web application designed to organize and track spending and savings over time. This repository contains the frontend implementation built with modern React technologies, following **Clean Architecture** principles.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Technology Stack
 
-## React Compiler
+- **React 19** - Latest React framework
+- **TypeScript 5.9** - Type-safe JavaScript
+- **Vite 7** - Next generation frontend tooling
+- **React Router 7** - Client-side routing
+- **TanStack Query 5** - Data fetching and state management
+- **Zustand** - Lightweight state management
+- **React Hook Form** - Form management
+- **Zod** - Schema validation
+- **Axios** - HTTP client
+- **Tailwind CSS 4** - Utility-first CSS framework
+- **Radix UI** - Unstyled, accessible component primitives
+- **i18next** - Internationalization framework
+- **Sonner** - Toast notifications
+- **ESLint** - Code linting
+- **Prettier** - Code formatting
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Architecture
 
-## Expanding the ESLint configuration
+This project follows **Clean Architecture** principles with clear separation of concerns:
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+src/
+├── api/              # API client and query configuration
+├── app/              # Application pages
+├── components/       # Reusable UI components
+│   ├── forms/       # Form components
+│   └── ui/          # UI primitives
+├── config/          # Configuration files
+├── features/        # Feature modules
+│   └── {feature}/   # Feature-specific components and stores
+├── hooks/           # Custom React hooks
+├── lib/             # Utility libraries
+├── providers/       # React context providers
+└── types/           # TypeScript type definitions
+    └── {domain}/    # Domain-specific types
+        ├── enums/   # Enum definitions
+        ├── forms/   # Form DTOs
+        └── responses/ # Response DTOs
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Layers
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- **api**: Contains API client configuration, endpoints, and query keys. Handles all backend communication.
+- **app**: Contains top-level page components and routing structure.
+- **components**: Reusable UI components organized by purpose (forms, ui primitives).
+- **features**: Feature modules containing feature-specific components, stores, and logic.
+- **types**: Type definitions organized by domain, following strict type management rules.
+- **lib**: Utility functions and library configurations.
+- **providers**: React context providers for global state and configuration.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Prerequisites
+
+- [Node.js](https://nodejs.org/) (v18 or later)
+- [Yarn](https://yarnpkg.com/) (v4.12.0 or later)
+- [Docker](https://www.docker.com/products/docker-desktop/) for containerization
+
+## Run the project
+
+This project uses Docker Compose to run the project. To run the project, you need to have Docker Compose installed.
+
+```bash
+# Build and start all services
+docker-compose up --build
+
+# Run in detached mode
+docker-compose up -d --build
+
+# View logs
+docker-compose logs -f web
+
+# Stop services
+docker-compose down
+
+# Stop and remove volumes
+docker-compose down -v
 ```
+
+- Web Application: http://localhost:8081
+
+## Development
+
+To run the web application in development mode:
+
+```bash
+# Install dependencies
+yarn install
+
+# Start development server
+yarn dev
+```
+
+The development server will start at http://localhost:5173 (or the next available port).
+
+## Running with Backend
+
+The web application requires the backend API to be running. To run the full application:
+
+1. **Start the backend API**: Follow the instructions in the [backend README](https://github.com/lnans/personal.budget) to start
+2. **Configure the API URL**: Create a `.env` file in the root of the project (or set environment variables) with:
+
+   ```bash
+   VITE_API_URL=http://localhost:8080
+   ```
+
+3. **Start the web application**: Run the development server as described in the [Development](#development) section.
+
+## Code Formatting
+
+Format the codebase:
+
+```bash
+yarn format
+```
+
+This script uses Prettier to format all files in the project.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](../personal.budget/LICENSE) file for details.
