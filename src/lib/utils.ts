@@ -57,3 +57,33 @@ export function isTokenExpired(token: string | null): boolean {
 
   return Date.now() >= exp.getTime()
 }
+
+/**
+ * Formats a currency amount to a string
+ * @param amount - The amount to format
+ * @returns The formatted currency amount
+ */
+export function formatCurrency(amount: number): string {
+  return new Intl.NumberFormat('fr-FR', {
+    style: 'currency',
+    currency: 'EUR',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+    currencyDisplay: 'symbol',
+  }).format(amount)
+}
+
+/**
+ * Returns the color of a currency amount
+ * @param amount - The amount to get the color for
+ * @returns The color of the amount
+ */
+export function cnCurrencyColor(amount: number): string {
+  if (amount === 0) {
+    return 'text-gray-500'
+  }
+  if (amount < 0) {
+    return 'text-red-500'
+  }
+  return ''
+}

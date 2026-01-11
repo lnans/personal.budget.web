@@ -67,13 +67,13 @@ src/types/
 - Define validation constants (e.g., `MAX_NAME_LENGTH`) at the top of the file
 - Export both the schema (`{Name}Schema`) and the inferred type (`{Name}FormDto`)
 - Use descriptive validation rules (`.min()`, `.max()`, etc.)
-- Import enum schemas from `../enums/` when needed
+- Import enum schemas using alias paths (e.g., `@/types/{domain}/enums/{Type}`) when needed
 - Example:
 
   ```typescript
   import { z } from 'zod'
 
-  import { AccountTypeSchema } from '../enums/AccountType'
+  import { AccountTypeSchema } from '@/types/accounts/enums/AccountType'
 
   const MAX_NAME_LENGTH = 20
 
@@ -89,13 +89,12 @@ src/types/
 ### Responses (`responses/`)
 
 - Use plain TypeScript types (NO Zod schemas)
-- Import enum types (not schemas) from `../enums/` when needed within the same domain
-- For cross-domain imports, use relative paths like `../../{otherDomain}/enums/{Type}`
+- Import enum types (not schemas) using alias paths (e.g., `@/types/{domain}/enums/{Type}`)
 - Use `import type` for type-only imports
 - Example (same domain):
 
   ```typescript
-  import type { AccountType } from '../enums/AccountType'
+  import type { AccountType } from '@/types/accounts/enums/AccountType'
 
   export type CreateAccountResponseDto = {
     id: string
@@ -110,7 +109,7 @@ src/types/
 - Example (cross-domain):
 
   ```typescript
-  import type { AccountType } from '../../accounts/enums/AccountType'
+  import type { AccountType } from '@/types/accounts/enums/AccountType'
 
   export type AddOperationResponseDto = {
     id: string
@@ -124,11 +123,11 @@ src/types/
 
 ## Import Conventions
 
-- Use relative imports within the same domain (e.g., `../enums/AccountType`)
-- For cross-domain imports, use relative paths (e.g., `../../accounts/enums/AccountType`)
+- **ALWAYS** use alias imports (`@/*`) instead of relative paths
+- Use alias paths for all imports (e.g., `@/types/{domain}/enums/{Type}`, `@/types/{domain}/forms/{Type}`, `@/types/{domain}/responses/{Type}`)
 - Use `import type` for type-only imports in response DTOs
 - Import Zod schemas in form DTOs, import types in response DTOs
-- Prefer same-domain imports when possible, but cross-domain imports are allowed when needed
+- Cross-domain imports are allowed when needed, always using alias paths
 
 ## Validation Rules
 
