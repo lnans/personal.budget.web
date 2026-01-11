@@ -21,5 +21,10 @@
   "auth.signIn.description": "Login with your account",
   "auth.signIn.login.label": "Login",
   "auth.signIn.password.label": "Password",
-  "auth.signIn.submit": "Sign in"
+  "auth.signIn.submit": "Sign in",
+  "accounts.list": "Accounts",
+  "accounts.netWorth": "Net Worth",
+  "accounts.add": "Add Account",
+  "actions.cancel": "Cancel",
+  "actions.save": "Save"
 }
