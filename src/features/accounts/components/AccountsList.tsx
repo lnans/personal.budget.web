@@ -2,8 +2,6 @@ import { useTranslation } from 'react-i18next'
 
 import { SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuItem } from '@/components/ui/Sidebar'
 
-import { AccountsAddButton } from './AccountsAddButton'
-
 function AccountsList() {
   const { t } = useTranslation()
   return (
@@ -12,7 +10,7 @@ function AccountsList() {
       <SidebarGroupContent className="flex flex-col gap-2">
         <SidebarMenu>
           <SidebarMenuItem>
-            <AccountsAddButton />
+            <span>Temp</span>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarGroupContent>

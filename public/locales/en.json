@@ -25,6 +25,11 @@
   "accounts.list": "Accounts",
   "accounts.netWorth": "Net Worth",
   "accounts.add": "Add Account",
+  "accounts.add.name": "Name",
+  "accounts.add.initialBalance": "Initial Balance",
+  "accounts.add.type": "Type",
+  "accounts.add.type.Checking": "Checking",
+  "accounts.add.type.Savings": "Savings",
   "actions.cancel": "Cancel",
   "actions.save": "Save"
 }
