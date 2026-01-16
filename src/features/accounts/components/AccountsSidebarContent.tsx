@@ -1,5 +1,6 @@
-import { SidebarContent, SidebarGroup, SidebarGroupContent, SidebarMenu } from '@/components/ui/Sidebar'
+import { SidebarContent } from '@/components/ui/Sidebar'
 
+import { AccountsAddButton } from './AccountsAddButton'
 import { AccountsAddFormDialog } from './AccountsAddFormDialog'
 import { AccountsList } from './AccountsList'
 import { AccountsNetWorth } from './AccountsNetWorth'
@@ -7,16 +8,11 @@ import { AccountsNetWorth } from './AccountsNetWorth'
 function AccountsSidebarContent() {
   return (
     <SidebarContent>
-      <SidebarGroup>
-        <SidebarGroupContent className="flex flex-col gap-2">
-          <SidebarMenu>
-            <AccountsNetWorth />
-          </SidebarMenu>
-        </SidebarGroupContent>
-      </SidebarGroup>
+      <AccountsNetWorth />
 
       <AccountsList />
 
+      <AccountsAddButton />
       <AccountsAddFormDialog />
     </SidebarContent>
   )
