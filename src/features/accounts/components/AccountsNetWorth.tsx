@@ -17,7 +17,7 @@ function AccountsNetWorth() {
     <SidebarGroup>
       <SidebarGroupContent>
         <SidebarMenu>
-          <SidebarMenuButton size="lg" className="border">
+          <SidebarMenuButton className="border" size="lg">
             <ChartPieIcon />
             <span>{t('accounts.netWorth')}</span>
             <span className={cn(cnCurrencyColor(netWorth), 'ms-auto font-semibold')}>{formatCurrency(netWorth)}</span>

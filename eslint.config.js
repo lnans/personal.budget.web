@@ -2,6 +2,7 @@ import js from '@eslint/js'
 import pluginQuery from '@tanstack/eslint-plugin-query'
 import pluginImport from 'eslint-plugin-import'
 import pluginPrettier from 'eslint-plugin-prettier/recommended'
+import PluginReact from 'eslint-plugin-react'
 import pluginReactDom from 'eslint-plugin-react-dom'
 import pluginReactHooks from 'eslint-plugin-react-hooks'
 import pluginReactRefresh from 'eslint-plugin-react-refresh'
@@ -41,6 +42,8 @@ export default defineConfig([
       pluginReactHooks.configs.flat.recommended,
       pluginReactRefresh.configs.vite,
       pluginPrettier,
+      PluginReact.configs.flat.recommended,
+      PluginReact.configs.flat['jsx-runtime'],
       pluginReactX.configs['recommended-typescript'],
       pluginReactDom.configs.recommended,
       ...pluginQuery.configs['flat/recommended'],
@@ -51,6 +54,11 @@ export default defineConfig([
       parserOptions: {
         project: ['./tsconfig.node.json', './tsconfig.app.json'],
         tsconfigRootDir: import.meta.dirname,
+      },
+    },
+    settings: {
+      react: {
+        version: 'detect',
       },
     },
     rules: {
@@ -66,6 +74,17 @@ export default defineConfig([
       ],
       // Disable base rule as it conflicts with TypeScript version
       'no-unused-vars': 'off',
+      // Sort React component props alphabetically
+      'react/jsx-sort-props': [
+        'error',
+        {
+          callbacksLast: true,
+          shorthandFirst: true,
+          ignoreCase: true,
+          noSortAlphabetically: false,
+          reservedFirst: true,
+        },
+      ],
     },
   },
 ])

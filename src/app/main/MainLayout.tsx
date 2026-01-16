@@ -31,7 +31,7 @@ function MainLayout() {
         <SidebarHeader>
           <SidebarMenu>
             <SidebarMenuItem>
-              <SidebarMenuButton asChild size="lg" className="data-[slot=sidebar-menu-button]:p-1.5!">
+              <SidebarMenuButton asChild className="data-[slot=sidebar-menu-button]:p-1.5!" size="lg">
                 <Link to="/">
                   <GalleryVerticalEnd className="size-5!" />
                   <span className="text-base font-semibold">{t('app.brand')}</span>
@@ -48,7 +48,7 @@ function MainLayout() {
         <header className="flex h-(--header-height) shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-(--header-height)">
           <div className="flex w-full items-center gap-1 px-4 lg:gap-2 lg:px-6">
             <SidebarTrigger className="-ml-1" />
-            <Separator orientation="vertical" className="mx-2 data-[orientation=vertical]:h-4" />
+            <Separator className="mx-2 data-[orientation=vertical]:h-4" orientation="vertical" />
             {/* TODO: maybe use a breadcrumb here? or maybe i18n to transaltion the location pathname? */}
             <h1 className="text-base font-medium">Operations</h1>
           </div>

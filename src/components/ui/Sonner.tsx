@@ -4,9 +4,7 @@ import { Toaster as Sonner, type ToasterProps } from 'sonner'
 const Toaster = ({ ...props }: ToasterProps) => {
   return (
     <Sonner
-      theme="dark"
       className="toaster group"
-      position="bottom-center"
       icons={{
         success: <CircleCheckIcon className="size-4 text-green-500" />,
         info: <InfoIcon className="size-4 text-blue-500" />,
@@ -14,6 +12,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
         error: <OctagonXIcon className="size-4 text-red-500" />,
         loading: <Loader2Icon className="size-4 animate-spin" />,
       }}
+      position="bottom-center"
       style={
         {
           '--normal-bg': 'var(--popover)',
@@ -22,6 +21,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
           '--border-radius': 'var(--radius)',
         } as React.CSSProperties
       }
+      theme="dark"
       {...props}
     />
   )

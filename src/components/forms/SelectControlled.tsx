@@ -35,9 +35,9 @@ function SelectControlled<
 }: SelectControlledProps<TFieldValues, TName>) {
   return (
     <Controller
-      name={name}
       control={control}
       defaultValue={defaultValue}
+      name={name}
       render={({ field, fieldState }) => {
         const errorMessage = fieldState.error?.message ? [{ message: fieldState.error.message }] : undefined
 
@@ -45,7 +45,7 @@ function SelectControlled<
           <Field data-invalid={fieldState.invalid}>
             <FieldLabel htmlFor={field.name}>{label}</FieldLabel>
             <Select {...props} value={field.value} onValueChange={field.onChange}>
-              <SelectTrigger id={field.name} aria-invalid={fieldState.invalid}>
+              <SelectTrigger aria-invalid={fieldState.invalid} id={field.name}>
                 <SelectValue placeholder={placeholder} />
               </SelectTrigger>
               <SelectContent>
