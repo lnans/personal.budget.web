@@ -52,9 +52,9 @@ export function SignInForm({ className, ...props }: React.ComponentProps<'div'>)
         <CardContent>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <FieldGroup>
-              <InputControlled control={form.control} name="login" label={t('auth.signIn.login.label')} autoFocus />
-              <InputControlled control={form.control} name="password" label={t('auth.signIn.password.label')} type="password" />
-              <Button type="submit" disabled={!isSubmitDisabled} loading={isPending}>
+              <InputControlled autoFocus control={form.control} label={t('auth.signIn.login.label')} name="login" />
+              <InputControlled control={form.control} label={t('auth.signIn.password.label')} name="password" type="password" />
+              <Button disabled={!isSubmitDisabled} loading={isPending} type="submit">
                 {t('auth.signIn.submit')}
               </Button>
             </FieldGroup>

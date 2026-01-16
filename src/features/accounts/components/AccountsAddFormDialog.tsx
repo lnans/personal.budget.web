@@ -24,7 +24,7 @@ function AccountsAddFormDialog() {
   const setIsCreatingAccount = useAccountsStore((state) => state.actions.setIsCreatingAccount)
 
   return (
-    <ResponsiveDialog title={t('accounts.add')} open={isCreatingAccount} onOpenChange={setIsCreatingAccount}>
+    <ResponsiveDialog open={isCreatingAccount} title={t('accounts.add')} onOpenChange={setIsCreatingAccount}>
       <AccountAddForm className="p-4" />
     </ResponsiveDialog>
   )
@@ -65,28 +65,28 @@ function AccountAddForm({ className }: React.ComponentProps<'form'>) {
   return (
     <form className={cn('grid items-start gap-6', className)} onSubmit={form.handleSubmit(onSubmit)}>
       <FieldGroup>
-        <InputControlled control={form.control} name="name" label={t('accounts.add.name')} autoFocus disabled={isPending} />
+        <InputControlled autoFocus control={form.control} disabled={isPending} label={t('accounts.add.name')} name="name" />
         <div className="grid grid-cols-2 gap-2">
           <SelectControlled
             control={form.control}
-            name="type"
-            label={t('accounts.add.type')}
-            options={accountTypes}
             disabled={isPending}
+            label={t('accounts.add.type')}
+            name="type"
+            options={accountTypes}
           />
           <InputNumberControlled
-            control={form.control}
-            name="initialBalance"
-            label={t('accounts.add.initialBalance')}
-            disabled={isPending}
-            thousandSeparator=" "
-            suffix=" €"
-            decimalScale={2}
             fixedDecimalScale
+            control={form.control}
+            decimalScale={2}
+            disabled={isPending}
+            label={t('accounts.add.initialBalance')}
+            name="initialBalance"
+            suffix=" €"
+            thousandSeparator=" "
           />
         </div>
       </FieldGroup>
-      <Button type="submit" disabled={isSubmitDisabled} loading={isPending}>
+      <Button disabled={isSubmitDisabled} loading={isPending} type="submit">
         {t('actions.save')}
       </Button>
     </form>

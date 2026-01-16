@@ -22,19 +22,19 @@ function InputControlled<
   const { t } = useTranslation()
   return (
     <Controller
-      name={name}
       control={control}
       defaultValue={defaultValue}
+      name={name}
       render={({ field, fieldState }) => (
         <Field data-invalid={fieldState.invalid}>
           <FieldLabel htmlFor={field.name}>{label}</FieldLabel>
           <Input
             {...props}
             {...field}
-            id={field.name}
             aria-invalid={fieldState.invalid}
-            placeholder={placeholder}
             autoComplete="off"
+            id={field.name}
+            placeholder={placeholder}
           />
           <FieldDescription>{description}</FieldDescription>
           <FieldError errors={fieldState.error?.message ? [{ message: t(fieldState.error.message) }] : undefined} />

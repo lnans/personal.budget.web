@@ -96,42 +96,42 @@ function InputNumber({
   return (
     <div className="flex items-center">
       <NumericFormat
-        value={value}
-        onValueChange={handleChange}
-        thousandSeparator={thousandSeparator}
+        valueIsNumericString
+        allowNegative={min < 0}
+        className="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none rounded-r-none relative"
+        customInput={Input}
         decimalScale={decimalScale}
         fixedDecimalScale={fixedDecimalScale}
-        allowNegative={min < 0}
-        valueIsNumericString
-        onBlur={handleBlur}
+        getInputRef={combinedRef} // Use combined ref
         max={max}
         min={min}
-        suffix={suffix}
-        prefix={prefix}
-        customInput={Input}
         placeholder={placeholder}
-        className="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none rounded-r-none relative"
-        getInputRef={combinedRef} // Use combined ref
+        prefix={prefix}
+        suffix={suffix}
+        thousandSeparator={thousandSeparator}
+        value={value}
+        onBlur={handleBlur}
+        onValueChange={handleChange}
         {...props}
       />
       <div className="flex flex-col">
         <Button
-          type="button"
           aria-label="Increase value"
           className="px-2 h-[18px] w-8 rounded-l-none rounded-br-none border-input border-l-0 border-b-[0.5px] focus-visible:relative"
+          disabled={value === max}
+          type="button"
           variant="outline"
           onClick={handleIncrement}
-          disabled={value === max}
         >
           <ChevronUp size={15} />
         </Button>
         <Button
-          type="button"
           aria-label="Decrease value"
           className="px-2 h-[18px] w-8 rounded-l-none rounded-tr-none border-input border-l-0 border-t-[0.5px] focus-visible:relative"
+          disabled={value === min}
+          type="button"
           variant="outline"
           onClick={handleDecrement}
-          disabled={value === min}
         >
           <ChevronDown size={15} />
         </Button>

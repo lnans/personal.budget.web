@@ -21,19 +21,19 @@ function InputNumberControlled<
   const { t } = useTranslation()
   return (
     <Controller
-      name={name}
       control={control}
       defaultValue={defaultValue}
+      name={name}
       render={({ field, fieldState }) => (
         <Field data-invalid={fieldState.invalid}>
           <FieldLabel htmlFor={field.name}>{label}</FieldLabel>
           <InputNumber
             {...props}
+            aria-invalid={fieldState.invalid}
+            id={field.name}
+            placeholder={placeholder}
             value={field.value}
             onValueChange={(value) => field.onChange(value)}
-            id={field.name}
-            aria-invalid={fieldState.invalid}
-            placeholder={placeholder}
           />
           <FieldDescription>{description}</FieldDescription>
           <FieldError errors={fieldState.error?.message ? [{ message: t(fieldState.error.message) }] : undefined} />

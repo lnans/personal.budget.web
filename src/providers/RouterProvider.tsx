@@ -33,7 +33,7 @@ function AppRouter() {
           children: [
             {
               path: '/',
-              element: <Navigate to="/operations" replace />,
+              element: <Navigate replace to="/operations" />,
             },
             {
               path: '/operations',

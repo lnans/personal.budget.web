@@ -16,9 +16,9 @@ function AccountsAddButton() {
         <SidebarMenu>
           <SidebarMenuItem>
             <Item
-              variant="outline"
               className="mt-2 p-2.5 gap-2 border-dashed opacity-50 hover:opacity-80 transition duration-150 ease-in-out hover:-translate-y-0.5"
               role="button"
+              variant="outline"
               onClick={toggleIsCreatingAccount}
             >
               <ItemHeader className="justify-center">

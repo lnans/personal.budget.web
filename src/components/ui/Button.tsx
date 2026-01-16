@@ -55,11 +55,11 @@ function Button({
   if (asChild) {
     return (
       <Comp
+        className={cn(buttonVariants({ variant, size, className }))}
+        data-size={size}
         data-slot="button"
         data-variant={variant}
-        data-size={size}
         disabled={loading || disabled}
-        className={cn(buttonVariants({ variant, size, className }))}
         {...props}
       >
         {children}
@@ -69,11 +69,11 @@ function Button({
 
   return (
     <Comp
+      className={cn(buttonVariants({ variant, size, className }))}
+      data-size={size}
       data-slot="button"
       data-variant={variant}
-      data-size={size}
       disabled={loading || disabled}
-      className={cn(buttonVariants({ variant, size, className }))}
       {...props}
     >
       {loading && <Spinner />}
