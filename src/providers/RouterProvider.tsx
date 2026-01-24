@@ -38,7 +38,6 @@ function AppRouter() {
             {
               path: '/operations',
               element: <OperationsPage />,
-              index: true,
             },
           ],
         },

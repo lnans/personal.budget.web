@@ -1,5 +1,6 @@
 import type { ComponentProps } from 'react'
 import { Controller, type FieldPath, type FieldValues, type UseControllerProps } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
 
 import { Field, FieldDescription, FieldError, FieldLabel } from '@/components/ui/Field'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/Select'
@@ -33,13 +34,14 @@ function SelectControlled<
   options,
   ...props
 }: SelectControlledProps<TFieldValues, TName>) {
+  const { t } = useTranslation()
   return (
     <Controller
       control={control}
       defaultValue={defaultValue}
       name={name}
       render={({ field, fieldState }) => {
-        const errorMessage = fieldState.error?.message ? [{ message: fieldState.error.message }] : undefined
+        const errorMessage = fieldState.error?.message ? [{ message: t(fieldState.error.message) }] : undefined
 
         return (
           <Field data-invalid={fieldState.invalid}>

@@ -34,7 +34,7 @@ function DrawerOverlay({ className, ...props }: React.ComponentProps<typeof Draw
 
 function DrawerContent({ className, children, ...props }: React.ComponentProps<typeof DrawerPrimitive.Content>) {
   return (
-    <DrawerPortal data-slot="drawer-portal">
+    <DrawerPortal>
       <DrawerOverlay />
       <DrawerPrimitive.Content
         className={cn(
