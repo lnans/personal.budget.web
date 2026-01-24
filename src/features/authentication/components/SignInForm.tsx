@@ -18,7 +18,11 @@ export function SignInForm({ className, ...props }: React.ComponentProps<'div'>)
 
   const { setAuthTokens, clearAuth } = useAuthStore((state) => state.actions)
 
-  const { mutate: signIn, isPending } = useMutation({
+  const {
+    mutate: signIn,
+    isPending,
+    isSuccess,
+  } = useMutation({
     mutationFn: AuthFn.signIn,
     onSuccess: (data) => {
       setAuthTokens(data.bearer, data.refreshToken)
@@ -40,7 +44,7 @@ export function SignInForm({ className, ...props }: React.ComponentProps<'div'>)
     signIn(data)
   }
 
-  const isSubmitDisabled = form.formState.isValid && !isPending
+  const isSubmitDisabled = isSuccess || isPending
 
   return (
     <div className={cn('flex flex-col gap-6', className)} {...props}>
@@ -54,7 +58,7 @@ export function SignInForm({ className, ...props }: React.ComponentProps<'div'>)
             <FieldGroup>
               <InputControlled autoFocus control={form.control} label={t('auth.signIn.login.label')} name="login" />
               <InputControlled control={form.control} label={t('auth.signIn.password.label')} name="password" type="password" />
-              <Button disabled={!isSubmitDisabled} loading={isPending} type="submit">
+              <Button disabled={isSubmitDisabled} loading={isPending} type="submit">
                 {t('auth.signIn.submit')}
               </Button>
             </FieldGroup>

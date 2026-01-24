@@ -34,9 +34,13 @@ function AccountAddForm({ className }: React.ComponentProps<'form'>) {
   const { t } = useTranslation()
   const setIsCreatingAccount = useAccountsStore((state) => state.actions.setIsCreatingAccount)
 
-  const { mutate: createAccount, isPending } = useMutation({
+  const {
+    mutate: createAccount,
+    isPending,
+    isSuccess,
+  } = useMutation({
     mutationFn: AccountsFn.createAccount,
-    onSuccess: (_1, _2, _3, context) => {
+    onSuccess: (_, __, ___, context) => {
       setIsCreatingAccount(false)
       context.client.invalidateQueries({ queryKey: queryKeys.accounts.all })
     },
@@ -47,7 +51,7 @@ function AccountAddForm({ className }: React.ComponentProps<'form'>) {
     defaultValues: {
       name: '',
       type: 'Checking',
-      initialBalance: 12.3,
+      initialBalance: 0,
     },
   })
 
@@ -60,7 +64,7 @@ function AccountAddForm({ className }: React.ComponentProps<'form'>) {
     { value: 'Savings', label: t('accounts.add.type.Savings') },
   ]
 
-  const isSubmitDisabled = !form.formState.isValid || isPending
+  const isSubmitDisabled = isSuccess || isPending
 
   return (
     <form className={cn('grid items-start gap-6', className)} onSubmit={form.handleSubmit(onSubmit)}>

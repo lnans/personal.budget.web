@@ -1,9 +1,9 @@
 export const AuthenticationErrors = {
-  LoginRequired: 'User.Login.Required',
-  LoginTooLong: 'User.Login.TooLong',
-  PasswordRequired: 'User.Password.Required',
-  RefreshTokenRequired: 'User.RefreshToken.Required',
-  InvalidCredentials: 'User.InvalidCredentials',
-  InvalidRefreshToken: 'User.InvalidRefreshToken',
-  NotFound: 'User.NotFound',
+  LoginRequired: 'errors.User.Login.Required',
+  LoginTooLong: 'errors.User.Login.TooLong',
+  PasswordRequired: 'errors.User.Password.Required',
+  RefreshTokenRequired: 'errors.User.RefreshToken.Required',
+  InvalidCredentials: 'errors.User.InvalidCredentials',
+  InvalidRefreshToken: 'errors.User.InvalidRefreshToken',
+  NotFound: 'errors.User.NotFound',
 } as const

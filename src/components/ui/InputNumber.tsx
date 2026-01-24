@@ -50,7 +50,8 @@ function InputNumber({
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (document.activeElement === (combinedRef as React.RefObject<HTMLInputElement>).current) {
+      const inputEl = (combinedRef as React.RefObject<HTMLInputElement> | undefined)?.current
+      if (inputEl && document.activeElement === inputEl) {
         if (e.key === 'ArrowUp') {
           handleIncrement()
         } else if (e.key === 'ArrowDown') {
@@ -85,10 +86,10 @@ function InputNumber({
     if (value !== undefined) {
       if (value < min) {
         setValue(min)
-        ;(ref as React.RefObject<HTMLInputElement>).current!.value = String(min)
+        if (onValueChange) onValueChange(min)
       } else if (value > max) {
         setValue(max)
-        ;(ref as React.RefObject<HTMLInputElement>).current!.value = String(max)
+        if (onValueChange) onValueChange(max)
       }
     }
   }

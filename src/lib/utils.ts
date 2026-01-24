@@ -61,12 +61,14 @@ export function isTokenExpired(token: string | null): boolean {
 /**
  * Formats a currency amount to a string
  * @param amount - The amount to format
+ * @param currency - The currency to format (default: 'EUR')
+ * @param locale - The locale to format the currency in (default: 'fr-FR')
  * @returns The formatted currency amount
  */
-export function formatCurrency(amount: number): string {
-  return new Intl.NumberFormat('fr-FR', {
+export function formatCurrency(amount: number, currency = 'EUR', locale = 'fr-FR'): string {
+  return new Intl.NumberFormat(locale, {
     style: 'currency',
-    currency: 'EUR',
+    currency,
     minimumFractionDigits: 0,
     maximumFractionDigits: 2,
     currencyDisplay: 'symbol',

@@ -1,7 +1,7 @@
 export const AccountsErrors = {
-  NameRequired: 'Account.Name.Required',
-  NameTooLong: 'Account.Name.TooLong',
-  AccountTypeUnknown: 'Account.AccountType.Unknown',
-  NotFound: 'Account.NotFound',
-  AlreadyDeleted: 'Account.AlreadyDeleted',
+  NameRequired: 'errors.Account.Name.Required',
+  NameTooLong: 'errors.Account.Name.TooLong',
+  AccountTypeUnknown: 'errors.Account.AccountType.Unknown',
+  NotFound: 'errors.Account.NotFound',
+  AlreadyDeleted: 'errors.Account.AlreadyDeleted',
 } as const
