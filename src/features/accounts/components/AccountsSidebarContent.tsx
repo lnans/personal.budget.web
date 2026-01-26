@@ -5,12 +5,16 @@ import { AccountsAddFormDialog } from './AccountsAddFormDialog'
 import { AccountsList } from './AccountsList'
 import { AccountsNetWorth } from './AccountsNetWorth'
 
-function AccountsSidebarContent() {
+type AccountsSidebarContentProps = {
+  selectedAccountId: string | null
+  onAccountClick: (accountId: string | null) => void
+}
+
+function AccountsSidebarContent({ selectedAccountId, onAccountClick }: AccountsSidebarContentProps) {
   return (
     <SidebarContent>
-      <AccountsNetWorth />
-
-      <AccountsList />
+      <AccountsNetWorth selectedAccountId={selectedAccountId} onAccountClick={onAccountClick} />
+      <AccountsList selectedAccountId={selectedAccountId} onAccountClick={onAccountClick} />
 
       <AccountsAddButton />
       <AccountsAddFormDialog />
