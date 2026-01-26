@@ -15,9 +15,12 @@ import {
   SidebarTrigger,
 } from '@/components/ui/Sidebar'
 import { AccountsSidebarContent } from '@/features/accounts/components/AccountsSidebarContent'
+import { useSearchParams } from '@/hooks/useSearchParams'
 
 function MainLayout() {
   const { t } = useTranslation()
+  const [selectedAccountId, setSelectedAccountId] = useSearchParams<string | null>('accountId')
+
   return (
     <SidebarProvider
       style={
@@ -41,7 +44,7 @@ function MainLayout() {
           </SidebarMenu>
         </SidebarHeader>
 
-        <AccountsSidebarContent />
+        <AccountsSidebarContent selectedAccountId={selectedAccountId} onAccountClick={setSelectedAccountId} />
       </Sidebar>
 
       <SidebarInset>

@@ -69,7 +69,7 @@ export function formatCurrency(amount: number, currency = 'EUR', locale = 'fr-FR
   return new Intl.NumberFormat(locale, {
     style: 'currency',
     currency,
-    minimumFractionDigits: 0,
+    minimumFractionDigits: 2,
     maximumFractionDigits: 2,
     currencyDisplay: 'symbol',
   }).format(amount)

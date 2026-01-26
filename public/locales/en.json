@@ -22,7 +22,8 @@
   "auth.signIn.login.label": "Login",
   "auth.signIn.password.label": "Password",
   "auth.signIn.submit": "Sign in",
-  "accounts.list": "Accounts",
+  "accounts.list.checking": "Checking",
+  "accounts.list.savings": "Savings",
   "accounts.netWorth": "Net Worth",
   "accounts.add": "Add Account",
   "accounts.add.name": "Name",
@@ -31,5 +32,6 @@
   "accounts.add.type.Checking": "Checking",
   "accounts.add.type.Savings": "Savings",
   "actions.cancel": "Cancel",
-  "actions.save": "Save"
+  "actions.save": "Save",
+  "common.noData": "No data"
 }
