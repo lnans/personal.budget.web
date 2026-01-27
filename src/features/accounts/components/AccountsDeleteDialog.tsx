@@ -1,10 +1,10 @@
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import { Trash2Icon } from 'lucide-react'
 import { useCallback, useRef, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 
-import { AccountsFn, AccountsQueryOptions } from '@/api/endpoints/AccountsEndpoints'
-import { queryKeys } from '@/api/QueryKeys'
+import { useDeleteAccount } from '@/api/commands/AccountsCommands'
+import { AccountsQueryOptions } from '@/api/endpoints/AccountsEndpoints'
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -33,14 +33,7 @@ function AccountsDeleteDialog() {
   const accountName = account?.name ?? ''
   const canDelete = confirmation === accountName
 
-  const { mutate: deleteAccount, isPending } = useMutation({
-    mutationFn: AccountsFn.deleteAccount,
-    onSuccess: (_, __, ___, context) => {
-      setDeletingAccountId(null)
-      setConfirmation('')
-      context.client.invalidateQueries({ queryKey: queryKeys.accounts.all })
-    },
-  })
+  const { mutate: deleteAccount, isPending } = useDeleteAccount()
 
   const handleOpenChange = useCallback(
     (open: boolean) => {
@@ -54,9 +47,14 @@ function AccountsDeleteDialog() {
 
   const handleDelete = useCallback(() => {
     if (deletingAccountId) {
-      deleteAccount(deletingAccountId)
+      deleteAccount(deletingAccountId, {
+        onSuccess: () => {
+          setDeletingAccountId(null)
+          setConfirmation('')
+        },
+      })
     }
-  }, [deleteAccount, deletingAccountId])
+  }, [deleteAccount, deletingAccountId, setDeletingAccountId, setConfirmation])
 
   return (
     <AlertDialog open={!!deletingAccountId} onOpenChange={handleOpenChange}>
