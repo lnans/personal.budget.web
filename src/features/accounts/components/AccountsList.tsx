@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { AccountsQueryOptions } from '@/api/endpoints/AccountsEndpoints'
@@ -13,12 +14,11 @@ import {
 import { cn, cnCurrencyColor, formatCurrency } from '@/lib/utils'
 import type { GetAccountsResponseDto } from '@/types/accounts/responses/GetAccountsResponseDto'
 
-type AccountsListProps = {
-  selectedAccountId: string | null
-  onAccountClick: (accountId: string | null) => void
-}
+import { useAccountsStore } from '../stores/accountsStore'
 
-function AccountsList({ selectedAccountId, onAccountClick }: AccountsListProps) {
+import { AccountsSettingsMenu } from './AccountsSettingsMenu'
+
+function AccountsList() {
   const { t } = useTranslation()
 
   const { data: accounts } = useQuery(AccountsQueryOptions.getAccounts())
@@ -28,20 +28,8 @@ function AccountsList({ selectedAccountId, onAccountClick }: AccountsListProps) 
 
   return (
     <>
-      <AccountGroup
-        accounts={checkingAccounts}
-        label={t('accounts.list.checking')}
-        labelNoData={t('common.noData')}
-        selectedAccountId={selectedAccountId}
-        onAccountClick={onAccountClick}
-      />
-      <AccountGroup
-        accounts={savingsAccounts}
-        label={t('accounts.list.savings')}
-        labelNoData={t('common.noData')}
-        selectedAccountId={selectedAccountId}
-        onAccountClick={onAccountClick}
-      />
+      <AccountGroup accounts={checkingAccounts} label={t('accounts.list.checking')} labelNoData={t('common.noData')} />
+      <AccountGroup accounts={savingsAccounts} label={t('accounts.list.savings')} labelNoData={t('common.noData')} />
     </>
   )
 }
@@ -50,11 +38,13 @@ type AccountGroupProps = {
   accounts: GetAccountsResponseDto[]
   label: string
   labelNoData: string
-  selectedAccountId: string | null
-  onAccountClick: (accountId: string | null) => void
 }
 
-function AccountGroup({ accounts, label, labelNoData, selectedAccountId, onAccountClick }: AccountGroupProps) {
+function AccountGroup({ accounts, label, labelNoData }: AccountGroupProps) {
+  const { setSelectedAccountId } = useAccountsStore((state) => state.actions)
+  const selectedAccountId = useAccountsStore((state) => state.selectedAccountId)
+  const [openMenuAccountId, setOpenMenuAccountId] = useState<string | null>(null)
+
   return (
     <SidebarGroup className="py-0">
       <SidebarGroupLabel>{label}</SidebarGroupLabel>
@@ -68,18 +58,31 @@ function AccountGroup({ accounts, label, labelNoData, selectedAccountId, onAccou
             accounts.map((account) => (
               <SidebarMenuItem key={account.id}>
                 <SidebarMenuButton
-                  className="pl-4"
+                  className="group/menu-button relative pl-4"
                   isActive={selectedAccountId === account.id}
                   size="lg"
-                  onClick={() => onAccountClick(account.id)}
+                  onClick={() => setSelectedAccountId(account.id)}
                 >
                   <div className="flex flex-col">
                     <span>{account.name}</span>
                     <span className="text-xs text-muted-foreground">{account.bank}</span>
                   </div>
-                  <span className={cn(cnCurrencyColor(account.balance), 'ms-auto font-semibold')}>
+                  <span
+                    className={cn(
+                      cnCurrencyColor(account.balance),
+                      'ms-auto pr-8 font-semibold transition-[padding,transform] md:pr-0 md:translate-x-0 md:group-hover/menu-button:-translate-x-4 md:group-focus-visible/menu-button:-translate-x-4 md:group-active/menu-button:-translate-x-4 md:group-hover/menu-button:pr-3 md:group-focus-visible/menu-button:pr-3 md:group-active/menu-button:pr-3',
+                      openMenuAccountId === account.id && 'md:-translate-x-4 md:pr-3'
+                    )}
+                  >
                     {formatCurrency(account.balance)}
                   </span>
+
+                  <AccountsSettingsMenu
+                    accountId={account.id}
+                    onOpenChange={(open) => {
+                      setOpenMenuAccountId((current) => (open ? account.id : current === account.id ? null : current))
+                    }}
+                  />
                 </SidebarMenuButton>
               </SidebarMenuItem>
             ))

@@ -36,5 +36,7 @@
   "accounts.add.type.Savings": "Savings",
   "actions.cancel": "Cancel",
   "actions.save": "Save",
-  "common.noData": "No data"
+  "common.noData": "No data",
+  "common.edit": "Edit",
+  "common.delete": "Delete"
 }
