@@ -50,6 +50,7 @@ function AccountAddForm({ className }: React.ComponentProps<'form'>) {
     resolver: zodResolver(CreateAccountFormSchema),
     defaultValues: {
       name: '',
+      bank: '',
       type: 'Checking',
       initialBalance: 0,
     },
@@ -70,6 +71,7 @@ function AccountAddForm({ className }: React.ComponentProps<'form'>) {
     <form className={cn('grid items-start gap-6', className)} onSubmit={form.handleSubmit(onSubmit)}>
       <FieldGroup>
         <InputControlled autoFocus control={form.control} disabled={isPending} label={t('accounts.add.name')} name="name" />
+        <InputControlled control={form.control} disabled={isPending} label={t('accounts.add.bank')} name="bank" />
         <div className="grid grid-cols-2 gap-2">
           <SelectControlled
             control={form.control}

@@ -1,6 +1,8 @@
 {
   "errors.Account.Name.Required": "Name required",
   "errors.Account.Name.TooLong": "Name too long",
+  "errors.Account.Bank.Required": "Bank required",
+  "errors.Account.Bank.TooLong": "Bank too long",
   "errors.Account.AccountType.Unknown": "Invalid account type",
   "errors.Account.NotFound": "Account not found",
   "errors.Account.AlreadyDeleted": "Already deleted",
@@ -27,6 +29,7 @@
   "accounts.netWorth": "Net Worth",
   "accounts.add": "Add Account",
   "accounts.add.name": "Name",
+  "accounts.add.bank": "Bank",
   "accounts.add.initialBalance": "Initial Balance",
   "accounts.add.type": "Type",
   "accounts.add.type.Checking": "Checking",
