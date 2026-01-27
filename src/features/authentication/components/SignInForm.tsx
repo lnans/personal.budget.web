@@ -1,14 +1,12 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useMutation } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
-import { AuthFn } from '@/api/endpoints/AuthenticationEndpoints'
+import { useSignIn } from '@/api/commands/AuthenticationCommands'
 import { InputControlled } from '@/components/forms/InputControlled'
 import { Button } from '@/components/ui/Button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card'
 import { FieldGroup } from '@/components/ui/Field'
-import { useAuthStore } from '@/features/authentication/stores/authStore'
 import { cn } from '@/lib/utils'
 import type { SignInFormDto } from '@/types/authentication/forms/SignInFormDto'
 import { SignInFormSchema } from '@/types/authentication/forms/SignInFormDto'
@@ -16,21 +14,7 @@ import { SignInFormSchema } from '@/types/authentication/forms/SignInFormDto'
 export function SignInForm({ className, ...props }: React.ComponentProps<'div'>) {
   const { t } = useTranslation()
 
-  const { setAuthTokens, clearAuth } = useAuthStore((state) => state.actions)
-
-  const {
-    mutate: signIn,
-    isPending,
-    isSuccess,
-  } = useMutation({
-    mutationFn: AuthFn.signIn,
-    onSuccess: (data) => {
-      setAuthTokens(data.bearer, data.refreshToken)
-    },
-    onError: () => {
-      clearAuth()
-    },
-  })
+  const { mutate: signIn, isPending, isSuccess } = useSignIn()
 
   const form = useForm<SignInFormDto>({
     resolver: zodResolver(SignInFormSchema),

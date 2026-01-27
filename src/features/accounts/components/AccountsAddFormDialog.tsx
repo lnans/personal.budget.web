@@ -1,11 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useMutation } from '@tanstack/react-query'
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
-import { AccountsFn } from '@/api/endpoints/AccountsEndpoints'
-import { queryKeys } from '@/api/QueryKeys'
+import { useCreateAccount } from '@/api/commands/AccountsCommands'
 import { InputControlled } from '@/components/forms/InputControlled'
 import { InputNumberControlled } from '@/components/forms/InputNumberControlled'
 import { SelectControlled } from '@/components/forms/SelectControlled'
@@ -34,17 +32,7 @@ function AccountAddForm({ className }: React.ComponentProps<'form'>) {
   const { t } = useTranslation()
   const setIsCreatingAccount = useAccountsStore((state) => state.actions.setIsCreatingAccount)
 
-  const {
-    mutate: createAccount,
-    isPending,
-    isSuccess,
-  } = useMutation({
-    mutationFn: AccountsFn.createAccount,
-    onSuccess: (_, __, ___, context) => {
-      setIsCreatingAccount(false)
-      context.client.invalidateQueries({ queryKey: queryKeys.accounts.all })
-    },
-  })
+  const { mutate: createAccount, isPending, isSuccess } = useCreateAccount()
 
   const form = useForm<CreateAccountFormDto>({
     resolver: zodResolver(CreateAccountFormSchema),
@@ -57,7 +45,11 @@ function AccountAddForm({ className }: React.ComponentProps<'form'>) {
   })
 
   const onSubmit = (data: CreateAccountFormDto) => {
-    createAccount(data)
+    createAccount(data, {
+      onSuccess: () => {
+        setIsCreatingAccount(false)
+      },
+    })
   }
 
   const accountTypes = [

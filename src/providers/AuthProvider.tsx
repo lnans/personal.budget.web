@@ -1,7 +1,8 @@
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import { useCallback, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+import { useRefreshToken } from '@/api/commands/AuthenticationCommands'
 import { AuthFn } from '@/api/endpoints/AuthenticationEndpoints'
 import { queryKeys } from '@/api/QueryKeys'
 import { AppLoader } from '@/components/ui/AppLoader'
@@ -13,24 +14,13 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate()
 
   const { authToken, refreshToken } = useAuthStore((state) => state)
-  const { isAuthTokenValid, isRefreshTokenValid, setAuthTokens, clearAuth } = useAuthStore((state) => state.actions)
+  const { isAuthTokenValid, isRefreshTokenValid, clearAuth } = useAuthStore((state) => state.actions)
 
   const isAuthValid = authToken && isAuthTokenValid()
   const isRefreshValid = refreshToken && isRefreshTokenValid()
   const hasNoTokens = !authToken && !refreshToken
 
-  const redirectToAuth = useCallback(() => {
-    clearAuth()
-    navigate('/auth', { replace: true })
-  }, [clearAuth, navigate])
-
-  const { mutate: refreshTokenMutate, isPending: isRefreshingToken } = useMutation({
-    mutationFn: () => AuthFn.refreshToken(refreshToken!.token),
-    onSuccess: (data) => {
-      setAuthTokens(data.bearer, data.refreshToken)
-    },
-    onError: redirectToAuth,
-  })
+  const { mutate: refreshTokenMutate, isPending: isRefreshingToken } = useRefreshToken()
 
   const {
     data: currentUser,
@@ -66,10 +56,10 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
 
     if (timeUntilRefresh > 0) {
       refreshTimerRef.current = setTimeout(() => {
-        refreshTokenMutate()
+        refreshTokenMutate(refreshToken.token)
       }, timeUntilRefresh)
     } else {
-      refreshTokenMutate()
+      refreshTokenMutate(refreshToken.token)
     }
   }, [authToken, refreshToken, isAuthTokenValid, isRefreshTokenValid, refreshTokenMutate])
 
@@ -84,12 +74,13 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
     }
 
     if (isRefreshValid) {
-      refreshTokenMutate()
+      refreshTokenMutate(refreshToken.token)
       return
     }
 
-    redirectToAuth()
-  }, [hasNoTokens, isAuthValid, isRefreshValid, navigate, refreshTokenMutate, redirectToAuth])
+    clearAuth()
+    navigate('/auth', { replace: true })
+  }, [hasNoTokens, isAuthValid, isRefreshValid, navigate, refreshTokenMutate, refreshToken, clearAuth])
 
   useEffect(() => {
     clearRefreshTimer()
@@ -105,7 +96,8 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   if (isUserError) {
-    redirectToAuth()
+    clearAuth()
+    navigate('/auth', { replace: true })
     return null
   }
 
