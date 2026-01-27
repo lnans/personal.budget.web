@@ -35,7 +35,6 @@ function AccountsSettingsMenu({ accountId, onOpenChange }: AccountsSettingsMenuP
     (e: React.MouseEvent<HTMLDivElement>) => {
       e.stopPropagation()
       setDeletingAccountId(accountId)
-      console.warn('Deletion mode will be implemented in next pull request.', accountId)
     },
     [accountId, setDeletingAccountId]
   )
@@ -54,14 +53,14 @@ function AccountsSettingsMenu({ accountId, onOpenChange }: AccountsSettingsMenuP
         <DropdownMenuGroup>
           <DropdownMenuItem onClick={handleEditClick}>
             <PencilIcon />
-            {t('common.edit')}
+            {t('actions.edit')}
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem variant="destructive" onClick={handleDeleteClick}>
             <TrashIcon />
-            {t('common.delete')}
+            {t('actions.delete')}
           </DropdownMenuItem>
         </DropdownMenuGroup>
       </DropdownMenuContent>

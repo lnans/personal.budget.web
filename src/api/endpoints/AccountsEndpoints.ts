@@ -3,6 +3,7 @@ import { queryOptions } from '@tanstack/react-query'
 import { apiClient } from '@/lib/axios'
 import type { CreateAccountFormDto } from '@/types/accounts/forms/CreateAccountFormDto'
 import type { CreateAccountResponseDto } from '@/types/accounts/responses/CreateAccountResponseDto'
+import type { DeleteAccountResponseDto } from '@/types/accounts/responses/DeleteAccountResponseDto'
 import type { GetAccountsResponseDto } from '@/types/accounts/responses/GetAccountsResponseDto'
 
 import { queryKeys } from '../QueryKeys'
@@ -16,6 +17,10 @@ export const AccountsFn = {
   },
   createAccount: async (data: CreateAccountFormDto) => {
     const response = await apiClient.post<CreateAccountResponseDto>(`/${group}`, data)
+    return response.data
+  },
+  deleteAccount: async (id: string) => {
+    const response = await apiClient.delete<DeleteAccountResponseDto>(`/${group}/${id}`)
     return response.data
   },
 } as const
