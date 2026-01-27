@@ -15,18 +15,33 @@ import {
   SidebarTrigger,
 } from '@/components/ui/Sidebar'
 import { AccountsSidebarContent } from '@/features/accounts/components/AccountsSidebarContent'
+import { useAccountsStore } from '@/features/accounts/stores/accountsStore'
 import { useSearchParams } from '@/hooks/useSearchParams'
+
+const SIDEBAR_SCALED_WIDTH = 80
+const HEADER_SCALED_HEIGHT = 12
 
 function MainLayout() {
   const { t } = useTranslation()
-  const [selectedAccountId, setSelectedAccountId] = useSearchParams<string | null>('accountId')
+
+  const { setSelectedAccountId } = useAccountsStore((state) => state.actions)
+  const selectedAccountId = useAccountsStore((state) => state.selectedAccountId)
+  const [queryParamAccountId, setQueryParamAccountId] = useSearchParams<string | null>('accountId')
+
+  React.useEffect(() => {
+    setSelectedAccountId(queryParamAccountId)
+  }, [queryParamAccountId, setSelectedAccountId])
+
+  React.useEffect(() => {
+    setQueryParamAccountId(selectedAccountId)
+  }, [selectedAccountId, setQueryParamAccountId])
 
   return (
     <SidebarProvider
       style={
         {
-          '--sidebar-width': 'calc(var(--spacing) * 72)',
-          '--header-height': 'calc(var(--spacing) * 12)',
+          '--sidebar-width': `calc(var(--spacing) * ${SIDEBAR_SCALED_WIDTH})`,
+          '--header-height': `calc(var(--spacing) * ${HEADER_SCALED_HEIGHT})`,
         } as React.CSSProperties
       }
     >
@@ -44,7 +59,7 @@ function MainLayout() {
           </SidebarMenu>
         </SidebarHeader>
 
-        <AccountsSidebarContent selectedAccountId={selectedAccountId} onAccountClick={setSelectedAccountId} />
+        <AccountsSidebarContent />
       </Sidebar>
 
       <SidebarInset>

@@ -6,12 +6,11 @@ import { AccountsQueryOptions } from '@/api/endpoints/AccountsEndpoints'
 import { SidebarGroup, SidebarGroupContent, SidebarMenu, SidebarMenuButton } from '@/components/ui/Sidebar'
 import { cn, cnCurrencyColor, formatCurrency } from '@/lib/utils'
 
-type AccountsNetWorthProps = {
-  selectedAccountId: string | null
-  onAccountClick: (accountId: string | null) => void
-}
+import { useAccountsStore } from '../stores/accountsStore'
 
-function AccountsNetWorth({ selectedAccountId, onAccountClick }: AccountsNetWorthProps) {
+function AccountsNetWorth() {
+  const { setSelectedAccountId } = useAccountsStore((state) => state.actions)
+  const selectedAccountId = useAccountsStore((state) => state.selectedAccountId)
   const { t } = useTranslation()
 
   const { data: accounts } = useQuery(AccountsQueryOptions.getAccounts())
@@ -26,7 +25,7 @@ function AccountsNetWorth({ selectedAccountId, onAccountClick }: AccountsNetWort
             className="border"
             isActive={selectedAccountId === null}
             size="lg"
-            onClick={() => onAccountClick(null)}
+            onClick={() => setSelectedAccountId(null)}
           >
             <ChartPieIcon />
             <span>{t('accounts.netWorth')}</span>
