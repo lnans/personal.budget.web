@@ -34,9 +34,11 @@
   "accounts.add.type": "Type",
   "accounts.add.type.Checking": "Checking",
   "accounts.add.type.Savings": "Savings",
-  "actions.cancel": "Cancel",
+  "accounts.delete.title": "Delete Account",
+  "accounts.delete.description": "Are you sure you want to delete the account <b>{{accountName}}</b>?<br /><br />This action cannot be undone. To continue, type the account name below:",
   "actions.save": "Save",
-  "common.noData": "No data",
-  "common.edit": "Edit",
-  "common.delete": "Delete"
+  "actions.edit": "Edit",
+  "actions.delete": "Delete",
+  "actions.cancel": "Cancel",
+  "common.noData": "No data"
 }
