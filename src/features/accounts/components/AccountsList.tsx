@@ -70,9 +70,13 @@ function AccountGroup({ accounts, label, labelNoData, selectedAccountId, onAccou
                 <SidebarMenuButton
                   className="pl-4"
                   isActive={selectedAccountId === account.id}
+                  size="lg"
                   onClick={() => onAccountClick(account.id)}
                 >
-                  <span>{account.name}</span>
+                  <div className="flex flex-col">
+                    <span>{account.name}</span>
+                    <span className="text-xs text-muted-foreground">{account.bank}</span>
+                  </div>
                   <span className={cn(cnCurrencyColor(account.balance), 'ms-auto font-semibold')}>
                     {formatCurrency(account.balance)}
                   </span>
