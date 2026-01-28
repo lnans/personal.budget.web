@@ -1,4 +1,4 @@
-import { queryOptions } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 
 import { apiClient } from '@/lib/axios'
 import type { CreateAccountFormDto } from '@/types/accounts/forms/CreateAccountFormDto'
@@ -8,27 +8,38 @@ import type { GetAccountsResponseDto } from '@/types/accounts/responses/GetAccou
 
 import { queryKeys } from '../QueryKeys'
 
-const group = 'accounts'
+const basePath = '/accounts'
 
-export const AccountsFn = {
-  getAccounts: async () => {
-    const response = await apiClient.get<GetAccountsResponseDto[]>(`/${group}`)
-    return response.data
-  },
-  createAccount: async (data: CreateAccountFormDto) => {
-    const response = await apiClient.post<CreateAccountResponseDto>(`/${group}`, data)
-    return response.data
-  },
-  deleteAccount: async (id: string) => {
-    const response = await apiClient.delete<DeleteAccountResponseDto>(`/${group}/${id}`)
-    return response.data
-  },
-} as const
+export function useGetAccounts() {
+  return useQuery({
+    queryKey: queryKeys.accounts.all,
+    queryFn: async ({ signal }) => {
+      const response = await apiClient.get<GetAccountsResponseDto[]>(basePath, { signal })
+      return response.data
+    },
+  })
+}
 
-export const AccountsQueryOptions = {
-  getAccounts: () =>
-    queryOptions({
-      queryKey: queryKeys.accounts.all,
-      queryFn: AccountsFn.getAccounts,
-    }),
-} as const
+export function useCreateAccount() {
+  return useMutation({
+    mutationFn: async (data: CreateAccountFormDto) => {
+      const response = await apiClient.post<CreateAccountResponseDto>(basePath, data)
+      return response.data
+    },
+    onSuccess: (_, __, ___, context) => {
+      context.client.invalidateQueries({ queryKey: queryKeys.accounts.all })
+    },
+  })
+}
+
+export function useDeleteAccount() {
+  return useMutation({
+    mutationFn: async (id: string) => {
+      const response = await apiClient.delete<DeleteAccountResponseDto>(`${basePath}/${id}`)
+      return response.data
+    },
+    onSuccess: (_, __, ___, context) => {
+      context.client.invalidateQueries({ queryKey: queryKeys.accounts.all })
+    },
+  })
+}

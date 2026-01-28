@@ -1,10 +1,8 @@
-import { useQuery } from '@tanstack/react-query'
 import { Trash2Icon } from 'lucide-react'
-import { useCallback, useRef, useState } from 'react'
+import React from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 
-import { useDeleteAccount } from '@/api/commands/AccountsCommands'
-import { AccountsQueryOptions } from '@/api/endpoints/AccountsEndpoints'
+import { useDeleteAccount, useGetAccounts } from '@/api/endpoints/AccountsEndpoints'
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -22,20 +20,20 @@ import { useAccountsStore } from '../stores/accountsStore'
 
 function AccountsDeleteDialog() {
   const { t } = useTranslation()
-  const [confirmation, setConfirmation] = useState<string>('')
-  const confirmationInputRef = useRef<HTMLInputElement>(null)
+  const [confirmation, setConfirmation] = React.useState<string>('')
+  const confirmationInputRef = React.useRef<HTMLInputElement>(null)
 
   const deletingAccountId = useAccountsStore((state) => state.deletingAccountId)
   const { setDeletingAccountId } = useAccountsStore((state) => state.actions)
 
-  const { data: accounts } = useQuery(AccountsQueryOptions.getAccounts())
-  const account = accounts?.find((account) => account.id === deletingAccountId)
+  const accountsQuery = useGetAccounts()
+  const account = accountsQuery.data?.find((account) => account.id === deletingAccountId)
   const accountName = account?.name ?? ''
   const canDelete = confirmation === accountName
 
-  const { mutate: deleteAccount, isPending } = useDeleteAccount()
+  const deleteAccountMutation = useDeleteAccount()
 
-  const handleOpenChange = useCallback(
+  const handleOpenChange = React.useCallback(
     (open: boolean) => {
       if (!open) {
         setDeletingAccountId(null)
@@ -45,16 +43,19 @@ function AccountsDeleteDialog() {
     [setDeletingAccountId]
   )
 
-  const handleDelete = useCallback(() => {
-    if (deletingAccountId) {
-      deleteAccount(deletingAccountId, {
-        onSuccess: () => {
-          setDeletingAccountId(null)
-          setConfirmation('')
-        },
-      })
-    }
-  }, [deleteAccount, deletingAccountId, setDeletingAccountId, setConfirmation])
+  const handleSubmit = () => {
+    if (!deletingAccountId) return
+
+    deleteAccountMutation.mutate(deletingAccountId, {
+      onSuccess: () => {
+        setDeletingAccountId(null)
+        setConfirmation('')
+      },
+    })
+  }
+
+  const isDeleteDisabled = !canDelete || deleteAccountMutation.isPending
+  const isDeletePending = deleteAccountMutation.isPending
 
   return (
     <AlertDialog open={!!deletingAccountId} onOpenChange={handleOpenChange}>
@@ -91,7 +92,7 @@ function AccountsDeleteDialog() {
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
                   if (canDelete) {
-                    handleDelete()
+                    handleSubmit()
                   }
                 }
               }}
@@ -99,10 +100,10 @@ function AccountsDeleteDialog() {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel disabled={isPending} variant="outline">
+          <AlertDialogCancel disabled={isDeletePending} variant="outline">
             {t('actions.cancel')}
           </AlertDialogCancel>
-          <Button disabled={!canDelete} loading={isPending} variant="destructive" onClick={handleDelete}>
+          <Button disabled={isDeleteDisabled} loading={isDeletePending} variant="destructive" onClick={handleSubmit}>
             {t('actions.delete')}
           </Button>
         </AlertDialogFooter>
