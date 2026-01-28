@@ -1,5 +1,5 @@
 import { PencilIcon, Settings2Icon, TrashIcon } from 'lucide-react'
-import { useCallback } from 'react'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import {
@@ -22,7 +22,7 @@ function AccountsSettingsMenu({ accountId, onOpenChange }: AccountsSettingsMenuP
   const { t } = useTranslation()
   const { setEditingAccountId, setDeletingAccountId } = useAccountsStore((state) => state.actions)
 
-  const handleEditClick = useCallback(
+  const handleEditClick = React.useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
       e.stopPropagation()
       setEditingAccountId(accountId)
@@ -31,7 +31,7 @@ function AccountsSettingsMenu({ accountId, onOpenChange }: AccountsSettingsMenuP
     [accountId, setEditingAccountId]
   )
 
-  const handleDeleteClick = useCallback(
+  const handleDeleteClick = React.useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
       e.stopPropagation()
       setDeletingAccountId(accountId)

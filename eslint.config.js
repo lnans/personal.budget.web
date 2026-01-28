@@ -17,7 +17,7 @@ export default defineConfig([
     files: ['**/*.{ts,tsx}'],
     extends: [
       js.configs.recommended,
-      tseslint.configs.stylisticTypeChecked,
+      tseslint.configs.recommendedTypeChecked,
       pluginImport.flatConfigs.recommended,
       {
         settings: {
@@ -63,6 +63,8 @@ export default defineConfig([
     },
     rules: {
       '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
+      '@typescript-eslint/no-floating-promises': 'off',
+      '@typescript-eslint/prefer-promise-reject-errors': 'off',
       '@typescript-eslint/no-unused-vars': [
         'error',
         {

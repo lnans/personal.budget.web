@@ -1,5 +1,5 @@
 import { MutationCache, QueryCache, QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { useCallback, useMemo } from 'react'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 
@@ -11,9 +11,12 @@ function QueryProvider({ children }: { children: React.ReactNode }) {
   /**
    * Global error handler for react-query
    */
-  const onError = useCallback(
+  const onError = React.useCallback(
     (error: Problem) => {
       console.error('React Query Error:', error)
+      if (error.status === 0) {
+        toast.error(t('errors.NetworkError'))
+      }
       if (error.status === 401) {
         toast.error(t('errors.User.InvalidCredentials'))
       }
@@ -27,7 +30,7 @@ function QueryProvider({ children }: { children: React.ReactNode }) {
     [t]
   )
 
-  const queryClient = useMemo(() => {
+  const queryClient = React.useMemo(() => {
     return new QueryClient({
       defaultOptions: {
         queries: {

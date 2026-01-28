@@ -3,7 +3,7 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
-import { useCreateAccount } from '@/api/commands/AccountsCommands'
+import { useCreateAccount } from '@/api/endpoints/AccountsEndpoints'
 import { InputControlled } from '@/components/forms/InputControlled'
 import { InputNumberControlled } from '@/components/forms/InputNumberControlled'
 import { SelectControlled } from '@/components/forms/SelectControlled'
@@ -32,7 +32,7 @@ function AccountAddForm({ className }: React.ComponentProps<'form'>) {
   const { t } = useTranslation()
   const setIsCreatingAccount = useAccountsStore((state) => state.actions.setIsCreatingAccount)
 
-  const { mutate: createAccount, isPending, isSuccess } = useCreateAccount()
+  const createAccountMutation = useCreateAccount()
 
   const form = useForm<CreateAccountFormDto>({
     resolver: zodResolver(CreateAccountFormSchema),
@@ -44,12 +44,14 @@ function AccountAddForm({ className }: React.ComponentProps<'form'>) {
     },
   })
 
-  const onSubmit = (data: CreateAccountFormDto) => {
-    createAccount(data, {
-      onSuccess: () => {
-        setIsCreatingAccount(false)
-      },
-    })
+  const handleSubmit = (event: React.SubmitEvent<HTMLFormElement>) => {
+    form.handleSubmit((data: CreateAccountFormDto) => {
+      createAccountMutation.mutate(data, {
+        onSuccess: () => {
+          setIsCreatingAccount(false)
+        },
+      })
+    })(event)
   }
 
   const accountTypes = [
@@ -57,17 +59,18 @@ function AccountAddForm({ className }: React.ComponentProps<'form'>) {
     { value: 'Savings', label: t('accounts.add.type.Savings') },
   ]
 
-  const isSubmitDisabled = isSuccess || isPending
+  const isSubmitDisabled = createAccountMutation.isSuccess || createAccountMutation.isPending
+  const isSubmitPending = createAccountMutation.isPending
 
   return (
-    <form className={cn('grid items-start gap-6', className)} onSubmit={form.handleSubmit(onSubmit)}>
+    <form className={cn('grid items-start gap-6', className)} onSubmit={handleSubmit}>
       <FieldGroup>
-        <InputControlled autoFocus control={form.control} disabled={isPending} label={t('accounts.add.name')} name="name" />
-        <InputControlled control={form.control} disabled={isPending} label={t('accounts.add.bank')} name="bank" />
+        <InputControlled autoFocus control={form.control} disabled={isSubmitPending} label={t('accounts.add.name')} name="name" />
+        <InputControlled control={form.control} disabled={isSubmitPending} label={t('accounts.add.bank')} name="bank" />
         <div className="grid grid-cols-2 gap-2">
           <SelectControlled
             control={form.control}
-            disabled={isPending}
+            disabled={isSubmitPending}
             label={t('accounts.add.type')}
             name="type"
             options={accountTypes}
@@ -76,7 +79,7 @@ function AccountAddForm({ className }: React.ComponentProps<'form'>) {
             fixedDecimalScale
             control={form.control}
             decimalScale={2}
-            disabled={isPending}
+            disabled={isSubmitPending}
             label={t('accounts.add.initialBalance')}
             name="initialBalance"
             suffix=" €"
@@ -84,7 +87,7 @@ function AccountAddForm({ className }: React.ComponentProps<'form'>) {
           />
         </div>
       </FieldGroup>
-      <Button disabled={isSubmitDisabled} loading={isPending} type="submit">
+      <Button disabled={isSubmitDisabled} loading={isSubmitPending} type="submit">
         {t('actions.save')}
       </Button>
     </form>

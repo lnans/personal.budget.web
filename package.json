@@ -8,9 +8,10 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
+    "type:check": "tsc -b --noEmit",
     "format": "prettier --write .",
     "preview": "vite preview",
-    "validate": "yarn lint:fix && yarn format"
+    "validate": "yarn lint:fix && yarn type:check && yarn format"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

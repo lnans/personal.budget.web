@@ -1,6 +1,7 @@
-import axios, { type AxiosInstance, type InternalAxiosRequestConfig } from 'axios'
+import axios, { AxiosError, type AxiosInstance, type InternalAxiosRequestConfig } from 'axios'
 
 import { useAuthStore } from '@/features/authentication/stores/authStore'
+import type { Problem } from '@/types/Problem'
 
 export const apiClient: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
@@ -23,7 +24,13 @@ apiClient.interceptors.response.use(
   (response) => {
     return response
   },
-  async (error) => {
-    return Promise.reject(error.response?.data)
+  async (error: AxiosError<Problem>) => {
+    const apiError = error.response?.data
+    const fallbackError: Problem = {
+      type: 'errors.NetworkError',
+      title: 'errors.NetworkError',
+      status: 0,
+    }
+    return Promise.reject(apiError ?? fallbackError)
   }
 )

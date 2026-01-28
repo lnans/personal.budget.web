@@ -18,6 +18,7 @@
   "errors.User.NotFound": "User not found",
   "errors.User.Forbidden": "Forbidden",
   "errors.User.InternalServerError": "Internal server error",
+  "errors.NetworkError": "Network error",
   "app.brand": "Budget.",
   "auth.signIn.title": "Welcome back",
   "auth.signIn.description": "Login with your account",

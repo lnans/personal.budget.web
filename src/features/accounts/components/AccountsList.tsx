@@ -1,8 +1,7 @@
-import { useQuery } from '@tanstack/react-query'
-import { useState } from 'react'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { AccountsQueryOptions } from '@/api/endpoints/AccountsEndpoints'
+import { useGetAccounts } from '@/api/endpoints/AccountsEndpoints'
 import {
   SidebarGroup,
   SidebarGroupContent,
@@ -21,10 +20,9 @@ import { AccountsSettingsMenu } from './AccountsSettingsMenu'
 function AccountsList() {
   const { t } = useTranslation()
 
-  const { data: accounts } = useQuery(AccountsQueryOptions.getAccounts())
-
-  const checkingAccounts = accounts?.filter((account) => account.type === 'Checking') ?? []
-  const savingsAccounts = accounts?.filter((account) => account.type === 'Savings') ?? []
+  const accountsQuery = useGetAccounts()
+  const checkingAccounts = accountsQuery.data?.filter((account) => account.type === 'Checking') ?? []
+  const savingsAccounts = accountsQuery.data?.filter((account) => account.type === 'Savings') ?? []
 
   return (
     <>
@@ -43,7 +41,7 @@ type AccountGroupProps = {
 function AccountGroup({ accounts, label, labelNoData }: AccountGroupProps) {
   const { setSelectedAccountId } = useAccountsStore((state) => state.actions)
   const selectedAccountId = useAccountsStore((state) => state.selectedAccountId)
-  const [openMenuAccountId, setOpenMenuAccountId] = useState<string | null>(null)
+  const [openMenuAccountId, setOpenMenuAccountId] = React.useState<string | null>(null)
 
   return (
     <SidebarGroup className="py-0">
