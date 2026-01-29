@@ -6,6 +6,7 @@ export type GetAccountsResponseDto = {
   bank: string
   type: AccountType
   balance: number
+  initialBalance: number
   createdAt: string
   updatedAt: string
 }
