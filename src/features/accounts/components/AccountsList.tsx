@@ -26,8 +26,8 @@ function AccountsList() {
 
   return (
     <>
-      <AccountGroup accounts={checkingAccounts} label={t('accounts.list.checking')} labelNoData={t('common.noData')} />
-      <AccountGroup accounts={savingsAccounts} label={t('accounts.list.savings')} labelNoData={t('common.noData')} />
+      <AccountGroup accounts={checkingAccounts} label={t('accounts.type.Checking')} labelNoData={t('common.noData')} />
+      <AccountGroup accounts={savingsAccounts} label={t('accounts.type.Savings')} labelNoData={t('common.noData')} />
     </>
   )
 }

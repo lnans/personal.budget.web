@@ -25,7 +25,7 @@ function AccountsAddButton() {
                 <PlusCircleIcon size={18} />
               </ItemHeader>
               <ItemContent>
-                <ItemDescription className="text-center text-white text-xs">{t('accounts.add')}</ItemDescription>
+                <ItemDescription className="text-center text-white text-xs">{t('accounts.actions.add.title')}</ItemDescription>
               </ItemContent>
             </Item>
           </SidebarMenuItem>

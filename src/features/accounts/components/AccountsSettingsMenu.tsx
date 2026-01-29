@@ -20,15 +20,14 @@ type AccountsSettingsMenuProps = {
 
 function AccountsSettingsMenu({ accountId, onOpenChange }: AccountsSettingsMenuProps) {
   const { t } = useTranslation()
-  const { setEditingAccountId, setDeletingAccountId } = useAccountsStore((state) => state.actions)
+  const { setPatchingAccountId, setDeletingAccountId } = useAccountsStore((state) => state.actions)
 
   const handleEditClick = React.useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
       e.stopPropagation()
-      setEditingAccountId(accountId)
-      console.warn('Edition mode will be implemented in next pull request.', accountId)
+      setPatchingAccountId(accountId)
     },
-    [accountId, setEditingAccountId]
+    [accountId, setPatchingAccountId]
   )
 
   const handleDeleteClick = React.useCallback(

@@ -16,9 +16,9 @@ import {
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 
-import { useAccountsStore } from '../stores/accountsStore'
+import { useAccountsStore } from '../../stores/accountsStore'
 
-function AccountsDeleteDialog() {
+function AccountsDeleteFormDialog() {
   const { t } = useTranslation()
   const [confirmation, setConfirmation] = React.useState<string>('')
   const confirmationInputRef = React.useRef<HTMLInputElement>(null)
@@ -70,9 +70,9 @@ function AccountsDeleteDialog() {
           <AlertDialogMedia className="bg-destructive/10 text-destructive dark:bg-destructive/20 dark:text-destructive">
             <Trash2Icon />
           </AlertDialogMedia>
-          <AlertDialogTitle>{t('accounts.delete.title')}</AlertDialogTitle>
+          <AlertDialogTitle>{t('accounts.actions.delete.title')}</AlertDialogTitle>
           <AlertDialogDescription>
-            <Trans i18nKey="accounts.delete.description" values={{ accountName }} />
+            <Trans i18nKey="accounts.actions.delete.description" values={{ accountName }} />
             <Input
               ref={confirmationInputRef}
               autoFocus
@@ -112,4 +112,4 @@ function AccountsDeleteDialog() {
   )
 }
 
-export { AccountsDeleteDialog }
+export { AccountsDeleteFormDialog }
