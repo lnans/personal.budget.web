@@ -16,15 +16,30 @@ function QueryProvider({ children }: { children: React.ReactNode }) {
       console.error('React Query Error:', error)
       if (error.status === 0) {
         toast.error(t('errors.NetworkError'))
-      }
-      if (error.status === 401) {
+      } else if (error.status === 400) {
+        const validationMessages = Object.values(error.errors ?? {})
+          .flat()
+          .map(({ code, description }) =>
+            t(`errors.${code}`, {
+              defaultValue: description || code,
+            })
+          )
+        const uniqueMessages = [...new Set(validationMessages)]
+        if (uniqueMessages.length === 0) {
+          toast.error(error.detail ?? t('errors.BadRequest'))
+        } else {
+          uniqueMessages.forEach((message) => toast.error(message))
+        }
+      } else if (error.status === 401) {
         toast.error(t('errors.User.InvalidCredentials'))
-      }
-      if (error.status === 403) {
-        toast.error(t('errors.User.Forbidden'))
-      }
-      if (error.status === 500) {
-        toast.error(t('errors.User.InternalServerError'))
+      } else if (error.status === 403) {
+        toast.error(t('errors.Forbidden'))
+      } else if (error.status === 404) {
+        toast.error(error.detail ?? t('errors.NotFound'))
+      } else if (error.status === 500) {
+        toast.error(t('errors.InternalServerError'))
+      } else {
+        toast.error(t('errors.Unknown'))
       }
     },
     [t]

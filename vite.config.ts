@@ -5,7 +5,7 @@ import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 
 import { validateEnvPlugin } from './plugins/vite-env-plugin'
-import { envSchema } from './src/config/env'
+import { envSchema } from './src/types/EnvSchema'
 
 // https://vite.dev/config/
 export default defineConfig({

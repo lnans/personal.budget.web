@@ -3,13 +3,13 @@ import { create } from 'zustand'
 type AccountsStore = {
   selectedAccountId: string | null
   isCreatingAccount: boolean
-  editingAccountId: string | null
+  patchingAccountId: string | null
   deletingAccountId: string | null
   actions: {
     setSelectedAccountId: (value: string | null) => void
     setIsCreatingAccount: (value: boolean) => void
     toggleIsCreatingAccount: () => void
-    setEditingAccountId: (value: string | null) => void
+    setPatchingAccountId: (value: string | null) => void
     setDeletingAccountId: (value: string | null) => void
   }
 }
@@ -17,7 +17,7 @@ type AccountsStore = {
 export const useAccountsStore = create<AccountsStore>((set, get) => ({
   selectedAccountId: null,
   isCreatingAccount: false,
-  editingAccountId: null,
+  patchingAccountId: null,
   deletingAccountId: null,
   actions: {
     setSelectedAccountId: (value: string | null) => {
@@ -29,8 +29,8 @@ export const useAccountsStore = create<AccountsStore>((set, get) => ({
     toggleIsCreatingAccount: () => {
       set({ isCreatingAccount: !get().isCreatingAccount })
     },
-    setEditingAccountId: (value: string | null) => {
-      set({ editingAccountId: value })
+    setPatchingAccountId: (value: string | null) => {
+      set({ patchingAccountId: value })
     },
     setDeletingAccountId: (value: string | null) => {
       set({ deletingAccountId: value })

@@ -1,10 +1,11 @@
 import axios, { AxiosError, type AxiosInstance, type InternalAxiosRequestConfig } from 'axios'
 
+import { ENV } from '@/env'
 import { useAuthStore } from '@/features/authentication/stores/authStore'
 import type { Problem } from '@/types/Problem'
 
 export const apiClient: AxiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: ENV.VITE_API_URL,
   headers: {
     'Content-Type': 'application/json',
   },

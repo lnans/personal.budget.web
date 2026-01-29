@@ -4,4 +4,4 @@ export const envSchema = z.object({
   VITE_API_URL: z.url({ protocol: /^https?$/, message: 'VITE_API_URL must be a valid URL' }),
 })
 
-export type Env = z.infer<typeof envSchema>
+export type EnvSchemaType = Readonly<z.infer<typeof envSchema>>
