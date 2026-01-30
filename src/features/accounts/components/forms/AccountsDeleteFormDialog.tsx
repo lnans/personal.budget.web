@@ -2,7 +2,7 @@ import { Trash2Icon } from 'lucide-react'
 import React from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 
-import { useDeleteAccount, useGetAccounts } from '@/api/endpoints/AccountsEndpoints'
+import { useDeleteAccount, useGetAccountById } from '@/api/endpoints/AccountsEndpoints'
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -26,8 +26,7 @@ function AccountsDeleteFormDialog() {
   const deletingAccountId = useAccountsStore((state) => state.deletingAccountId)
   const { setDeletingAccountId } = useAccountsStore((state) => state.actions)
 
-  const accountsQuery = useGetAccounts()
-  const account = accountsQuery.data?.find((account) => account.id === deletingAccountId)
+  const account = useGetAccountById(deletingAccountId)
   const accountName = account?.name ?? ''
   const canDelete = confirmation === accountName
 

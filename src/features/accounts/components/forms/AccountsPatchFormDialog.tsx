@@ -3,7 +3,7 @@ import React from 'react'
 import { useForm, useWatch } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
-import { useGetAccounts, usePatchAccount } from '@/api/endpoints/AccountsEndpoints'
+import { useGetAccountById, usePatchAccount } from '@/api/endpoints/AccountsEndpoints'
 import { CheckboxControlled } from '@/components/forms/CheckboxControlled'
 import { InputControlled } from '@/components/forms/InputControlled'
 import { InputNumberControlled } from '@/components/forms/InputNumberControlled'
@@ -41,9 +41,7 @@ function AccountPatchForm({ accountId }: { accountId: string }) {
   const { t } = useTranslation()
   const setPatchingAccountId = useAccountsStore((state) => state.actions.setPatchingAccountId)
 
-  const getAccountQuery = useGetAccounts()
-  const account = getAccountQuery.data?.find((account) => account.id === accountId)
-
+  const account = useGetAccountById(accountId)
   const patchAccountMutation = usePatchAccount()
 
   const form = useForm<PatchAccountSchemaDto>({

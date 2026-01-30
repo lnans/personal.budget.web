@@ -4,6 +4,7 @@
   "accounts.actions.delete.title": "Delete Account",
   "accounts.actions.patch.title": "Edit Account",
   "accounts.actions.patch.updateInitialBalance": "Update initial balance",
+  "accounts.allAccounts": "All accounts",
   "accounts.bank": "Bank",
   "accounts.initialBalance": "Initial Balance",
   "accounts.name": "Name",
@@ -50,5 +51,7 @@
   "errors.User.Login.TooLong": "Login too long",
   "errors.User.NotFound": "User not found",
   "errors.User.Password.Required": "Password required",
-  "errors.User.RefreshToken.Required": "Refresh token required"
+  "errors.User.RefreshToken.Required": "Refresh token required",
+
+  "operations.title": "Operations"
 }

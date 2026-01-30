@@ -14,6 +14,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from '@/components/ui/Sidebar'
+import { AccountsBreadcrumb } from '@/features/accounts/components/AccountsBreadcrumb'
 import { AccountsSidebarContent } from '@/features/accounts/components/AccountsSidebarContent'
 import { useAccountsStore } from '@/features/accounts/stores/accountsStore'
 import { useSearchParams } from '@/hooks/useSearchParams'
@@ -67,8 +68,7 @@ function MainLayout() {
           <div className="flex w-full items-center gap-1 px-4 lg:gap-2 lg:px-6">
             <SidebarTrigger className="-ml-1" />
             <Separator className="mx-2 data-[orientation=vertical]:h-4" orientation="vertical" />
-            {/* TODO: maybe use a breadcrumb here? or maybe i18n to transaltion the location pathname? */}
-            <h1 className="text-base font-medium">Operations</h1>
+            <AccountsBreadcrumb />
           </div>
         </header>
         <div className="flex flex-1 flex-col">
