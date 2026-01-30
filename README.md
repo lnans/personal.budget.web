@@ -8,21 +8,24 @@
 
 ## Technology Stack
 
-- **React 19** - Latest React framework
-- **TypeScript 5.9** - Type-safe JavaScript
-- **Vite 7** - Next generation frontend tooling
-- **React Router 7** - Client-side routing
-- **TanStack Query 5** - Data fetching and state management
-- **Zustand** - Lightweight state management
-- **React Hook Form** - Form management
-- **Zod** - Schema validation
-- **Axios** - HTTP client
-- **Tailwind CSS 4** - Utility-first CSS framework
-- **Radix UI** - Unstyled, accessible component primitives
-- **i18next** - Internationalization framework
-- **Sonner** - Toast notifications
-- **ESLint** - Code linting
-- **Prettier** - Code formatting
+| Category         | Technology        |
+| ---------------- | ----------------- |
+| Framework        | React 19          |
+| Language         | TypeScript 5.9    |
+| Build Tool       | Vite 7            |
+| Routing          | React Router 7    |
+| Data Fetching    | TanStack Query 5  |
+| State Management | Zustand 5         |
+| Forms            | React Hook Form 7 |
+| Validation       | Zod 4             |
+| HTTP Client      | Axios             |
+| Styling          | Tailwind CSS 4    |
+| UI Components    | Radix UI          |
+| i18n             | i18next           |
+| Notifications    | Sonner            |
+| Icons            | Lucide React      |
+| Linting          | ESLint 9          |
+| Formatting       | Prettier          |
 
 ## Architecture
 
@@ -30,43 +33,66 @@ This project follows **Clean Architecture** principles with clear separation of 
 
 ```
 src/
-├── api/              # API client and query configuration
-├── app/              # Application pages
-├── components/       # Reusable UI components
-│   ├── forms/       # Form components
-│   └── ui/          # UI primitives
-├── config/          # Configuration files
-├── features/        # Feature modules
-│   └── {feature}/   # Feature-specific components and stores
-├── hooks/           # Custom React hooks
-├── lib/             # Utility libraries
-├── providers/       # React context providers
-└── types/           # TypeScript type definitions
-    └── {domain}/    # Domain-specific types
-        ├── enums/   # Enum definitions
-        ├── forms/   # Form DTOs
-        └── responses/ # Response DTOs
+├── api/                # API client and query configuration
+│   └── endpoints/      # API endpoint definitions
+├── app/                # Application pages
+│   ├── auth/           # Authentication pages
+│   └── main/           # Main application layout and pages
+├── components/         # Reusable UI components
+│   ├── forms/          # Form components (controlled inputs)
+│   └── ui/             # UI primitives (Button, Dialog, Sidebar, etc.)
+├── config/             # Configuration files (Axios, i18next)
+├── features/           # Feature modules (components, stores, logic)
+│   └── {domain}/       # Domain-specific features
+│       ├── components/ # Domain-specific components
+│       └── stores/     # Domain-specific stores
+├── hooks/              # Custom React hooks
+├── lib/                # Utility functions
+├── providers/          # React context providers
+└── types/              # TypeScript type definitions
+    └── {domain}/       # Domain-specific types
+        ├── enums/      # Enum definitions
+        ├── forms/      # Form DTOs (Zod schemas)
+        ├── queries/    # Query definitions
+        └── responses/  # Response DTOs
 ```
-
-### Layers
-
-- **api**: Contains API client configuration, endpoints, and query keys. Handles all backend communication.
-- **app**: Contains top-level page components and routing structure.
-- **components**: Reusable UI components organized by purpose (forms, ui primitives).
-- **features**: Feature modules containing feature-specific components, stores, and logic.
-- **types**: Type definitions organized by domain, following strict type management rules.
-- **lib**: Utility functions and library configurations.
-- **providers**: React context providers for global state and configuration.
 
 ## Prerequisites
 
-- [Node.js](https://nodejs.org/) (v18 or later)
-- [Yarn](https://yarnpkg.com/) (v4.12.0 or later)
-- [Docker](https://www.docker.com/products/docker-desktop/) for containerization
+- [Node.js](https://nodejs.org/) (v22 or later)
+- [Yarn](https://yarnpkg.com/) (v4.12.0 - included via Corepack)
+- [Docker](https://www.docker.com/products/docker-desktop/) (optional, for containerization)
 
-## Run the project
+## Development
 
-This project uses Docker Compose to run the project. To run the project, you need to have Docker Compose installed.
+To run the web application in development mode:
+
+```bash
+# Install dependencies
+yarn install
+
+# Start development server
+yarn dev
+```
+
+The development server will start at http://localhost:5173 (or the next available port).
+
+### Available Scripts
+
+| Script            | Description                          |
+| ----------------- | ------------------------------------ |
+| `yarn dev`        | Start development server             |
+| `yarn build`      | Build for production                 |
+| `yarn preview`    | Preview production build             |
+| `yarn lint`       | Run ESLint                           |
+| `yarn lint:fix`   | Run ESLint with auto-fix             |
+| `yarn type:check` | Run TypeScript type checking         |
+| `yarn format`     | Format code with Prettier            |
+| `yarn validate`   | Run lint:fix, type:check, and format |
+
+## Docker
+
+This project uses Docker Compose for containerized deployment:
 
 ```bash
 # Build and start all services
@@ -87,26 +113,13 @@ docker-compose down -v
 
 - Web Application: http://localhost:8081
 
-## Development
-
-To run the web application in development mode:
-
-```bash
-# Install dependencies
-yarn install
-
-# Start development server
-yarn dev
-```
-
-The development server will start at http://localhost:5173 (or the next available port).
-
 ## Running with Backend
 
 The web application requires the backend API to be running. To run the full application:
 
-1. **Start the backend API**: Follow the instructions in the [backend README](https://github.com/lnans/personal.budget) to start
-2. **Configure the API URL**: Create a `.env` file in the root of the project (or set environment variables) with:
+1. **Start the backend API**: Follow the instructions in the [backend repository](https://github.com/lnans/personal.budget)
+
+2. **Configure the API URL**: Create a `.env` file in the root of the project:
 
    ```bash
    VITE_API_URL=http://localhost:8080
@@ -114,16 +127,12 @@ The web application requires the backend API to be running. To run the full appl
 
 3. **Start the web application**: Run the development server as described in the [Development](#development) section.
 
-## Code Formatting
+## Environment Variables
 
-Format the codebase:
-
-```bash
-yarn format
-```
-
-This script uses Prettier to format all files in the project.
+| Variable       | Description                                      | Required |
+| -------------- | ------------------------------------------------ | -------- |
+| `VITE_API_URL` | Backend API URL (must be a valid HTTP/HTTPS URL) | Yes      |
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](../personal.budget/LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/lnans/personal.budget/blob/main/LICENSE) file for details.

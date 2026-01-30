@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
 
-import { apiClient } from '@/lib/axios'
+import { apiClient } from '@/config/axios'
 import type { CreateAccountFormDto } from '@/types/accounts/forms/CreateAccountFormDto'
 import type { PatchAccountFormDto } from '@/types/accounts/forms/PatchAccountFormDto'
 import type { CreateAccountResponseDto } from '@/types/accounts/responses/CreateAccountResponseDto'
