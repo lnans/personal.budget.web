@@ -22,6 +22,11 @@ export function useGetAccounts() {
   })
 }
 
+export function useGetAccountById(id: string | null) {
+  const accountsQuery = useGetAccounts()
+  return accountsQuery.data?.find((account) => account.id === id)
+}
+
 export function useCreateAccount() {
   return useMutation({
     mutationFn: async (data: CreateAccountFormDto) => {
