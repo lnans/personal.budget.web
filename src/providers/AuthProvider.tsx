@@ -11,7 +11,7 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate()
 
   const { authToken, refreshToken } = useAuthStore((state) => state)
-  const { isAuthTokenValid, isRefreshTokenValid, clearAuth } = useAuthStore((state) => state.actions)
+  const { isAuthTokenValid, isRefreshTokenValid, clearAuth, setUser } = useAuthStore((state) => state.actions)
 
   const isAuthValid = authToken && isAuthTokenValid()
   const isRefreshValid = refreshToken && isRefreshTokenValid()
@@ -75,6 +75,12 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
 
     return clearRefreshTimer
   }, [clearRefreshTimer, scheduleTokenRefresh])
+
+  React.useEffect(() => {
+    if (isAuthValid && currentUserQuery.data) {
+      setUser(currentUserQuery.data)
+    }
+  }, [isAuthValid, currentUserQuery.data, setUser])
 
   const isLoading = refreshTokenMutation.isPending || (isAuthValid && currentUserQuery.isLoading)
 

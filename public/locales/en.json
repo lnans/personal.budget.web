@@ -25,6 +25,7 @@
   "auth.signIn.password.label": "Password",
   "auth.signIn.submit": "Sign in",
   "auth.signIn.title": "Welcome back",
+  "auth.signOut.title": "Sign out",
 
   "common.noData": "No data",
 
@@ -53,5 +54,7 @@
   "errors.User.Password.Required": "Password required",
   "errors.User.RefreshToken.Required": "Refresh token required",
 
-  "operations.title": "Operations"
+  "operations.title": "Operations",
+
+  "settings.title": "Settings"
 }
