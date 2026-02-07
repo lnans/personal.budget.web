@@ -6,6 +6,8 @@ import { Link, Outlet } from 'react-router-dom'
 import { Separator } from '@/components/ui/Separator'
 import {
   Sidebar,
+  SidebarContent,
+  SidebarFooter,
   SidebarHeader,
   SidebarInset,
   SidebarMenu,
@@ -14,9 +16,15 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from '@/components/ui/Sidebar'
+import { AccountsAddButton } from '@/features/accounts/components/AccountsAddButton'
 import { AccountsBreadcrumb } from '@/features/accounts/components/AccountsBreadcrumb'
-import { AccountsSidebarContent } from '@/features/accounts/components/AccountsSidebarContent'
+import { AccountsList } from '@/features/accounts/components/AccountsList'
+import { AccountsNetWorth } from '@/features/accounts/components/AccountsNetWorth'
+import { AccountsAddFormDialog } from '@/features/accounts/components/forms/AccountsAddFormDialog'
+import { AccountsDeleteFormDialog } from '@/features/accounts/components/forms/AccountsDeleteFormDialog'
+import { AccountsPatchFormDialog } from '@/features/accounts/components/forms/AccountsPatchFormDialog'
 import { useAccountsStore } from '@/features/accounts/stores/accountsStore'
+import { AuthProfileButton } from '@/features/authentication/components/AuthProfileButton'
 import { useSearchParams } from '@/hooks/useSearchParams'
 
 const SIDEBAR_SCALED_WIDTH = 80
@@ -60,7 +68,19 @@ function MainLayout() {
           </SidebarMenu>
         </SidebarHeader>
 
-        <AccountsSidebarContent />
+        <SidebarContent>
+          <AccountsNetWorth />
+          <AccountsList />
+
+          <AccountsAddButton />
+          <AccountsAddFormDialog />
+          <AccountsPatchFormDialog />
+          <AccountsDeleteFormDialog />
+        </SidebarContent>
+
+        <SidebarFooter>
+          <AuthProfileButton />
+        </SidebarFooter>
       </Sidebar>
 
       <SidebarInset>
