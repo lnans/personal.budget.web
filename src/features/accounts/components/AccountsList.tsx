@@ -10,7 +10,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/Sidebar'
-import { cn, cnCurrencyColor, formatCurrency } from '@/lib/utils'
+import { cn, cnAccountCurrencyColor, formatCurrency } from '@/lib/utils'
 import type { GetAccountsResponseDto } from '@/types/accounts/responses/GetAccountsResponseDto'
 
 import { useAccountsStore } from '../stores/accountsStore'
@@ -67,7 +67,7 @@ function AccountGroup({ accounts, label, labelNoData }: AccountGroupProps) {
                   </div>
                   <span
                     className={cn(
-                      cnCurrencyColor(account.balance),
+                      cnAccountCurrencyColor(account.balance),
                       'ms-auto pr-8 font-semibold transition-[padding,transform] md:pr-0 md:translate-x-0 md:group-hover/menu-button:-translate-x-4 md:group-focus-visible/menu-button:-translate-x-4 md:group-active/menu-button:-translate-x-4 md:group-hover/menu-button:pr-3 md:group-focus-visible/menu-button:pr-3 md:group-active/menu-button:pr-3',
                       openMenuAccountId === account.id && 'md:-translate-x-4 md:pr-3'
                     )}

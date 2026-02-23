@@ -76,11 +76,11 @@ export function formatCurrency(amount: number, currency = 'EUR', locale = 'fr-FR
 }
 
 /**
- * Returns the color of a currency amount
+ * Returns the color of an account currency amount
  * @param amount - The amount to get the color for
  * @returns The color of the amount
  */
-export function cnCurrencyColor(amount: number): string {
+export function cnAccountCurrencyColor(amount: number): string {
   if (amount === 0) {
     return 'text-gray-500'
   }
@@ -88,4 +88,35 @@ export function cnCurrencyColor(amount: number): string {
     return 'text-red-500'
   }
   return ''
+}
+
+/**
+ * Returns the color of an operation currency amount
+ * @param amount - The amount to get the color for
+ * @returns The color of the amount
+ */
+export function cnOperationCurrencyColor(amount: number): string {
+  if (amount === 0) {
+    return 'text-gray-500'
+  }
+  if (amount > 0) {
+    return 'text-green-500'
+  }
+  return ''
+}
+
+export function formatDate(
+  date: Date | string | null | undefined,
+  format: 'short' | 'medium' | 'long' | 'full' = 'medium',
+  locale = 'fr-FR'
+): string {
+  if (!date) {
+    return ''
+  }
+
+  const dateObj = typeof date === 'string' ? new Date(date) : date
+
+  return new Intl.DateTimeFormat(locale, {
+    dateStyle: format,
+  }).format(dateObj)
 }
