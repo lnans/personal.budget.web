@@ -1,5 +1,7 @@
+import { AccountOperationsList } from '@/features/accounts/components/AccountOperationsList'
+
 function OperationsPage() {
-  return <div>OperationsPage</div>
+  return <AccountOperationsList />
 }
 
 export { OperationsPage }

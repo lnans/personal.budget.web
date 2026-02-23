@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 
 import { useGetAccounts } from '@/api/endpoints/AccountsEndpoints'
 import { SidebarGroup, SidebarGroupContent, SidebarMenu, SidebarMenuButton } from '@/components/ui/Sidebar'
-import { cn, cnCurrencyColor, formatCurrency } from '@/lib/utils'
+import { cn, cnAccountCurrencyColor, formatCurrency } from '@/lib/utils'
 
 import { useAccountsStore } from '../stores/accountsStore'
 
@@ -27,7 +27,7 @@ function AccountsNetWorth() {
           >
             <ChartPieIcon />
             <span>{t('accounts.netWorth')}</span>
-            <span className={cn(cnCurrencyColor(netWorth), 'ms-auto font-semibold')}>{formatCurrency(netWorth)}</span>
+            <span className={cn(cnAccountCurrencyColor(netWorth), 'ms-auto font-semibold')}>{formatCurrency(netWorth)}</span>
           </SidebarMenuButton>
         </SidebarMenu>
       </SidebarGroupContent>

@@ -28,6 +28,7 @@
   "auth.signOut.title": "Sign out",
 
   "common.noData": "No data",
+  "common.pagination.loadMore": "Load more",
 
   "errors.Account.AccountType.Unknown": "Invalid account type",
   "errors.Account.AlreadyDeleted": "Already deleted",
@@ -54,6 +55,8 @@
   "errors.User.Password.Required": "Password required",
   "errors.User.RefreshToken.Required": "Refresh token required",
 
+  "operations.lastActivity": "Latest operations activity",
+  "operations.noOperations": "No operations found",
   "operations.title": "Operations",
 
   "settings.title": "Settings"
